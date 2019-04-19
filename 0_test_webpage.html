@@ -5,13 +5,17 @@
         <title>JavaScript Test Page</title>
         <!-- JS can be put in the head or body tag.
         This affects when the script is loaded.
-        Putting it just before the end of the body tag means
-        it will be loaded last. -->
+        Putting it just before the end of the body tag is often
+        the best strategy as JS may need HTML elements to be loaded first -->
     </head>
     <body>
         <!-- Demonstrates two different ways to insert JS. Internal and external. -->
+        <h1>Title</h1>
+        <div id="text"></div>
+        <div id="boolean"></div>
         <script type="text/javascript">
-            document.write('<h1>hello world</h1>');
+            var testTitle = document.querySelector('h1');
+            testTitle.textContent = 'hello world';
         </script>
         <script src='1_variablesTest.js'></script>
     </body>

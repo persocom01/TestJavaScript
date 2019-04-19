@@ -5,6 +5,7 @@ function printAll (arr) {
   var arr2 = []
   var i
   // For loops have 3 statements, the 2nd and 3rd being optional.
+  // Note
   // Without them, break and i++ must be somewhere within the loop itself.
   for (i = 0; i < arr.length; i++) {
     arr2.push(arr[i])

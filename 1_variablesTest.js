@@ -3,9 +3,10 @@
 are written this way. */
 
 // It is possible to declare a variable without a value.
-var testText = 'It\'s a test'
-var boo = true
+// document.querySelector('selector') takes in CSS Selectors as argument.
+// In this case #name selects the first element with id="name".
+var text = document.querySelector('#text')
+var boo = document.querySelector('#boolean')
 
-// document.write is actually not a recommended method in JS.
-document.write(testText, '\n')
-document.write(boo)
+text.textContent = 'It\'s a test'
+boo.textContent = true
