@@ -1,6 +1,6 @@
 # TestJavaScript
 
-A JavaScript testing playground organized by topic in the sololearn tutorial.
+A JavaScript testing playground based roughly on the mozillia JS tutorial: https://developer.mozilla.org/en-US/docs/Learn/JavaScript
 
 Workable code is written on each topic to demonstrate use of JavaScript in the topic area.
 

@@ -18,6 +18,8 @@ function printAll (arr) {
 }
 
 // Demonstrates continue.
+// In this case, continue causes the loop to continue without adding vowels
+// to the output.
 function noVowels (arr) {
   var vowels = ['a', 'e', 'i', 'o', 'u']
   var arr2 = []
@@ -34,6 +36,8 @@ function noVowels (arr) {
 }
 
 // Demonstrates break.
+// In this case, break causes the loop to break when the letter
+// specified is encountered.
 function stopAtLetter (letter, arr) {
   var i = 0
   var arr2 = []

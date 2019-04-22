@@ -1,6 +1,5 @@
 // Demonstrates if statements and logical operators.
-var input = 7
-// Demonstrates a conditional variable.
+var input = 107
 // || = OR.
 var checkedInput = (input < -100 || input > 100) ? 'input is out of scope' : input
 var allowNegative = false
@@ -8,7 +7,7 @@ var allowNegative = false
 // The types of typeof are:
 // 'number', 'string', 'boolean', 'undefined', 'object'.
 if (typeof checkedInput === 'string') {
-  console.log('the magnitude of x is greater than 100')
+  console.log(checkedInput)
 // && = AND and ! = NOT
 } else if (checkedInput < 0 && !allowNegative) {
   console.log('input cannot be negative')
