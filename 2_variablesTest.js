@@ -4,6 +4,13 @@ are written this way. */
 
 // variable names can start with $
 var $text
+// Variables with no value === undefined.
+// However, if you use them in math they return NaN (not a  number).
+// NaN is a special object property that isn't === 'NaN'.
+// To determine if the value is NaN, use isNaN(value) or Number.isNaN(value).
+// isNaN() will evaluate all non-numbers as NaN.
+// Number.isNaN() will only evaluate NaN as NaN.
+document.querySelector('#NaN').textContent = $text + 1
 
 // document.querySelector('selector') takes in CSS Selectors as argument.
 // In this case #name selects the first element with id="name".

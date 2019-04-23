@@ -5,7 +5,7 @@ var checkedInput = (input < -100 || input > 100) ? 'input is out of scope' : inp
 var allowNegative = false
 
 // The types of typeof are:
-// 'number', 'string', 'boolean', 'undefined', 'object'.
+// 'number', 'string', 'boolean', 'undefined', 'object', 'symbol'.
 if (typeof checkedInput === 'string') {
   console.log(checkedInput)
 // && = AND and ! = NOT
