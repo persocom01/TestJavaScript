@@ -25,6 +25,7 @@ function noVowels (arr) {
   var arr2 = []
   var i = 0
   while (i < arr.length) {
+    // vowels.indexOf(string) returns -1 if string is not found.
     if (vowels.indexOf(arr[i]) > -1) {
       i++
       continue
