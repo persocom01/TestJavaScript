@@ -1,4 +1,4 @@
-// Demonstrates use of an object in JS, which is like a python dictionary.
+// Demonstrates use of an object in JS.
 
 var order = 'cola'
 var menu = ['coffee', 'tea']
@@ -22,7 +22,8 @@ function getMenu (order) {
 }
 
 console.log(cafeObj.type)
-console.log(cafeObj.getMenu)
+// Alternative to .getMenu.
+console.log(cafeObj['getMenu'])
 // Demonstrates access of nested object in object.
 // Also demonstrates use of numerical keys, which can be accessed using obj[num].
 console.log(cafeObj.maids[1])
@@ -43,3 +44,15 @@ var objContinued = {
 console.log(objContinued[''])
 console.log(objContinued['!'])
 console.log(objContinued.printMethod())
+console.log()
+
+// Demonstrates copying and merging objects.
+// It is possible to use sprad properties to do this but this method works
+// for node.js.
+var target = { a: '1', b: '2' }
+var source = { b: '2', c: '3' }
+var clonedObj = Object.assign({}, source)
+var mergedObj = Object.assign(target, source)
+
+console.log(clonedObj)
+console.log(mergedObj)
