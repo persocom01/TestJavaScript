@@ -6,11 +6,10 @@ console.log(x)
 // This is identical to the concat() method.
 // \n is newline.
 console.log(x.concat('\nseason 2'))
-var str = `
-multiline
-string
-`
-console.log(str)
+var y = 'break \
+strings up \
+like this'
+console.log(y)
 
 // This is not true for other operations.
 x = '11' + 1
