@@ -16,7 +16,9 @@ if (typeof checkedInput === 'string') {
   console.log(input + ' passes the tests.')
 }
 
+// Demonstrates the switch statement.
 switch (checkedInput) {
+  // Strings can also be used as cases, such as case 'apple':.
   case 7:
     console.log('you picked the lucky number seven!')
     // break is neccessary or it will continue to the next case.
