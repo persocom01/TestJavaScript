@@ -54,5 +54,7 @@ console.log('lowercase:', sentence2.toLowerCase())
 console.log('trim:', sentence2.trim())
 console.log()
 
+// Demonstrates split and join.
 var strArr = sentence.split(' ')
 console.log('convert to array:', strArr)
+console.log(strArr.join(' '))
