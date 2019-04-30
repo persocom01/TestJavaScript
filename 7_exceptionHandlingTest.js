@@ -1,18 +1,22 @@
 // Demonstrates error handling.
-function CustomException (message) {
+function CustomError (message) {
+  this.name = 'CustomError'
   this.message = message
-  this.name = 'CustomException'
 }
 
 // Atomatically runs when exception is thrown.
-CustomException.prototype.toString = function () {
+CustomError.prototype.toString = function () {
   return this.name + ': "' + this.message + '"'
 }
 
 function countToTen (number) {
   if (number > 10) {
     // You can throw strings, numbers, or even boolean.
-    throw new CustomException(number + ' is out of scope.')
+    // You can also make use of a prebuilt error constructor by using:
+    // throw new Error('message')
+    // The error constructor comes with two properties, Error.name and
+    // Error.message.
+    throw new CustomError(number + ' is out of scope.')
   } else {
     var arr = []
     for (var i = number; i <= 10; i++) {
@@ -26,6 +30,10 @@ function tryWrapper (num) {
   try {
     countToTen(num)
   } catch (e) {
+    // throw e is known as re-throwing the error, since catch statements are
+    // meant to perform something in the case of an error.
+    // Re-throwing the error can be useful is you want it to be caught again
+    // in an outer try catch block.
     throw e
   } finally {
     // return in the finally block overriddes return or throw in the other blocks.
