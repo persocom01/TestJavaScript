@@ -77,3 +77,5 @@ for (var fruit of fruits) {
   letterSum += fruit.length
 }
 console.log('for of:', letterSum)
+
+// loop labels are not covered since their use is discouraged.

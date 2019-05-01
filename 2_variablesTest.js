@@ -36,3 +36,6 @@ if (typeof x === 'undefined') {
 } else {
   document.querySelector('#let').textContent = x
 }
+
+// Variables can also be defined as function using function expressions.
+// This is covered under the funtions chapter.
