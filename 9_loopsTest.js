@@ -1,4 +1,4 @@
-// Demonstrates 3 types of loops.
+// Demonstrates 3 types of loops, for, while and do while.
 var alphabet = ['a', 'b', 'c', 'd', 'e']
 
 function printAll (arr) {
@@ -55,3 +55,25 @@ function stopAtLetter (letter, arr) {
 printAll(alphabet)
 noVowels(alphabet)
 stopAtLetter('d', alphabet)
+console.log()
+
+// Demonstrates other types of for loops.
+var fruits = [ 'apple', 'banana', 'orange' ]
+var indexList = ''
+var letterSum = 0
+
+// Demonstrates the for... in loop.
+// This one lists the array indexes.
+for (var i in fruits) {
+  indexList += i
+}
+console.log('for in:', indexList)
+
+// Demonstrates the for... of loop.
+// // This loop sums the number of letters in the array.
+// for... of returns the value of each element in the array instead of just the index.
+letterSum = 0
+for (var fruit of fruits) {
+  letterSum += fruit.length
+}
+console.log('for of:', letterSum)

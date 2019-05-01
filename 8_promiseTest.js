@@ -1,4 +1,5 @@
 // Demonstrates use of promises.
+// Doesn't work atm, will return to this in future.
 import XMLHttpRequest;
 
 function imgLoad (url) {
