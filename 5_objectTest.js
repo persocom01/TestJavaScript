@@ -59,4 +59,9 @@ console.log()
 
 // Demonstrates turning object elements into individual variables.
 var { a, b } = target
+// Demonstrates renaming the individual elements.
+// Also demonstrate giving a default value to alpha, which in this case
+// has no effect.
+var { a: alpha = 0, b: beta } = mergedObj
 console.log('destructured object:', a, b)
+console.log('renamed destructured object:', alpha, beta)
