@@ -36,7 +36,12 @@ console.log(map(factorial, inputArray))
 // Breaking down functions into partial functions which take only 1 argument
 // each is called currying.
 function greetCurried (greeting) {
+  // In the case of a variable name conflict between inner and outer functions,
+  // the inner function will take the value of the inner function variable.
+  // Not demonstrated here, but a conflict would arise if it were written as
+  // function nameCurried (greeting)
   function nameCurried (name) {
+    // Inner functions may use variables from outer functions.
     return greeting + ' ' + name
   }
   return nameCurried
