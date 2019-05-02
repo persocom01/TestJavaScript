@@ -53,6 +53,10 @@ var target = { a: '1', b: '2' }
 var source = { b: '2', c: '3' }
 var clonedObj = Object.assign({}, source)
 var mergedObj = Object.assign(target, source)
-
 console.log(clonedObj)
 console.log(mergedObj)
+console.log()
+
+// Demonstrates turning object elements into individual variables.
+var { a, b } = target
+console.log('destructured object:', a, b)
