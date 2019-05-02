@@ -1,22 +1,15 @@
 // Demonstrates functions.
 
-// Demonstrates a function capable of taking in multiple arguments using
-// the special arguments object.
-function greet () {
-  for (var i in arguments) {
-    console.log('Hello', arguments[i])
-  }
-}
-
-greet('Al', 'Ben')
-
 // Demonstrates a function expression with a simple anonymous function.
 // Unlike normal functions, function expressions work like variables in that
-// they have to be declared before use and are not automatically run first
-// regardless of position in the code.
+// they are not hoisted to the top when code is run.
 var square = function (number) { return number * number }
+// Demonstrates an arrow function expression quivalent of the above.
+var squareArrow = number => number * number
 var fourSquare = square(4)
+var eightSquareArrow = squareArrow(8)
 console.log('anon function:', fourSquare)
+console.log('arrow function:', eightSquareArrow)
 
 // Demonstrates a function expression with a named function.
 // Also demonstrates possing function expressions to a function.
@@ -35,19 +28,44 @@ console.log(map(factorial, inputArray))
 // Demonstrates nested functions.
 // Breaking down functions into partial functions which take only 1 argument
 // each is called currying.
-function greetCurried (greeting) {
+// Also demonstrates setting default value.
+function greetCurried (greeting = 'Hi') {
   // In the case of a variable name conflict between inner and outer functions,
   // the inner function will take the value of the inner function variable.
   // Not demonstrated here, but a conflict would arise if it were written as
   // function nameCurried (greeting)
-  function nameCurried (name) {
+  function nameCurried () {
     // Inner functions may use variables from outer functions.
-    return greeting + ' ' + name
+    // Demonstrates the special arguments object which allows accepting
+    // multiple aguments.
+    var output = ''
+    for (var i in arguments) {
+      output += greeting + ' ' + arguments[i]
+      // Adds a line break if not the last argument.
+      if (i < arguments.length - 1) {
+        output += '\n'
+      }
+    }
+    return output
   }
   return nameCurried
 }
-var greetHi = greetCurried('Hi')
-console.log(greetHi('Eruru'))
+var greetHi = greetCurried()
+console.log(greetHi('Aruru'))
 // Passing arguments to curried functions is done via function(arg1)(arg2)
 // instead of function(arg1, arg2)
-console.log(greetCurried('Hello there')('Shiori'))
+console.log(greetCurried('Hello there')('Eruru', 'Urutori'))
+console.log()
+
+// Multiple arguments can also be passed using ....
+function classList (classname, ...students) {
+  var output = classname + '\n'
+  for (var i in students) {
+    output += students[i]
+    if (i < students.length - 1) {
+      output += '\n'
+    }
+  }
+  return output
+}
+console.log(classList('1-D', 'Yuzuha', 'Touka'))
