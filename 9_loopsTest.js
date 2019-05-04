@@ -77,5 +77,24 @@ for (var fruit of fruits) {
   letterSum += fruit.length
 }
 console.log('for of:', letterSum)
+console.log()
+
+// Demonstrates how to loop through nested objects.
+var party = [
+  {
+    name: 'Parn',
+    role: 'swordsman',
+    race: 'human'
+  },
+  {
+    name: 'Deedlit',
+    role: 'archer',
+    race: 'elf'
+  }
+]
+console.log('party members:')
+for (var { name: n, role: ro, race: ra } of party) {
+  console.log(n + ' the ' + ra + ' ' + ro)
+}
 
 // loop labels are not covered since their use is discouraged.
