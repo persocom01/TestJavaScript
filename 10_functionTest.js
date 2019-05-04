@@ -83,3 +83,10 @@ function burger ({
 }
 // Demonstrates how to pass values into named arguments.
 console.log(burger({ bun: 'rice', patty: 'fish', others: { sauce: 'mayonnaise' } }))
+
+// Demonstrates how to retrieve object properties using functions.
+var beefBurger = { bun: 'bread', patty: 'beef' }
+function pattyType ({ patty: p }) {
+  return p
+}
+console.log(pattyType(beefBurger))
