@@ -69,3 +69,17 @@ function classList (classname, ...students) {
   return output
 }
 console.log(classList('1-D', 'Yuzuha', 'Touka'))
+console.log()
+
+// Demonstrates how to name function arguments.
+function burger ({
+  bun = 'bread',
+  patty,
+  others = { sauce: 'ketchup', veg: 'lettuce' }
+// Without = {}, an error will occur when no arguments are passed.
+} = {}) {
+  // Demonstrates how to return multiple variables.
+  return [bun, patty, others]
+}
+// Demonstrates how to pass values into named arguments.
+console.log(burger({ bun: 'rice', patty: 'fish', others: { sauce: 'mayonnaise' } }))
