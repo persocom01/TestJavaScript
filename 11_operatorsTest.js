@@ -14,6 +14,8 @@ x -= 1
 x *= 10
 x /= 2
 console.log('start:', x)
+x **= 2
+console.log('power:', x)
 x %= 2
 console.log('remainder:', x)
 console.log()
@@ -26,3 +28,7 @@ console.log("1 != '1'", 1 != '1')
 console.log("1 !== '1'", 1 !== '1')
 console.log("1 > '1'", 1 > '1')
 console.log("1 >= '1'", 1 >= '1')
+console.log()
+
+// Logical operators are covered under if statements.
+// Conditional opeartor is under variables.

@@ -19,6 +19,7 @@ console.log(x)
 console.log()
 
 // Strings can be converted back to numbers using the + operator.
+// Note that + also works on boolean operators, returning 1 for true and 0 for false.
 x = '10' + '10'
 console.log(x)
 x = +'10' + +'10'

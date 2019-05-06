@@ -8,7 +8,8 @@ var cafeObj = {
   getMenu: getMenu(order),
   // Nested object.
   // Also demonstrates computed property names, which in this case evalutate
-  // to 1 and 2. It is possible to compute strings as names as well.
+  // to 1 and 2. Computed property names are surrounded by [].
+  // It is possible to compute strings as names as well.
   maids: { [++i]: 'Miyuki', [++i]: 'Megumi' }
 }
 

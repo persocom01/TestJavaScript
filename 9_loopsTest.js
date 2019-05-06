@@ -2,19 +2,21 @@
 var alphabet = ['a', 'b', 'c', 'd', 'e']
 
 function printAll (arr) {
-  var arr2 = []
-  var i
+  var arrForward = []
+  var arrReverse = []
   // For loops have 3 statements, the 2nd and 3rd being optional.
-  // Note
   // Without them, break and i++ must be somewhere within the loop itself.
-  for (i = 0; i < arr.length; i++) {
-    arr2.push(arr[i])
+  // Demonstrates using two variables in a for loop.
+  for (var i = 0, i2 = arr.length - 1; i < arr.length; i++, i2--) {
+    arrForward.push(arr[i])
+    arrReverse.push(arr[i2])
   }
   // Alternative that does not require defining i beforehand.
   // for (var index in arr) {
-  //   arr2.push(arr[index])
+  //   arrForward.push(arr[index])
   // }
-  console.log(arr2.join(''))
+  console.log(arrForward.join(''))
+  console.log(arrReverse.join(''))
 }
 
 // Demonstrates continue.

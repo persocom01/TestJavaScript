@@ -20,6 +20,7 @@ $text.textContent = 'It\'s a test'
 // Variables can be declared and given a value immediately.
 var boo = 123
 // Demonstrates a conditional variable.
+// The format is condition ? valIfTrue : valIfFalse.
 var chkBoo = (typeof boo !== 'boolean') ? 'variable boo is not a boolean' : boo
 // Demonstrates skipping the var = document.querySelector().
 document.querySelector('#boolean').textContent = chkBoo
