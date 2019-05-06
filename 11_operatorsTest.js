@@ -32,3 +32,8 @@ console.log()
 
 // Logical operators are covered under if statements.
 // Conditional opeartor is under variables.
+
+// The types of typeof are:
+// 'number', 'string', 'boolean', 'undefined', 'object', 'symbol'.
+// null is considered an object.
+console.log(typeof x)

@@ -3,7 +3,7 @@
 var order = 'cola'
 var menu = ['coffee', 'tea']
 var i = 0
-var cafeObj = {
+var cafe = {
   type: 'Maid',
   getMenu: getMenu(order),
   // Nested object.
@@ -22,12 +22,14 @@ function getMenu (order) {
   }
 }
 
-console.log(cafeObj.type)
+// Demonstrates in operator.
+console.log('type' in cafe)
+console.log(cafe.type)
 // Alternative to .getMenu.
-console.log(cafeObj['getMenu'])
+console.log(cafe['getMenu'])
 // Demonstrates access of nested object in object.
 // Also demonstrates use of numerical keys, which can be accessed using obj[num].
-console.log(cafeObj.maids[1])
+console.log(cafe.maids[1])
 console.log()
 
 var objContinued = {

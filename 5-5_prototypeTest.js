@@ -24,6 +24,12 @@ Maid.prototype.threeSizes = function () {
   return arr.join(', ')
 }
 
+// Demonstrates in operator.
+console.log('in operator:', 'name' in Maid)
+// Demonstrates use of instanceof to test object class.
+console.log('instanceof:', kaho instanceof Maid)
 console.log(kaho.threeSizes())
 kaho.growup()
 console.log(kaho.age)
+
+// Classes will be covered here in future.
