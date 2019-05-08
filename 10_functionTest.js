@@ -4,7 +4,7 @@
 // Unlike normal functions, function expressions work like variables in that
 // they are not hoisted to the top when code is run.
 var square = function (number) { return number * number }
-// Demonstrates an arrow function expression quivalent of the above.
+// Demonstrates an arrow function expression equivalent of the above.
 var squareArrow = number => number * number
 var fourSquare = square(4)
 var eightSquareArrow = squareArrow(8)

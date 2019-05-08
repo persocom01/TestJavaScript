@@ -19,6 +19,15 @@ var [ smile, sweet, ...service ] = maids
 console.log(smile, sweet, service)
 // Demonstrates use of the in operator, which returns a boolean based on whether
 // the oject property exists.
-// For arrays, it accept arry indexes and not values themselves.
+// For arrays, it accept array indexes and not values themselves.
 console.log('index:', 0 in maids)
 console.log('value:', 'Maika' in maids)
+console.log()
+
+// JS has no list comprehensions. Use things like map and filer methods instead.
+var attrib = [ 'smile', 'sweet', 'service', 'service' ]
+var i = 0
+var maidAttributes = attrib.map(x => x + ': ' + maids[i++])
+console.log('map:', maidAttributes)
+var girlsOnly = maidAttributes.filter(x => x.indexOf('service') === -1)
+console.log('filter:', girlsOnly)

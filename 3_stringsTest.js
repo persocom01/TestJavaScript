@@ -33,8 +33,10 @@ console.log('return indexed letter:', sentence[0])
 // Same as above but returns '' instead of undefined if out of range.
 console.log('return indexed letter2:', sentence.charAt(1))
 // 2nd argument indicates start point. In this case it bypasses the first 'the'.
+// Returns -1 if nothing is found.
 console.log('return index of first instance:', sentence.indexOf('the', 10))
 // search() method can use regex, which is indicated by /regex/ in js.
+// Returns -1 if nothing is found.
 console.log('search:', sentence.search(/[Tt]he/))
 console.log('return index of last instance:', sentence.lastIndexOf('fox'))
 // You can also slice from the end of the string using -ve numbers.

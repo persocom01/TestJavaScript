@@ -31,6 +31,7 @@ console.log()
 // console.log('atanh:', Math.atanh())
 // console.log()
 
+var list = [ 1, 2, 3, 4, 5, 6 ]
 // pow(base, power). Accepts fractional and negative powers as well.
 console.log('pow:', Math.pow(9, 0.5))
 // Returns e^number.
@@ -42,7 +43,9 @@ console.log('log10:', Math.log10(100))
 console.log('log1p:', Math.log1p(Math.exp(1) - 1))
 // log base 2.
 console.log('log2:', Math.log2(4))
+// Round down.
 console.log('floor:', Math.floor(1.9))
+// Round up.
 console.log('ceil:', Math.ceil(1.1))
 console.log('min:', Math.min())
 console.log('max:', Math.max())
