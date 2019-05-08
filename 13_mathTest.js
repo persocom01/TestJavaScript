@@ -37,11 +37,13 @@ console.log('pow:', Math.pow(9, 0.5))
 console.log('exp:', Math.exp(1))
 // Returns e^number - 1.
 console.log('expm1:', Math.expm1(1))
-console.log('log10:', Math.log10(10))
-console.log('log1p:', Math.log1p())
-console.log('log2:', Math.log2())
-console.log('floor:', Math.floor())
-console.log('ceil:', Math.ceil())
+console.log('log10:', Math.log10(100))
+// Natural log of num + 1. ln1 = 0. Therefore if num = 0, result = 0.
+console.log('log1p:', Math.log1p(Math.exp(1) - 1))
+// log base 2.
+console.log('log2:', Math.log2(4))
+console.log('floor:', Math.floor(1.9))
+console.log('ceil:', Math.ceil(1.1))
 console.log('min:', Math.min())
 console.log('max:', Math.max())
 console.log('random:', Math.random())

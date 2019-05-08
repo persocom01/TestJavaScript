@@ -21,9 +21,11 @@ function map (fun, arr) {
   for (var i = 0; i < arr.length; i++) {
     result[i] = fun(arr[i])
   }
-  return result
+  console.log(result)
 }
-console.log(map(factorial, inputArray))
+map(factorial, inputArray)
+// The above is actually identical to arry method map:
+console.log(inputArray.map(factorial))
 
 // Demonstrates nested functions.
 // Breaking down functions into partial functions which take only 1 argument
