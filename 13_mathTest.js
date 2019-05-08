@@ -31,7 +31,7 @@ console.log()
 // console.log('atanh:', Math.atanh())
 // console.log()
 
-var list = [ 1, 2, 3, 4, 5, 6 ]
+var list = [ ...Array(5).keys() ]
 // pow(base, power). Accepts fractional and negative powers as well.
 console.log('pow:', Math.pow(9, 0.5))
 // Returns e^number.
@@ -41,21 +41,27 @@ console.log('expm1:', Math.expm1(1))
 console.log('log10:', Math.log10(100))
 // Natural log of num + 1. ln1 = 0. Therefore if num = 0, result = 0.
 console.log('log1p:', Math.log1p(Math.exp(1) - 1))
-// log base 2.
 console.log('log2:', Math.log2(4))
-// Round down.
 console.log('floor:', Math.floor(1.9))
-// Round up.
 console.log('ceil:', Math.ceil(1.1))
-console.log('min:', Math.min())
-console.log('max:', Math.max())
+// Note that you cannot just pass the list without ....
+console.log('min:', Math.min(...list))
+console.log('max:', Math.max(...list))
+// Works like excel's rand()
 console.log('random:', Math.random())
-console.log('round:', Math.round())
-console.log('fround:', Math.fround())
-console.log('trunc:', Math.trunc())
-console.log('sqrt:', Math.sqrt())
-console.log('cbrt:', Math.cbrt())
-console.log('hypot:', Math.hypot())
-console.log('sign:', Math.sign())
-console.log('clz32:', Math.clz32())
-console.log('imul:', Math.imul())
+console.log('round:', Math.round(1.5))
+// Returns closest float representation of a number. Beats me what use this is.
+console.log('fround:', Math.fround(1.05))
+// Removes all decimals.
+console.log('trunc:', Math.trunc(1234.56))
+console.log('sqrt:', Math.sqrt(9))
+console.log('cuberoot:', Math.cbrt(27))
+// Returns sqrt of the sqares of the arguments passed.
+// Useful for the Pythagorean theorem, but you can pass any number of arguments.
+console.log('hypot:', Math.hypot(3, 4))
+// Returns 1, 0 or -1 based on the sign of the number.
+console.log('sign:', Math.sign(-0))
+
+// Stuff relating to 32 bit representation of numbers.
+// console.log('clz32:', Math.clz32())
+// console.log('imul:', Math.imul())

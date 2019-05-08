@@ -6,9 +6,13 @@ console.log(arr)
 delete arr[4]
 console.log(arr)
 // The difference between an empty element and an undefined element
-// is undefined returns true if checked.
+// is undefined behaves like a filled element under certain checks.
 console.log('empty element:', 1 in arr)
 console.log('undefined element:', 3 in arr)
+// Does not list empty keys.
+console.log(Object.keys(arr))
+// Ignores empty keys.
+console.log([...arr.keys()])
 console.log()
 
 // Demonstrates combining two array together using the ... operator.
@@ -31,3 +35,8 @@ var maidAttributes = attrib.map(x => x + ': ' + maids[i++])
 console.log('map:', maidAttributes)
 var girlsOnly = maidAttributes.filter(x => x.indexOf('service') === -1)
 console.log('filter:', girlsOnly)
+console.log()
+
+// JS also has no range() function. To generate an array range, use:
+var range5 = [...Array(5).keys()]
+console.log('range:', range5)
