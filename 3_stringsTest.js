@@ -37,7 +37,7 @@ console.log('return indexed letter2:', sentence.charAt(1))
 console.log('return index of first instance:', sentence.indexOf('the', 10))
 // search() method can use regex, which is indicated by /regex/ in js.
 // Returns -1 if nothing is found.
-console.log('search:', sentence.search(/[Tt]he/))
+console.log('search:', sentence.search(/[A-Z]\w+/gm))
 console.log('return index of last instance:', sentence.lastIndexOf('fox'))
 // You can also slice from the end of the string using -ve numbers.
 // Leaving out the 2nd argument return the rest of the string.
@@ -50,9 +50,15 @@ console.log()
 
 // Other methods.
 var sentence2 = sentence.replace('dog', 'wolf')
+// match() is like search but it returns the actual string instead of the index,
+// and is able to return multiple matches as a list.
+console.log('match:', sentence2.match(/\w*[ae]+\w*/gmi))
+// There is also matchAll, but it doesn't work on node.js.
+// console.log('match:', sentence2.matchAll(/(\w*)[ae]+(\w*)/gmi))
 console.log('replace:', sentence2)
 console.log('uppercase:', sentence2.toUpperCase())
 console.log('lowercase:', sentence2.toLowerCase())
+console.log('repeat:', sentence2.repeat(2))
 // Removes spaces from front and back, which in this case does nothing.
 console.log('trim:', sentence2.trim())
 console.log()
