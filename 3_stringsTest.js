@@ -49,7 +49,7 @@ console.log('substr:', sentence.substr(16, 3))
 console.log()
 
 // Other methods.
-var sentence2 = sentence.replace('dog', 'wolf')
+var sentence2 = sentence.replace(/dog/, 'wolf')
 // match() is like search but it returns the actual string instead of the index,
 // and is able to return multiple matches as a list.
 console.log('match:', sentence2.match(/\w*[ae]+\w*/gmi))
@@ -67,3 +67,11 @@ console.log()
 var strArr = sentence.split(' ')
 console.log('convert to array:', strArr)
 console.log(strArr.join(' '))
+console.log()
+
+// Demonstrates formatting currencies.
+var options = { style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 3 }
+var goldPrice = new Intl.NumberFormat('en-US', options)
+console.log(goldPrice.format(1234.567))
