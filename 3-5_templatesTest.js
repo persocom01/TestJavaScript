@@ -29,3 +29,14 @@ var specialCharacters = `
 \u03A9 Unicode special character
 `
 console.log(specialCharacters)
+
+// You may use String.raw to escape special characters but keep substitutions.
+var insertText = 'raw string substitution.'
+var rawString = String.raw`
+\0 Null Byte
+\b Backspace
+${insertText}
+\f Form feed
+\n New line
+`
+console.log('raw string:', rawString)

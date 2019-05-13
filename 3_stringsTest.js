@@ -53,8 +53,6 @@ var sentence2 = sentence.replace(/dog/, 'wolf')
 // match() is like search but it returns the actual string instead of the index,
 // and is able to return multiple matches as a list.
 console.log('match:', sentence2.match(/\w*[ae]+\w*/gmi))
-// There is also matchAll, but it doesn't work on node.js.
-// console.log('match:', sentence2.matchAll(/(\w*)[ae]+(\w*)/gmi))
 console.log('replace:', sentence2)
 console.log('uppercase:', sentence2.toUpperCase())
 console.log('lowercase:', sentence2.toLowerCase())
@@ -64,6 +62,7 @@ console.log('trim:', sentence2.trim())
 console.log()
 
 // Demonstrates split and join.
+// split accepts use of regex.
 var strArr = sentence.split(' ')
 console.log('convert to array:', strArr)
 console.log(strArr.join(' '))
