@@ -3,8 +3,7 @@
 // Current dates.
 var currentDateStr = Date()
 var currentDate = new Date()
-// Note that currentDateStr is not a date object.
-// It should be treated as a string.
+// Note that currentDateStr is not a date object, but a string.
 console.log(currentDateStr)
 console.log(currentDate)
 // Demonstrates how to format a date object into a customized string.

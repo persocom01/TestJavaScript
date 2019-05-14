@@ -1,4 +1,5 @@
 // Templates provide more functionality to string construction.
+
 // They use ` the mark below ~ instead of '.
 var temp = `
 templates

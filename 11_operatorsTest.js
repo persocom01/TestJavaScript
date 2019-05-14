@@ -1,3 +1,4 @@
+// Demonstrates various operators in JS.
 var i = 0
 var x
 

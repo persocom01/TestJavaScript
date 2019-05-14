@@ -1,5 +1,4 @@
 // Demonstrates use of an object in JS.
-
 var order = 'cola'
 var menu = ['coffee', 'tea']
 var i = 0
