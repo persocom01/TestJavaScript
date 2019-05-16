@@ -51,7 +51,7 @@ console.log()
 // Other methods.
 var sentence2 = sentence.replace(/dog/, 'wolf')
 // match() is like search but it returns the actual string instead of the index,
-// and is able to return multiple matches as a list.
+// and is able to return multiple matches as a list if the g flag is set.
 console.log('match:', sentence2.match(/\w*[ae]+\w*/gmi))
 console.log('replace:', sentence2)
 console.log('uppercase:', sentence2.toUpperCase())
