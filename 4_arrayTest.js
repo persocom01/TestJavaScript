@@ -13,7 +13,7 @@ console.log('empty element:', 1 in arr)
 console.log('undefined element:', 3 in arr)
 // Using a non integer index creates an array property instead of array element.
 arr[1.5] = ['array', 'property']
-console.log('property:', arr.hasOwnProperty(1.5), 'value:', arr[1.5])
+console.log('property:', arr.hasOwnProperty(1.5), '\nvalue:', arr[1.5])
 // Does not list empty keys, but does list properties.
 console.log(Object.keys(arr))
 // Ignores empty keys.
