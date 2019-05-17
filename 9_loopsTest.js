@@ -15,8 +15,8 @@ function printAll (arr) {
   // for (var index in arr) {
   //   arrForward.push(arr[index])
   // }
-  console.log(arrForward.join(''))
-  console.log(arrReverse.join(''))
+  console.log('forward:', arrForward.join(''))
+  console.log('reverse:', arrReverse.join(''))
 }
 
 // Demonstrates continue.
@@ -35,7 +35,7 @@ function noVowels (arr) {
     arr2.push(arr[i])
     i++
   }
-  console.log(arr2.join(''))
+  console.log('non vowels:', arr2.join(''))
 }
 
 // Demonstrates break.
@@ -51,7 +51,7 @@ function stopAtLetter (letter, arr) {
     }
     i++
   } while (i < arr.length)
-  console.log(arr2.join(''))
+  console.log('up to letter ' + letter + ':', arr2.join(''))
 }
 
 printAll(alphabet)
@@ -72,13 +72,21 @@ for (var i in fruits) {
 console.log('for in:', indexList)
 
 // Demonstrates the for... of loop.
-// // This loop sums the number of letters in the array.
+// This loop sums the number of letters in the array.
 // for... of returns the value of each element in the array instead of just the index.
 letterSum = 0
 for (var fruit of fruits) {
   letterSum += fruit.length
 }
 console.log('for of:', letterSum)
+
+// Alternative way to write the above for in loop.
+letterSum = 0
+// Arrow functions can also be used, but in this case the loop doesn't return anything.
+fruits.forEach(function (fruit) {
+  letterSum += fruit.length
+})
+console.log('for each:', letterSum)
 console.log()
 
 // Demonstrates how to loop through nested objects.

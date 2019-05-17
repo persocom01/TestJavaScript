@@ -11,7 +11,10 @@ console.log(arr)
 // is undefined behaves like a filled element under certain checks.
 console.log('empty element:', 1 in arr)
 console.log('undefined element:', 3 in arr)
-// Does not list empty keys.
+// Using a non integer index creates an array property instead of array element.
+arr[1.5] = ['array', 'property']
+console.log('property:', arr.hasOwnProperty(1.5), 'value:', arr[1.5])
+// Does not list empty keys, but does list properties.
 console.log(Object.keys(arr))
 // Ignores empty keys.
 console.log([...arr.keys()])
@@ -40,5 +43,6 @@ console.log('filter:', girlsOnly)
 console.log()
 
 // JS also has no range() function. To generate an array range, use:
+// Array(5) creates an empty array with length 5.
 var range5 = [...Array(5).keys()]
 console.log('range:', range5)

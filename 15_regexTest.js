@@ -17,7 +17,8 @@ var reObj = new RegExp('\\bice[- ]?(?<suffix>\\w+)', 'gmi')
 var reObjAlt = new RegExp(String.raw`\bice[- ]?(?<suffix>\w+)`, 'gmi')
 // This alt is just to demonstrate the two are functionally equivalent.
 console.log('reObjAlt:', reObjAlt.exec(text))
-// You may also convert a regex literal to a regex object using the source method.
+// A regex literal has two properties: lastIndex (used when g flag is used) and source.
+// source may be used to convert a regex literal to a regex object.
 // However, this method does not preserve modifiers.
 reObj = new RegExp(re.source, 'gmi')
 // console.log('reObj:', reObj.exec(text))
@@ -84,6 +85,8 @@ console.log()
 var fireSword = text.replace(groupMatch, '$`$1 fire $2$<suffix>$<suffix2>')
 console.log('group replace:', fireSword)
 // Demonstrates how pass a function to replace to do the same thing as the above.
+// One reason you might need a function is because you can put other functions
+// such as toUpperCase() in the return.
 function fireSwordReplacer (match, p1, p2, p3, offset, string) {
   return string.slice(0, offset) + p1 + ' fire ' + p2 + p2 + p3
 }
