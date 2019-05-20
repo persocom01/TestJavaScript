@@ -5,6 +5,11 @@
 // they are not hoisted to the top when code is run.
 var square = function (number) { return number * number }
 // Demonstrates an arrow function expression equivalent of the above.
+// Arrow functions with only 1 argument do not require ().
+// However, arrow functions with no arguments must be written as:
+// () => do something.
+// Multiple arguments are written as:
+// (arg1, arg2, ...args) => do something.
 var squareArrow = number => number * number
 var fourSquare = square(4)
 var eightSquareArrow = squareArrow(8)
