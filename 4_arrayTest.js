@@ -49,3 +49,25 @@ console.log()
 // Array(5) creates an empty array with length 5.
 var range5 = [...Array(5).keys()]
 console.log('range:', range5)
+console.log()
+
+// Demonstrates 2d arrays.
+var numpad = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+]
+var reduceRow = (a, c) => [...a, c]
+for (var num in numpad) {
+  // Each element in a 2d array is called using array[row][column].
+  console.log('2d array row ' + (+num + 1) + ':', numpad[num].reduce(reduceRow, []))
+}
+
+// Demonstrates calling array methods on array-like objects for which said
+// methods are normally unusable.
+var string = ''
+Array.prototype.forEach.call(maids[0], function (name) {
+  string += '-' + name
+})
+// Slice is used to eliminate the first character.
+console.log('array method on string:', string.slice(1))

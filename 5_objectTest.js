@@ -21,8 +21,8 @@ function getMenu (order) {
   }
 }
 
-// Demonstrates in operator.
-console.log('type' in cafe)
+// Demonstrates usage of in operator to check keys.
+console.log('maids' in cafe)
 console.log(cafe.type)
 // Alternative to .getMenu.
 console.log(cafe['getMenu'])

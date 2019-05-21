@@ -55,17 +55,26 @@ console.log('some:', staff.some(x => x.length >= 5))
 console.log()
 
 // Reduce sums all elements (currentValue) of the array into a single value
-// (accumulator). In this case an initial value of 0 is provided or else
-// this method will start with the first array element.
+// (accumulator). An initial value can be provided as the second argument
+// or else the method will start with the first array element.
 var reduceSum = (accumulator, currentValue) => accumulator + currentValue.length
 console.log('reduce sum:', staff.reduce(reduceSum, 0))
-var reduceFlatten = function (a, c) {
-  console.log(typeof [...c])
-  if ([...c][1] === undefined) {
-    [...a].push(c)
-  } else {
-    [...a].concat([...c])
+// There are various ways to use reduce(), and it doesn't need to return a number.
+// In this case the initial value is an empty array.
+// The flat() method also exists, but is only implemented in node.js ver 11.0.
+var reduceFlatten = (a, c) => a.concat(c)
+console.log('reduce flatten:', staff.reduce(reduceFlatten, []))
+// Alternatively you may use c.search(/^M/) > -1.
+// Also note that a++ doesn't work, since return will execute without adding 1.
+var reduceCountNamesStartingWithM = (a, c) => c[0] === 'M' ? ++a : a
+console.log('reduce count names starting with M:', staff.reduce(reduceCountNamesStartingWithM, 0))
+// Demonstrates another way to use reduce as well as the reduceRight() method,
+// which does the same thing but starts from the right.
+var reduceGroupByProperty = function (a, c) {
+  if (!a[c[0]]) {
+    a[c[0]] = []
   }
-  return [...a]
+  a[c[0]].push(c)
+  return a
 }
-console.log('reduce flatten:', maids.reduce(reduceFlatten))
+console.log('reduce group by property:', staff.reduceRight(reduceGroupByProperty, []))
