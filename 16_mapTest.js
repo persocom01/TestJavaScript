@@ -22,11 +22,14 @@ myMap.clear()
 
 // Weakmaps are another object-like object.
 // Weakmaps may only take objects as keys.
+// There is no way to list the keys in a WeakMap object
 var confidential = new WeakMap()
 function Maid () {
   const idealBHW = [ 90, 60, 90 ]
   confidential.set(this, idealBHW)
 }
-Maid.prototype.bhw = () => console.log(confidential.get(this))
-var kaho = new Maid()
-kaho.bhw()
+Maid.prototype.bhw = function () {
+  return confidential.get(this)
+}
+// Confidential is not exported with the module.
+module.exports = Maid

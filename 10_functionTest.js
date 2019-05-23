@@ -17,6 +17,7 @@ console.log('anon function:', fourSquare)
 console.log('arrow function:', eightSquareArrow)
 
 // Demonstrates a function expression with a named function.
+// You use a named function when you want to reference the function again.
 // Also demonstrates possing function expressions to a function.
 var factorial = function fac (n) { return n < 2 ? 1 : n * fac(n - 1) }
 var inputArray = [ 3, 5, 7 ]
@@ -64,7 +65,7 @@ console.log(greetHi('Aruru'))
 console.log(greetCurried('Hello there')('Eruru', 'Urutori'))
 console.log()
 
-// Multiple arguments can also be passed using ....
+// Multiple arguments can be passed as an array using ....
 function classList (classname, ...students) {
   var output = classname + '\n'
   for (var i in students) {
