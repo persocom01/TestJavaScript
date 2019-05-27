@@ -34,4 +34,5 @@ for (element of iter) {
 }
 console.log()
 
+// Demonstrates how to convert back to an array.
 console.log('convert to array:', Array.from(mySet))
