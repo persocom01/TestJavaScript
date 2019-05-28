@@ -1,14 +1,37 @@
 // Demonstrates use of an object in JS.
 
+// Objects are a reference type in JS. Thus two objects are never equal.
+var fruit = { name: 'apple' }
+var fruit2 = { name: 'apple' }
+console.log('comparison:', fruit === fruit2)
+fruit2 = fruit
+// They are now equal because their references are the same.
+console.log('comparison2:', fruit === fruit2)
+// However, changing the first object causes the second object to change.
+// This isn't true with normal variables.
+fruit.name = 'banana'
+console.log('both are changed:', fruit2.name)
+console.log()
+
 // Creating an object this way is known as using an object initializer.
 // An object may also be created using a contructor function, covered under prototypes.
 var cafe = {
-  getMenu: function () {
+  // Demonstrates a getter method. Getters always take no arguments.
+  // The only advantage seems to be calling this method uses cafe.getMenu
+  // instead of cafe.getMenu().
+  get getMenu () {
     // Demonstrates use of a template referencing an object property.
-    return `We have ${this.menu} on our menu, master`
+    return `We have ${this.menu} on our menu, master.`
   },
-  // An alternative to the above way to writing an object method.
-  takeOrder (order) {
+  // Demonstrates a get set pair, which use the same method name.
+  set gsName (name) {
+    this.name = name
+  },
+  get gsName () {
+    return this.name
+  },
+  // Alternatively written as takeOrder (order).
+  takeOrder: function (order) {
     // Note the reference to a property this.menu that doesn't yet exist.
     // this refers to the object itself, but this.form refers to the parent form.
     // Not relevant here but maybe elsewhere.
@@ -19,6 +42,32 @@ var cafe = {
     }
   }
 }
+// Deletes an object property.
+delete cafe.getMenu
+
+// Demonstrates how to set the above getMenu and gsNAme methods after the object
+// is defined instead of when it is defined.
+// If you comment out the whole section below it the section aboves should work
+// the exact same way.
+Object.defineProperties(cafe, {
+  // The syntax is fairly complicated in this case because we give the function
+  // the object property names as an object containing objects instead of a string.
+  // If we use a string as property name instead, the syntax would be written
+  // as Object.defineProperties(cafe, 'property name', objectWithSetGetMethods)
+  getMenu: {
+    get: function () {
+      return `We have ${this.menu} on our menu, master.`
+    }
+  },
+  gsName: {
+    set: function (name) {
+      this.name = name
+    },
+    get: function () {
+      return this.name
+    }
+  }
+})
 
 var menu = ['coffee', 'tea']
 var i = 0
@@ -32,7 +81,8 @@ var stile = Object.create(cafe, {
     // enumerable, writable, or configurable more easily this way.
     // Using Object.create() makes these properties false by default compared
     // to true by default using other methods.
-    enumerable: true
+    enumerable: true,
+    writable: true
   },
   menu: {
     // While totally unnecessary, demonstrates passing a variable as a property.
@@ -55,10 +105,13 @@ console.log('get own property:', Object.getOwnPropertyNames(stile))
 // Demonstrates usage of in operator to check keys.
 console.log('in:', 'maids' in stile)
 console.log('property:', stile.maids)
-// Alternative to .getMenu.
+// Alternative to .takeOrder().
 console.log('property sq:', stile['takeOrder']('cola'))
-// The normal way to call an object method instead of the above.
-console.log('method:', stile.getMenu())
+// The get method doesn't require ().
+console.log('get method:', stile.getMenu)
+// Set methods use = instead of .gsName(name).
+stile.gsName = 'Wagnaria'
+console.log('set method:', stile.gsName)
 // Demonstrates access of nested object in object.
 // Also demonstrates use of numerical keys, which can be accessed using obj[num].
 console.log('property num:', stile.maids[1])
