@@ -57,6 +57,9 @@ console.log('nested object property:', stile.employees[0].name)
 // Demonstrates how to create a 'subclass' of an object in JS.
 function BattleMaid (name, age, b, w, h) {
   // Copies all properties of Maid to BattleMaid.
+  // It is possible for an object to inherit the local properties of multiple
+  // objects by calling them this way. However, you may only inherit prototype
+  // properties of one object.
   // This is an alternative to writing:
   // this.base = Maid
   // this.base(this, name, age, b, w, h)
