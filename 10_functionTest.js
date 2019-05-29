@@ -1,8 +1,7 @@
 // Demonstrates functions.
 
 // Demonstrates a function expression with a simple anonymous function.
-// Unlike normal functions, function expressions work like variables in that
-// they are not hoisted to the top when code is run.
+// Unlike normal functions, function expressions are not hoisted when code is run.
 var square = function (number) { return number * number }
 // Demonstrates an arrow function expression equivalent of the above.
 // Arrow functions with only 1 argument do not require ().
@@ -18,7 +17,7 @@ console.log('arrow function:', eightSquareArrow)
 
 // Demonstrates a function expression with a named function.
 // You use a named function when you want to reference the function again.
-// Also demonstrates possing function expressions to a function.
+// Also demonstrates passing function expressions to a function.
 var factorial = function fac (n) { return n < 2 ? 1 : n * fac(n - 1) }
 var inputArray = [ 3, 5, 7 ]
 
@@ -40,8 +39,7 @@ console.log(inputArray.map(factorial))
 function greetCurried (greeting = 'Hi') {
   // In the case of a variable name conflict between inner and outer functions,
   // the inner function will take the value of the inner function variable.
-  // Not demonstrated here, but a conflict would arise if it were written as
-  // function nameCurried (greeting)
+  // This would occur if the function were written as nameCurried (greeting)
   function nameCurried () {
     // Inner functions may use variables from outer functions.
     // Demonstrates the special arguments object which allows accepting

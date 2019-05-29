@@ -2,7 +2,7 @@
 
 // Demonstrates use of a constructor function.
 function Maid (name, age, b, w, h) {
-  // Properties are assigned using this.propertyname.
+  // Properties are assigned using this.propertyName.
   this.name = name
   this.age = age
   this.b = b
@@ -19,6 +19,8 @@ function Maid (name, age, b, w, h) {
 
 // While you could make this an object property, using a prototype means this
 // function is not re created every time a new object of the class is made.
+// prototypes which use this.propertyName are unable to use arrow functions
+// as this.propertyName will return undefined.
 Maid.prototype.threeSizes = function () {
   var arr = [ this.b, this.w, this.h ]
   return arr.join(', ')
@@ -31,9 +33,9 @@ var mafuyu = new Maid('Mafuyu', 16, 32, 22, 34)
 console.log('in operator:', 'name' in Maid)
 // Demonstrates use of instanceof to test object class.
 console.log('instanceof:', kaho instanceof Maid)
-console.log(kaho.threeSizes())
+console.log('prototype function:', kaho.threeSizes())
 kaho.growup()
-console.log(kaho.age)
+console.log('arrow function method:', kaho.age)
 
 // Demonstrates passing objects to an object.
 function Cafe (name, ...employees) {
@@ -42,4 +44,16 @@ function Cafe (name, ...employees) {
 }
 var stile = new Cafe('stile', kaho, mafuyu)
 // Demonstrates how to reference an object in an object.
-console.log(stile.employees[0].name)
+console.log('nested object property:', stile.employees[0].name)
+
+// Demonstrates how to create a 'subclass' of an object in JS.
+function BattleMaid (name, age, b, w, h) {
+  Maid.call(this, name, age, b, w, h)
+  this.function = 'combat'
+}
+// You need this these two statements to copy the prototype properties of the
+// base object.
+BattleMaid.prototype = Object.create(Maid.prototype)
+BattleMaid.prototype.constructor = BattleMaid
+var narberal = new BattleMaid('Narberal', 90, 39, 26, 39)
+console.log('subclass:', narberal.threeSizes())

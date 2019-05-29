@@ -9,7 +9,8 @@ fruit2 = fruit
 console.log('comparison2:', fruit === fruit2)
 // However, changing the first object causes the second object to change.
 // This isn't true with normal variables.
-fruit.name = 'banana'
+// Deletes an object property.
+delete fruit.name
 console.log('both are changed:', fruit2.name)
 console.log()
 
@@ -42,18 +43,16 @@ var cafe = {
     }
   }
 }
-// Deletes an object property.
-delete cafe.getMenu
 
-// Demonstrates how to set the above getMenu and gsNAme methods after the object
+// Demonstrates how to set the above getMenu and gsName methods after the object
 // is defined instead of when it is defined.
-// If you comment out the whole section below it the section aboves should work
+// If you comment out the whole section below, the section aboves should work
 // the exact same way.
 Object.defineProperties(cafe, {
   // The syntax is fairly complicated in this case because we give the function
   // the object property names as an object containing objects instead of a string.
   // If we use a string as property name instead, the syntax would be written
-  // as Object.defineProperties(cafe, 'property name', objectWithSetGetMethods)
+  // as Object.defineProperties(cafe, 'propertyName', objectWithSetGetMethods).
   getMenu: {
     get: function () {
       return `We have ${this.menu} on our menu, master.`
