@@ -3,11 +3,13 @@
 // Demonstrates use of a constructor function.
 function Maid (name, age, b, w, h) {
   // Properties are assigned using this.propertyName.
-  this.name = name
-  this.age = age
-  this.b = b
-  this.w = w
-  this.h = h
+  // || '' is used to define a default value if none is passed during
+  // object construction.
+  this.name = name || ''
+  this.age = age || ''
+  this.b = b || ''
+  this.w = w || ''
+  this.h = h || ''
   // Demonstrates an arrow function expression.
   // This one is equvalent to:
   // function () { return this.age++ }
@@ -25,6 +27,9 @@ Maid.prototype.threeSizes = function () {
   var arr = [ this.b, this.w, this.h ]
   return arr.join(', ')
 }
+// This was written to demonstrate that local properties are given precedence
+// over prototype properties.
+Maid.prototype.name = 'name'
 
 var kaho = new Maid('Kaho', 16, 36, 24, 36)
 var mafuyu = new Maid('Mafuyu', 16, 32, 22, 34)
@@ -36,6 +41,9 @@ console.log('instanceof:', kaho instanceof Maid)
 console.log('prototype function:', kaho.threeSizes())
 kaho.growup()
 console.log('arrow function method:', kaho.age)
+// In JS you may add properties to an object at any time.
+kaho.crush = 'Akizuki'
+console.log('adding properties:', kaho.crush)
 
 // Demonstrates passing objects to an object.
 function Cafe (name, ...employees) {
@@ -48,6 +56,10 @@ console.log('nested object property:', stile.employees[0].name)
 
 // Demonstrates how to create a 'subclass' of an object in JS.
 function BattleMaid (name, age, b, w, h) {
+  // Copies all properties of Maid to BattleMaid.
+  // This is an alternative to writing:
+  // this.base = Maid
+  // this.base(this, name, age, b, w, h)
   Maid.call(this, name, age, b, w, h)
   this.function = 'combat'
 }
