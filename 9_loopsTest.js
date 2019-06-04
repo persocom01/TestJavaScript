@@ -19,9 +19,8 @@ function printAll (arr) {
   console.log('reverse:', arrReverse.join(''))
 }
 
-// Demonstrates continue.
-// In this case, continue causes the loop to continue without adding vowels
-// to the output.
+// Demonstrates continue, which restarts the loop.
+// In this case, continue causes the loop to restart after skipping vowels.
 function noVowels (arr) {
   var vowels = ['a', 'e', 'i', 'o', 'u']
   var arr2 = []
