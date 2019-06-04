@@ -50,6 +50,7 @@ function * wordIterator (word = '') {
   }
 }
 var sequence = wordIterator('cake')
+console.log('next demo:')
 // The first value passed to next is always ignored.
 // That's why the first statement doesn't work.
 console.log(sequence.next(3).value)
