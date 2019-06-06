@@ -13,7 +13,7 @@ function countToTen (number) {
   if (number > 10) {
     // You can throw strings, numbers, or even boolean.
     // You can also make use of a prebuilt error constructor by using:
-    // throw new Error('message')
+    // throw new Error('message') or throw Error('message').
     // The error constructor comes with two properties, Error.name and
     // Error.message.
     throw new CustomError(number + ' is out of scope.')

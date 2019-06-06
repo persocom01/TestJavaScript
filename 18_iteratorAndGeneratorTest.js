@@ -6,7 +6,7 @@
 function * rangeIterator (start = 0, end = 10, step = 1) {
   // Handles invalid input with an error.
   if (step <= 0) {
-    throw Error('Step cannot be smaller or equal to zero.')
+    throw new Error('Step cannot be smaller or equal to zero.')
   }
   for (var i = start; i < end; i += step) {
     // You may yield more than once in the same function.
@@ -52,7 +52,8 @@ function * wordIterator (word = '') {
 var sequence = wordIterator('cake')
 console.log('next demo:')
 // The first value passed to next is always ignored.
-// That's why the first statement doesn't work.
+// That's why the first statement doesn't work, and why this method of setting
+// initial value would be better done as a function argument.
 console.log(sequence.next(3).value)
 console.log(sequence.next(3).value)
 console.log(sequence.next(0).value)

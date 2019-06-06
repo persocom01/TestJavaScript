@@ -15,10 +15,11 @@ console.log('both are changed:', fruit2.name)
 console.log()
 
 // Creating an object this way is known as using an object initializer.
-// An object may also be created using a contructor function, covered under prototypes.
+// An object may also be created using a contructor function,
+// this is covered under prototypeTest.
 var cafe = {
-  // Demonstrates a getter method. Getters always take no arguments.
-  // The only advantage seems to be calling this method uses cafe.getMenu
+  // Demonstrates a getter method. Getters take no arguments.
+  // The advantage seems to be that calling this method uses cafe.getMenu
   // instead of cafe.getMenu().
   get getMenu () {
     // Demonstrates use of a template referencing an object property.
@@ -44,13 +45,14 @@ var cafe = {
   }
 }
 
-// Demonstrates how to set the above getMenu and gsName methods after the object
-// is defined instead of when it is defined.
+// Demonstrates how to set the above getMenu and gsName methods after the
+// object is defined instead of when it is defined.
 // If you comment out the whole section below, the section aboves should work
 // the exact same way.
 Object.defineProperties(cafe, {
   // The syntax is fairly complicated in this case because we give the function
-  // the object property names as an object containing objects instead of a string.
+  // the object property names as an object with nested objects instead of a
+  // string.
   // If we use a string as property name instead, the syntax would be written
   // as Object.defineProperties(cafe, 'propertyName', objectWithSetGetMethods).
   getMenu: {
@@ -97,11 +99,12 @@ var stile = Object.create(cafe, {
   }
 })
 
-// Lists all keys. Only properties with attribute enumerable: true will be displayed.
+// Lists all property names with attribute enumerable: true.
 console.log('keys:', Object.keys(stile))
-// Does the same thing, but if used on an array, also returns the length property.
+// Does the same thing, but doesn't require attribute enumerable: true.
+// If used on an array, also returns the length property.
 console.log('get own property:', Object.getOwnPropertyNames(stile))
-// Demonstrates usage of in operator to check keys.
+// Demonstrates usage of the in operator to check keys.
 console.log('in:', 'maids' in stile)
 console.log('property:', stile.maids)
 // Alternative to .takeOrder().
@@ -147,7 +150,7 @@ console.log()
 // Demonstrates turning object elements into individual variables.
 var { a, b } = target
 // Demonstrates renaming the individual elements.
-// Also demonstrate giving a default value to alpha, which in this case
+// Also demonstrates giving a default value to alpha, which in this case
 // has no effect.
 var { a: alpha = 0, b: beta } = mergedObj
 console.log('destructured object:', a, b)
