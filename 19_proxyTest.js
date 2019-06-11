@@ -11,7 +11,7 @@ var mafuyu = new Maid('Mafuyu', 'sadistic', [32, 22, 34])
 // target from users.
 function mafuyuProxy () {
   var target = mafuyu
-  // Demmonstrates the handler variable, which in this case alters the behaviour
+  // Demonstrates the handler variable, which in this case alters the behaviour
   // of getting and setting object properties.
   var handler = {
     get (target, key) {

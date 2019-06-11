@@ -16,9 +16,37 @@ var handler = {
       return false
     }
     return key in target
+  },
+  // Demonstrates the deleteProperty handler, which affects property.delete.
+  deleteProperty (target, key) {
+    console.log(`property ${key} is being deleted.`)
+    // Without this the key won't actually be deleted.
+    delete target[key]
+    return true
+  },
+  // Disables the addition of custom properties using Object.defineProperties().
+  defineProperty (target, key, descriptor) {
+    return false
+  },
+  // Prevents iterative loops from returning private keys by returning a
+  // custom iterator.
+  enumerate (target) {
+    return Object.keys(target).filter(key => key[0] !== '_')[Symbol.iterator]()
+  },
+  // Prevents Reflect.ownKeys() from returning private keys.
+  ownKeys (target) {
+    return Reflect.ownKeys(target).filter(key => key[0] !== '_')
   }
 }
 
 var prox = new Proxy(mafuyu, handler)
-console.log('name' in prox)
-console.log('_bhw' in prox)
+console.log('public prop:', 'name' in prox)
+console.log('hidden prop:', '_bhw' in prox)
+delete prox.name
+// Demonstrates the impact of the emumerate handler.
+var arr = []
+for (var key in prox) {
+  arr.push(key)
+}
+console.log('enumerate handler:', arr)
+console.log('reflect ownkeys:', Reflect.ownKeys(prox))

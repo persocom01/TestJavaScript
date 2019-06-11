@@ -104,6 +104,8 @@ console.log('keys:', Object.keys(stile))
 // Does the same thing, but doesn't require attribute enumerable: true.
 // If used on an array, also returns the length property.
 console.log('get own property:', Object.getOwnPropertyNames(stile))
+// Using reflect to do the same thing.
+console.log('reflect:', Reflect.ownKeys(stile))
 // Demonstrates usage of the in operator to check keys.
 console.log('in:', 'maids' in stile)
 console.log('property:', stile.maids)
