@@ -42,7 +42,7 @@ function keepPrivate (key) {
 }
 
 // In order to capture both keys as variables in the revocable proxy object we
-// use this syntax. It is covered in ojectTest.
+// use this syntax. It is covered in objectTest.
 var { proxy: prox, revoke } = mafuyuProxy()
 console.log('name:', prox.name)
 // Causes an error for wrong property.
