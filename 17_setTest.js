@@ -36,3 +36,14 @@ console.log()
 
 // Demonstrates how to convert back to an array.
 console.log('convert to array:', Array.from(mySet))
+console.log()
+
+// A WeakSet is not really a set but just a collection of objects.
+// A weakset always starts empty.
+var myWeakSet = new WeakSet()
+myWeakSet.add(arr)
+// You may add things to a weakset but you cannot look into it.
+console.log('weakset:', myWeakSet)
+// You may only verify objects that are in the set by looking for them using has.
+console.log('weakset has:', myWeakSet.has(arr))
+myWeakSet.delete(arr)

@@ -36,6 +36,11 @@ var handler = {
   // Prevents Reflect.ownKeys() from returning private keys.
   ownKeys (target) {
     return Reflect.ownKeys(target).filter(key => key[0] !== '_')
+  },
+  // Affects Object.getOwnPropertyDescriptor(). To make properties private you
+  // can return undefined or throw an error.
+  getOwnPropertyDescriptor (target, key) {
+    return Object.getOwnPropertyDescriptor(target, key)
   }
 }
 
@@ -50,3 +55,4 @@ for (var key in prox) {
 }
 console.log('enumerate handler:', arr)
 console.log('reflect ownkeys:', Reflect.ownKeys(prox))
+console.log('getOwnPropertyDescriptor:', Object.getOwnPropertyDescriptor(prox, '_bhw'))

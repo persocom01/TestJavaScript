@@ -4,7 +4,6 @@ var x
 
 // Increments have a before and after.
 // ++var only adds 1 to var after the statement is complete.
-// node.js doesn't have document.write() but instead this.
 console.log(++i)
 console.log(i--)
 
