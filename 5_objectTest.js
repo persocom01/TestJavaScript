@@ -32,6 +32,8 @@ var cafe = {
   get gsName () {
     return this.name
   },
+  // Demonstrates how to define a 'normal' object property.
+  industry: { value: 'service' },
   // Alternatively written as takeOrder (order).
   takeOrder: function (order) {
     // Note the reference to a property this.menu that doesn't yet exist.
@@ -50,11 +52,12 @@ var cafe = {
 // If you comment out the whole section below, the section aboves should work
 // the exact same way.
 Object.defineProperties(cafe, {
-  // The syntax is fairly complicated in this case because we give the function
-  // the object property names as an object with nested objects instead of a
-  // string.
-  // If we use a string as property name instead, the syntax would be written
-  // as Object.defineProperties(cafe, 'propertyName', objectWithSetGetMethods).
+  // The syntax is fairly complicated in this case because we are defining
+  // multiple object properties at the same time.
+  // If only one property needs to be defined, you may use:
+  // Object.defineProperty(cafe, 'propertyName', objectWithSetGetMethods)
+  // Object.defineProperty may run faster than Object.defineProperties,
+  // but the difference is minimal.
   getMenu: {
     get: function () {
       return `We have ${this.menu} on our menu, master.`

@@ -3,6 +3,8 @@ var maids = [ 'Maika', 'Kaho', [ 'Mafuyu', 'Miu' ] ]
 var guys = [ 'Dino', 'Koyo' ]
 
 // Note that using + doesn't achieve the same result.
+// If you want to add the second array to the first without creating a new
+// array, use array.push.apply(maids, guys) instead.
 var staff = maids.concat(guys)
 console.log('concat:', staff)
 // Combines array elements into a string.

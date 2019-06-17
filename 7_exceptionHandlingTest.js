@@ -26,9 +26,11 @@ function countToTen (number) {
   }
 }
 
+// Demonstrates try, catch and finally.
 function tryWrapper (num) {
   try {
     countToTen(num)
+  // catch catches errors, which in this case is defined as e.
   } catch (e) {
     // throw e is known as re-throwing the error, since catch statements are
     // meant to perform something in the case of an error.
