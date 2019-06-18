@@ -20,30 +20,31 @@ var args = ['Mafuyu', 'sadistic']
 // of a single array. Alternatively, use new Maid(...args).
 var mafuyu = Reflect.construct(Maid, args)
 console.log('construct:', mafuyu.name)
+// Alternative to Object.getOwnPropertyDescriptor() but returns a TypeError
+// if an object is not passed as the first argument.
+console.log('r-propertyDescriptor:', Reflect.getOwnPropertyDescriptor(mafuyu, 'name'))
 console.log()
 
 // Demonstrates the difference between the obejct and reflect version.
 console.log('o-defineProperty:', Object.defineProperty(mafuyu, 'role', { value: 'server' }))
 // Returns a boolean instead of the object.
-console.log('r-defineProperty:'Reflect.defineProperty(mafuyu, 'role', { value: 'server' }))
-console.log(mafuyu.role)
+console.log('r-defineProperty:', Reflect.defineProperty(mafuyu, 'role', { value: 'server' }))
+// Demonstrates how to use Reflect.set(object, propertyName, propertyValue)
+// In this case, it returns false if you try to set a property that already
+// exists.
+console.log('r-set:', Reflect.set(mafuyu, 'age', 16))
+// I'm not sure what the practical use of this is, but this is how to use it.
+console.log('r-get:', Reflect.get(mafuyu, 'role'))
+// An alternative to delete mafuyu.age.
+// Returns true even if the target did not exist to begin with.
+console.log('r-delete:', Reflect.deleteProperty(mafuyu, 'age'))
+console.log('r-ownKeys:', Reflect.ownKeys(mafuyu))
+console.log()
 
-// Reflect.deleteProperty()
-//
-// Reflect.get()
-//
-// Reflect.getOwnPropertyDescriptor()
-//
-// Reflect.getPrototypeOf()
-//
-// Reflect.has()
-//
-// Reflect.isExtensible()
-//
-// Reflect.ownKeys()
-//
-// Reflect.preventExtensions()
-//
-// Reflect.set()
-//
-// Reflect.setPrototypeOf()
+// Demonstrates how to use set and get prototype, which in this case isn't
+// meant to do anything.
+console.log('r-setProto:', Reflect.setPrototypeOf(mafuyu, Maid.prototype))
+console.log('r-getProto:', Reflect.getPrototypeOf(mafuyu))
+console.log('r-has:', Reflect.has(mafuyu, 'attrib'))
+console.log('r-preventExtensions:', Reflect.preventExtensions(mafuyu))
+console.log('r-isExtensible:', Reflect.isExtensible(mafuyu))
