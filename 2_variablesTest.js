@@ -33,7 +33,7 @@ if (true) {
 }
 
 if (typeof x === 'undefined') {
-  document.querySelector('#let').textContent = 'x is undefined.'
+  document.querySelector('#let').textContent = 'let x is a local variable.'
 } else {
   document.querySelector('#let').textContent = x
 }

@@ -1,7 +1,7 @@
 // Demonstrates exporting modules.
 // You may export variables and functions using the export keyword.
 // export must be top level and cannot be used inside stuff like functions.
-export var mod1 = 1
+export var mod1 = 'import module 1'
 
 function sayHi () {
   console.log('hi')
