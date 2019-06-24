@@ -4,11 +4,15 @@
 function sayHi () {
   console.log('hi')
 }
+var name = 'mod1'
 
-export var mod1 = 'import from module 1 sucessful.'
-// While you may export items indicidually, it is likely better to do your
+// You may export things that depend on things that are not exported.
+export var mod1 = `import from ${name} sucessful.`
+// While you may export items individually, it is likely better to do your
 // exporting at the end of the file as a kind of array.
-export { sayHi }
+// Using as allows you to rename the object being exported.
+export { sayHi as mod1Fun }
 
 // // node.js does not use the export keyword but instead a module.exports object.
-// module.exports = { sayHi }
+// // Demonstrates how to rename exports in node.js.
+// module.exports = { mod1Fun: sayHi }
