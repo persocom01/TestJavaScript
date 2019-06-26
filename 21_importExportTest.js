@@ -10,6 +10,8 @@ import { mod2Fun as myMod2Fun } from './myModule2.js'
 
 // Demonstrates a default import. Unlike named imports, no {} is needed.
 // You also have to name the default object immediately instead of using as.
+// Default imports are not recommended by some users as it is difficult to see
+// what the imported object contains.
 import myMod1 from './myModule1.js'
 
 document.querySelector('#import').textContent = mod1.mod1
