@@ -6,14 +6,22 @@ function Maid (name, age, b, w, h) {
   // || '' is used to define a default value if none is passed during
   // object construction.
   this.name = name || ''
+  // Demonstrates an ad hoc way to create get set pair in a constructor function.
+  // To create a 'real' get set pair, use Object.defineProperty() instead.
+  this.rename = {
+    set setName (newName) {
+      this.name = newName
+    },
+    get getName () {
+      return `My name is ${this.name}`
+    }
+  }
   this.age = age || ''
   this.b = b || ''
   this.w = w || ''
   this.h = h || ''
   // Demonstrates an arrow function expression.
-  // This one is equvalent to:
-  // function () { return this.age++ }
-  // Note that using {} means return must also be specified.
+  // This one is equivalent to: function () { return this.age++ }
   // Using an anonymous function means this.age refers to this.age in the
   // outer function.
   this.growup = () => this.age++
@@ -21,8 +29,8 @@ function Maid (name, age, b, w, h) {
 
 // While you could make this an object property, using a prototype means this
 // function is not re created every time a new object of the class is made.
-// prototypes which use this.propertyName are unable to use arrow functions
-// as this.propertyName will return undefined.
+// Prototypes are unable to use arrow functions as this.propertyName will
+// return undefined.
 Maid.prototype.threeSizes = function () {
   var arr = [ this.b, this.w, this.h ]
   return arr.join(', ')
@@ -44,6 +52,9 @@ console.log('arrow function method:', kaho.age)
 // In JS you may add properties to an object at any time.
 kaho.crush = 'Akizuki'
 console.log('adding properties:', kaho.crush)
+kaho.rename.setName = 'Kaho2'
+console.log(kaho.rename.getName)
+console.log()
 
 // Demonstrates passing objects to an object.
 function Cafe (name, ...employees) {

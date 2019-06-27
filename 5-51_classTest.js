@@ -4,6 +4,8 @@
 
 // Classes can be made in two ways, the first being class declarations.
 class Maid {
+  // All classses have a special mthod called constructor.
+  // It initializes the class object.
   constructor (name, attribute) {
     this.name = name
     this.attrib = attribute
@@ -21,6 +23,7 @@ var BM = class BattleMaid {
     this.position = position
   }
 }
-// Note that you create a class using the variable name instead of the class name.
+// Note that in this case you create a class using the variable name instead of
+// the class name.
 var narberal = new BM('Narberal', 3)
 console.log(narberal.name)
