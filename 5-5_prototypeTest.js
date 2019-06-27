@@ -7,13 +7,18 @@ function Maid (name, age, b, w, h) {
   // object construction.
   this.name = name || ''
   // Demonstrates an ad hoc way to create get set pair in a constructor function.
-  // To create a 'real' get set pair, use Object.defineProperty() instead.
+  // To create a 'real' get set pair, use:
+  // Object.defineProperty(this, propertyName, objectWithSetGetMethods)
+  // You may also use Object.defineProperty after the function is defined by
+  // replacing this with objectName.prototype instead.
+  // Defining the property inside th function makes it an instance method.
+  // Defining it outside makes it a class method.
   this.rename = {
     set setName (newName) {
       this.name = newName
     },
     get getName () {
-      return `My name is ${this.name}`
+      return `My name is ${this.name}, master.`
     }
   }
   this.age = age || ''
@@ -52,7 +57,6 @@ console.log('arrow function method:', kaho.age)
 // In JS you may add properties to an object at any time.
 kaho.crush = 'Akizuki'
 console.log('adding properties:', kaho.crush)
-kaho.rename.setName = 'Kaho2'
 console.log(kaho.rename.getName)
 console.log()
 

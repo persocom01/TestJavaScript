@@ -55,7 +55,7 @@ Object.defineProperties(cafe, {
   // The syntax is fairly complicated in this case because we are defining
   // multiple object properties at the same time.
   // If only one property needs to be defined, you may use:
-  // Object.defineProperty(cafe, 'propertyName', objectWithSetGetMethods)
+  // Object.defineProperty(cafe, propertyName, objectWithSetGetMethods)
   // Object.defineProperty may run faster than Object.defineProperties,
   // but the difference is minimal.
   getMenu: {
