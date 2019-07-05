@@ -10,9 +10,23 @@ class Maid {
     this.name = name
     this.attrib = attribute
   }
+  // Demonstrates a get set pair inside a class.
+  set gsName (newName) {
+    this.name = newName
+  }
+  get gsName () {
+    return `My name is ${this.name}, master.`
+  }
+  // Demonstrates a normal method.
+  title (name) {
+    var firstCaps = this.attrib.charAt(0).toUpperCase() + this.attrib.slice(1)
+    return `I am ${firstCaps} maid ${this.name}, master ${name}.`
+  }
 }
 var mafuyu = new Maid('Mafuyu', 'sadistic')
-console.log(mafuyu.name)
+console.log(mafuyu.gsName)
+// Normal methods require () unlike get methods.
+console.log(mafuyu.title('Dino'))
 
 // Alternatively, use a class expression.
 // You can leave out the class name, but then I don't see why you won't just
