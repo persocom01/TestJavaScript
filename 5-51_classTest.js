@@ -1,6 +1,7 @@
 // Classes are special functions in JS.
 // Unlike functions, classes are not hoisted. They need to be declared
 // before use.
+var menu = ['coffee', 'tea']
 
 // Classes can be made in two ways, the first being class declarations.
 class Maid {
@@ -22,11 +23,17 @@ class Maid {
     var firstCaps = this.attrib.charAt(0).toUpperCase() + this.attrib.slice(1)
     return `I am ${firstCaps} maid ${this.name}, master ${name}.`
   }
+  // A static method is one that is called using the base class instead of the
+  // class instance. In fact, calling it inside a class instance causes an error.
+  static lookAtMenu () {
+    return `They have ${menu} on their menu.`
+  }
 }
 var mafuyu = new Maid('Mafuyu', 'sadistic')
 console.log(mafuyu.gsName)
 // Normal methods require () unlike get methods.
 console.log(mafuyu.title('Dino'))
+console.log(Maid.lookAtMenu())
 
 // Alternatively, use a class expression.
 // You can leave out the class name, but then I don't see why you won't just
