@@ -15,7 +15,7 @@ console.log('both are changed:', fruit2.name)
 console.log()
 
 // Creating an object this way is known as using an object initializer.
-// An object may also be created using a contructor function,
+// An object may also be created using a constructor function,
 // this is covered under prototypeTest.
 var cafe = {
   // Demonstrates a getter method. Getters take no arguments.
