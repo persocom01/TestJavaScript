@@ -42,6 +42,7 @@ console.log(mafuyu.gsName)
 console.log(mafuyu.title('Dino'))
 console.log(Maid.lookAtMenu())
 console.log(mafuyu.greet())
+console.log()
 
 // Alternatively, use a class expression.
 // You can leave out the class name, but then I don't see why you won't just
@@ -55,6 +56,10 @@ var BM = class BattleMaid extends Maid {
     super(name, 'battle')
     this.position = position
   }
+  // You may call methods of the base class using super.
+  title (name) {
+    return super.title(name) + '\n' + 'I am ready for Battle.'
+  }
 }
 // Note that in this case you create a class using the variable name instead of
 // the class name.
@@ -62,3 +67,4 @@ var narberal = new BM('Narberal', 3)
 // Unlike normal objects, protoype properties of the subclass are automatically
 // inherited.
 console.log(narberal.greet())
+console.log(narberal.title('Ains'))
