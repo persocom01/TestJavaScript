@@ -39,4 +39,4 @@ if (typeof x === 'undefined') {
 }
 
 // Variables can also be defined as function using function expressions.
-// This is covered under the funtions chapter.
+// This is covered under the functions chapter.

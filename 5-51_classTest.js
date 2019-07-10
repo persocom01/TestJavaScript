@@ -44,14 +44,27 @@ console.log(Maid.lookAtMenu())
 console.log(mafuyu.greet())
 console.log()
 
-// Alternatively, use a class expression.
+// Demonstrates a mixin.
+// Mixins can be said to be class parts meant to be used with other classes.
+// Although they do not have a superclass, you can have mixins inherit from
+// other mixins using:
+// var mixin2 = base => class extends mixin1(base) {}
+var magicMixin = base => class extends base {
+  twinDragonLightning (target) {
+    return `Casting 7th tier magic twin dragon lightning at ${target}.`
+  }
+}
+
+// Demonstrates the 2nd way to create a class, a class expression.
 // You can leave out the class name, but then I don't see why you won't just
 // use a class declaration instead.
-// Extends makes the new class, BattleMaid, a subclass of Maid.
-// You may also extend function objects but not objects created with the object
-// initializer. To inherit from objects created with the object initializer,
-// use Object.setPrototypeOf(subclass.prototype, baseObject).
-var BM = class BattleMaid extends Maid {
+// Also demonstrates the use of a mixin.
+// To use multiple mixins, use mixin1(mixin2(baseClass)).
+// Extends is used to make BattleMaid a subclass of Maid.
+// You may also extend function objects.
+// However, to inherit from objects created with the object initializer, use:
+// Object.setPrototypeOf(subclass.prototype, baseObject).
+var BM = class BattleMaid extends magicMixin(Maid) {
   constructor (name, position) {
     super(name, 'battle')
     this.position = position
@@ -68,3 +81,4 @@ var narberal = new BM('Narberal', 3)
 // inherited.
 console.log(narberal.greet())
 console.log(narberal.title('Ains'))
+console.log(narberal.twinDragonLightning('Skeletal Dragon'))
