@@ -80,5 +80,7 @@ var narberal = new BM('Narberal', 3)
 // Unlike normal objects, protoype properties of the subclass are automatically
 // inherited.
 console.log(narberal.greet())
+// Subclass methods overwrite baseclass methods.
 console.log(narberal.title('Ains'))
+// Mixin method.
 console.log(narberal.twinDragonLightning('Skeletal Dragon'))

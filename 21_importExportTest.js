@@ -6,7 +6,7 @@ import * as mod1 from './modules/mod1.js'
 
 // You are generally recommended to rename the objects on import instead
 // of when they are exported.
-import { mod2Fun as myMod2Fun } from './myModule2.js'
+import { Mod2Class as MyMod2Class } from './myModule2.js'
 
 // Demonstrates a default import. Unlike named imports, no {} is needed.
 // You also have to name the default object immediately instead of using as.
@@ -15,7 +15,10 @@ import { mod2Fun as myMod2Fun } from './myModule2.js'
 import myMod1 from './myModule1.js'
 
 document.querySelector('#import').textContent = mod1.mod1
-myMod2Fun()
+// When importing a class, you still need to assign it to a variable to use
+// its methods.
+var m2c = new MyMod2Class()
+m2c.mod2Fun()
 document.querySelector('#default1').textContent = myMod1.default1
 document.querySelector('#default2').textContent = myMod1.default2
 
