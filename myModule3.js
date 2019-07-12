@@ -1,13 +1,13 @@
 // Demonstrates exporting a class.
-var text = 'mod2 class function functional.'
+var text = 'mod3 class function functional.'
 
 // An alternative to exporting default is exporting a class containing
 // everything in one package.
-class Mod2Class {
+class Mod3Class {
   // Exported functions can use non exported variables.
   mod2Fun () {
-    document.querySelector('#modObject').textContent = text
+    document.querySelector('#modObject2').textContent = text
   }
 }
 
-export { Mod2Class }
+export { Mod3Class }

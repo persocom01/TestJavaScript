@@ -4,9 +4,10 @@
 // python.
 import * as mod1 from './modules/mod1.js'
 
+// Demonstrates renaming of imports and importing from a module aggregator.
 // You are generally recommended to rename the objects on import instead
 // of when they are exported.
-import { Mod2Class as MyMod2Class } from './myModule2.js'
+import { Mod2Class as MyMod2Class, Mod3Class } from './myModuleAggregator.js'
 
 // Demonstrates a default import. Unlike named imports, no {} is needed.
 // You also have to name the default object immediately instead of using as.
