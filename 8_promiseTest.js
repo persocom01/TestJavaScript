@@ -1,4 +1,6 @@
 // Demonstrates use of promises.
+// Promises are objects that execute upon the completion or failure to
+// complete of an operation.
 
 // Doesn't work atm, will return to this in future.
 import XMLHttpRequest;

@@ -13,6 +13,7 @@ var $text
 document.querySelector('#NaN').textContent = $text + 1
 
 // document.querySelector('selector') takes in CSS Selectors as argument.
+// For a full list go to https://www.w3schools.com/cssref/css_selectors.asp
 // In this case #name selects the first element with id="name".
 $text = document.querySelector('#text')
 $text.textContent = 'It\'s a test'

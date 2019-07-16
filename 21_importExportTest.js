@@ -20,6 +20,8 @@ document.querySelector('#import').textContent = mod1.mod1
 // its methods.
 var m2c = new MyMod2Class()
 m2c.mod2Fun()
+var m3c = new Mod3Class()
+m3c.mod3Fun()
 document.querySelector('#default1').textContent = myMod1.default1
 document.querySelector('#default2').textContent = myMod1.default2
 
