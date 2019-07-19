@@ -4,12 +4,12 @@
 // python.
 import * as mod1 from './modules/mod1.js'
 
-// Demonstrates the default import 'style' in JS. The imports are put inside
-// {} and you may optionally rename them with as. You may also import multiple
-// things by seperating them with a ,.
+// Demonstrates the 'normal' import in JS. The imports are put inside {} and
+// you may optionally rename them with as. You may also have multiple imports
+// by separating them with a ,.
 // You are generally recommended to rename the objects on import instead
 // of when they are exported.
-import { Mod2Class as MyMod2Class, Mod3Class } from './myModuleAggregator.js'
+import { Mod2Class as MyMod2Class } from './myModuleAggregator.js'
 
 // Demonstrates a default import. Unlike named imports, no {} is needed.
 // You also have to name the module object immediately instead of optionally.
@@ -25,9 +25,13 @@ var squareBtn = document.querySelector('#button1')
 // event is detected via capturing (true) or bubbling (false).
 // Bubbling is default, and it means the events of child elements take priority
 // over their parents.
-var m3c = new Mod3Class()
+// var m3c = new Mod3Class()
 squareBtn.addEventListener('click', () => {
-  m3c.mod3Fun()
+  import('./myModule3.js').then(Module => {
+    let m3c = new Module.Mod3Class()
+    m3c.mod3Fun()
+  })
+  // m3c.mod3Fun()
 })
 
 document.querySelector('#import').textContent = mod1.mod1
