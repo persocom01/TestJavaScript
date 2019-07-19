@@ -9,25 +9,29 @@
         the best strategy as JS may need HTML elements to be loaded first -->
     </head>
     <body>
-        <!-- Demonstrates two different ways to insert JS. Internal and external. -->
         <h1>Title</h1>
-        <div id="NaN"></div>
-        <div id="text"></div>
-        <div id="boolean"></div>
-        <div id="let"></div>
-        <div id="import"></div>
-        <div id="default1"></div>
-        <div id="default2"></div>
-        <div id="modObject"></div>
-        <button type="button" onclick="alert('Hello world!')">Click me!</button>
+        <!-- At it's most basic, giving an element a unique id makes selecting
+        it easy. Class makes selecting a group of similar elements easy. -->
+        <div id="NaN" class="divText"></div>
+        <div id="text" class="divText"></div>
+        <div id="boolean" class="divText"></div>
+        <div id="let" class="divText"></div>
+        <div id="import" class="divText"></div>
+        <div id="default1" class="divText"></div>
+        <div id="default2" class="divText"></div>
+        <div id="modObject" class="divText"></div>
+        <!-- button type has 3 possible values, 'button' for clicking,
+        'submit' for forms, and 'reset' for reseting form data. -->
+        <button id="button1" type="button" onclick="">Change color!</button>
+        <!-- Demonstrates two different ways to insert JS. Internal and external. -->
         <script type="text/javascript">
             var testTitle = document.querySelector('h1');
             testTitle.textContent = 'hello world';
         </script>
-        <script src='2_variablesTest.js'></script>
+        <script src="2_variablesTest.js"></script>
         <!-- type='module' is required if you want to use imported js modules.
         you also need to open file on a server instead of opening it as a file
         in a browser for it to work. -->
-        <script type='module' src='21_importExportTest.js'></script>
+        <script type="module" src="21_importExportTest.js"></script>
     </body>
 </html>
