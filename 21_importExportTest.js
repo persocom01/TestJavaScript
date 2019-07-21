@@ -25,13 +25,16 @@ var squareBtn = document.querySelector('#button1')
 // event is detected via capturing (true) or bubbling (false).
 // Bubbling is default, and it means the events of child elements take priority
 // over their parents.
-// var m3c = new Mod3Class()
 squareBtn.addEventListener('click', () => {
+  // Demonstrates a conditional import. In this case the module is imported
+  // on the condition of the event (a click) being executed.
+  // The import function always returns a module object, and any references
+  // to what is imported have to be done through that object.
   import('./myModule3.js').then(Module => {
+    // This line is necessary because the import is a class object.
     let m3c = new Module.Mod3Class()
     m3c.mod3Fun()
   })
-  // m3c.mod3Fun()
 })
 
 document.querySelector('#import').textContent = mod1.mod1
