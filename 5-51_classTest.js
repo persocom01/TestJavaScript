@@ -10,6 +10,7 @@ class Maid {
   constructor (name, attribute) {
     this.name = name
     this.attrib = attribute
+  // Unlike with normal objects, a , isn't needed between methods.
   }
   // Demonstrates a get set pair inside a class.
   set gsName (newName) {

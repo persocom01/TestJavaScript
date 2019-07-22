@@ -30,10 +30,16 @@ squareBtn.addEventListener('click', () => {
   // on the condition of the event (a click) being executed.
   // The import function always returns a module object, and any references
   // to what is imported have to be done through that object.
-  import('./myModule3.js').then(Module => {
+  import('./myModuleAggregator.js').then(Module => {
     // This line is necessary because the import is a class object.
     let m3c = new Module.Mod3Class()
-    m3c.mod3Fun()
+    if (squareBtn.innerHTML == 'Change color!') {
+      m3c.changeColor()
+      squareBtn.innerHTML = 'Change back!'
+    } else {
+      m3c.changeBack()
+      squareBtn.innerHTML = 'Change color!'
+    }
   })
 })
 
