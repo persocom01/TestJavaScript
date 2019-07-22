@@ -33,6 +33,7 @@ squareBtn.addEventListener('click', () => {
   import('./myModuleAggregator.js').then(Module => {
     // This line is necessary because the import is a class object.
     let m3c = new Module.Mod3Class()
+    // The innerHTML property determines the text on a button.
     if (squareBtn.innerHTML == 'Change color!') {
       m3c.changeColor()
       squareBtn.innerHTML = 'Change back!'
