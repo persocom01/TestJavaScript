@@ -1,5 +1,12 @@
 // Demonstrates importing modules from the module folder.
 
+// JS and node.js uses different syntax for imports, and while codes was
+// written to be compatible with both as much as possible, it is not possible
+// to write code for this topic that is compatible with both here.
+// As such, priority is given to JS over node.js, and in order to see the
+// results of this code, it needs to be loaded onto a server and
+// 1_test.webpage.html opened on a web browser.
+
 // Importing * imports everything, and as creates a module object, similar to
 // python.
 import * as mod1 from './modules/mod1.js'
@@ -12,7 +19,7 @@ import * as mod1 from './modules/mod1.js'
 import { Mod2Class as MyMod2Class } from './myModuleAggregator.js'
 
 // Demonstrates a default import. Unlike named imports, no {} is needed.
-// You also have to name the module object immediately instead of optionally.
+// You have to name the module object immediately instead of optionally.
 // Default imports are not recommended by some users as it is difficult to see
 // what the imported object contains.
 import myMod1 from './myModule1.js'
@@ -24,7 +31,7 @@ var squareBtn = document.querySelector('#button1')
 // to be executed when the event occurs, and a boolean value as to whether the
 // event is detected via capturing (true) or bubbling (false).
 // Bubbling is default, and it means the events of child elements take priority
-// over their parents.
+// over their parents. Capturing, or trickling, does the opposite.
 squareBtn.addEventListener('click', () => {
   // Demonstrates a conditional import. In this case the module is imported
   // on the condition of the event (a click) being executed.
@@ -45,8 +52,6 @@ squareBtn.addEventListener('click', () => {
 })
 
 document.querySelector('#import').textContent = mod1.mod1
-// When importing a class, you still need to assign it to a variable to use
-// its methods.
 var m2c = new MyMod2Class()
 m2c.mod2Fun()
 document.querySelector('#default1').textContent = myMod1.default1

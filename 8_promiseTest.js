@@ -3,9 +3,12 @@
 // complete of an operation.
 
 // Doesn't work atm, will return to this in future.
-import XMLHttpRequest;
+import XMLHttpRequest
 
 function imgLoad (url) {
+  // The promise constructor takes in a single argument; a callback with
+  // two function as arguments; resolve for if the operation worked, reject if
+  // it did not.
   return new Promise(function (resolve, reject) {
     var request = new XMLHttpRequest()
     request.open('GET', url)
