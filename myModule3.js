@@ -18,7 +18,7 @@ class Mod3Class {
     for (var i = 0; i < selection.length; i++) {
       // Colors may also be defined using 140 standard names. The names are
       // case insensitive.
-      selection[i].style.color = 'black'
+      selection[i].style.color = 'white'
       // The initial keyword can be used on any property to change its values
       // back to what they originally were.
       selection[i].style.fontWeight = 'initial'

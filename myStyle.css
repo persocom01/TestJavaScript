@@ -1,5 +1,17 @@
 /* Demonstrates use of custom css. */
 
+/* * affects all elments. */
+/* With :not you can specify an element this css does not apply to. */
+/* Other pseudo classes can be found here:
+https://www.w3.org/TR/selectors-3/ */
+*:not(button) {
+  color:white;
+}
+
+body {
+  background-color:black;
+}
+
 /* .resize applies this css to all img with class resize. */
 img.resize {
   max-width:20%;
