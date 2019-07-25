@@ -9,3 +9,4 @@
 // a single object makes the syntax when exporting and importing easier.
 export { Mod2Class } from './myModule2.js'
 export { Mod3Class } from './myModule3.js'
+export { PromiseClass } from './8_promiseTest.js'

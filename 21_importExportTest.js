@@ -16,7 +16,7 @@ import * as mod1 from './modules/mod1.js'
 // by separating them with a ,.
 // You are generally recommended to rename the objects on import instead
 // of when they are exported.
-import { Mod2Class as MyMod2Class } from './myModuleAggregator.js'
+import { Mod2Class as MyMod2Class, PromiseClass } from './myModuleAggregator.js'
 
 // Demonstrates a default import. Unlike named imports, no {} is needed.
 // You have to name the module object immediately instead of optionally.

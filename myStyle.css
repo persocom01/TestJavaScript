@@ -1,0 +1,7 @@
+/* Demonstrates use of custom css. */
+
+/* .resize applies this css to all img with class resize. */
+img.resize {
+  max-width:20%;
+  max-height:20%;
+}
