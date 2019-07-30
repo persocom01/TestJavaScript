@@ -34,7 +34,7 @@
         <div id="divImg1" class="divImg">
           <!-- It is possible to have multiple classes. -->
           <img id="img1" class="align resize" src="./images/Mika desk.jpg" />
-          <button id="button2" type="button" onclick="downloadImage()">download</button>
+          <button id="button2" type="button" onclick="dlImageButton()">download</button>
         </div>
         <!-- Demonstrates two different ways to insert JS. Internal and external. -->
         <!-- Type indicates the type of script. The default is
@@ -44,9 +44,12 @@
             testTitle.textContent = 'JavaScript test page';
         </script>
         <script src="2_variablesTest.js"></script>
-        <!-- type='module' is required if you want to use imported js modules.
+        <script src="8_promiseTest.js"></script>
+        <!-- type="module" is required if you want to use imported js modules.
         you also need to open file on a server instead of opening it as a file
-        in a browser for it to work. -->
+        in a browser for it to work. Unlike typical scripts, functions in
+        type="module" have to be called immediately and cannot be called
+        in the html document. -->
         <script type="module" src="21_importExportTest.js"></script>
     </body>
 </html>

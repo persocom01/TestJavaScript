@@ -16,7 +16,7 @@ import * as mod1 from './modules/mod1.js'
 // by separating them with a ,.
 // You are generally recommended to rename the objects on import instead
 // of when they are exported.
-import { Mod2Class as MyMod2Class, PromiseClass } from './myModuleAggregator.js'
+import { Mod2Class as MyMod2Class } from './myModuleAggregator.js'
 
 // Demonstrates a default import. Unlike named imports, no {} is needed.
 // You have to name the module object immediately instead of optionally.
@@ -56,18 +56,6 @@ squareBtn.addEventListener('click', () => {
     }
   })
 })
-
-let pc = new PromiseClass()
-function downloadImage() {
-  var squareBtn2 = document.querySelector('#button2')
-  squareBtn2.innerHTML = 'Change color!'
-  // let a = document.createElement('a')
-  // document.body.appendChild(a)
-  // a.style = 'display:none'
-  // a.href = pc.url
-  // a.download = 'image'
-  // a.click()
-}
 
 // var squareBtn2 = document.querySelector('#button2')
 // squareBtn2.addEventListener('click', () => {
