@@ -34,11 +34,14 @@
         <div id="divImg1" class="divImg">
           <!-- It is possible to have multiple classes. -->
           <img id="img1" class="align resize" src="./images/Mika desk.jpg" />
+          <button id="button2" type="button" onclick="downloadImage()">download</button>
         </div>
         <!-- Demonstrates two different ways to insert JS. Internal and external. -->
-        <script type="text/javascript">
+        <!-- Type indicates the type of script. The default is
+        application/javascript. -->
+        <script type="application/javascript">
             var testTitle = document.querySelector('h1');
-            testTitle.textContent = 'hello world';
+            testTitle.textContent = 'JavaScript test page';
         </script>
         <script src="2_variablesTest.js"></script>
         <!-- type='module' is required if you want to use imported js modules.

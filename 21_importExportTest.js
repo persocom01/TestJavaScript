@@ -24,6 +24,12 @@ import { Mod2Class as MyMod2Class, PromiseClass } from './myModuleAggregator.js'
 // what the imported object contains.
 import myMod1 from './myModule1.js'
 
+document.querySelector('#import').textContent = mod1.mod1
+var m2c = new MyMod2Class()
+m2c.mod2Fun()
+document.querySelector('#default1').textContent = myMod1.default1
+document.querySelector('#default2').textContent = myMod1.default2
+
 var squareBtn = document.querySelector('#button1')
 // A full list of possible events can be found at:
 // https://www.w3schools.com/jsref/dom_obj_event.asp
@@ -51,11 +57,24 @@ squareBtn.addEventListener('click', () => {
   })
 })
 
-document.querySelector('#import').textContent = mod1.mod1
-var m2c = new MyMod2Class()
-m2c.mod2Fun()
-document.querySelector('#default1').textContent = myMod1.default1
-document.querySelector('#default2').textContent = myMod1.default2
+let pc = new PromiseClass()
+function downloadImage() {
+  var squareBtn2 = document.querySelector('#button2')
+  squareBtn2.innerHTML = 'Change color!'
+  // let a = document.createElement('a')
+  // document.body.appendChild(a)
+  // a.style = 'display:none'
+  // a.href = pc.url
+  // a.download = 'image'
+  // a.click()
+}
+
+// var squareBtn2 = document.querySelector('#button2')
+// squareBtn2.addEventListener('click', () => {
+//   let pc = new PromiseClass()
+//
+//   // pc.getImage(pc.url + '?dl=1')
+// })
 
 // // node.js uses require instead of import.
 // // You may also skip the file extension.

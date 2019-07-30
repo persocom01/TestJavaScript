@@ -4,16 +4,22 @@
 
 class PromiseClass {
   constructor () {
-    this.url = './images/Mika%20sit.png'
+    // Gets url of image.
+    this.url = document.querySelector('#img1').src
   }
   getImage (url) {
     // The promise constructor takes in a single argument; a callback with
     // two function as arguments; resolve for if the operation worked, reject if
     // it did not.
     return new Promise(function (resolve, reject) {
+      // It seems one of the most common use of promises is to download
+      // stuff with XMLHttpRequest.
+      // XMLHttpRequest's main advantage is the ability to update part of
+      // a webpage without reloading it. It is critical in AJAX programming.
       var request = new XMLHttpRequest()
       request.open('GET', url)
       // In the case of an image, set responseType to blob for binary data.
+      // Other types include document for html or xml and json for json.
       request.responseType = 'blob'
       request.onload = function () {
         if (request.status === 200) {

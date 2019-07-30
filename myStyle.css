@@ -13,6 +13,7 @@ body {
   text-align:center;
 }
 
+/* Aligns images to the center. */
 img.align {
   display:block;
   margin-left:auto;
