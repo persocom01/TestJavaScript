@@ -4,6 +4,10 @@
 
 // Gets url of image.
 var url = document.querySelector('#img1').src
+// Extracts filename from url.
+var fileName
+fileName = url.replace(/%20/, ' ')
+fileName = fileName.match(/\/([\w ]+)\.?\w*$/)[1]
 
 function get (url, response = 'blob') {
   // It seems one of the most common use of promises is to download
@@ -22,6 +26,7 @@ function get (url, response = 'blob') {
     request.onload = function () {
       if (request.status === 200) {
         // The promise returns anything inside the resolve function.
+        // It may only returna a single value or object.
         resolve(request.response)
       } else {
         reject(alert('Load unsuccessful, error code:' + request.statusText))
@@ -34,10 +39,10 @@ function get (url, response = 'blob') {
   })
 }
 
-function saveBlob (blob) {
+function saveBlob (blob, fileName) {
   let a = document.createElement('a')
   a.href = window.URL.createObjectURL(blob)
-  a.download = 'image'
+  a.download = fileName
   a.click()
 }
 
@@ -49,5 +54,5 @@ function dlImageButton () {
   // To perform an action if the promise is not resolved, use .catch instead.
   // In a promise chain, a single .catch at the end will execute no matter
   // where in the chain the promise failed.
-  get(url).then(blob => saveBlob(blob))
+  get(url).then(blob => saveBlob(blob, fileName))
 }
