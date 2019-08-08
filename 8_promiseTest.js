@@ -46,6 +46,9 @@ function saveBlob (blob, fileName) {
   a.click()
 }
 
+// Makes a button download a file on click.
+// Typically, it is better to make a link look like button rather than a button
+// work like a link, as JS can be disabled.
 function dlImageButton () {
   // To use a promise object, one must attach .then(value => doSomething(value))
   // to it. You may choose not to use an arrow function, but either way you
