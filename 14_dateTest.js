@@ -7,12 +7,14 @@ var currentDate = new Date()
 console.log(currentDateStr)
 console.log(currentDate)
 // Demonstrates how to format a date object into a customized string.
-var options = { year: '2-digit',
+var options = {
+  year: '2-digit',
   month: '2-digit',
   day: '2-digit',
   hour: '2-digit',
   minute: '2-digit',
-  timeZoneName: 'short' }
+  timeZoneName: 'short'
+}
 var localDate = new Intl.DateTimeFormat('en-US', options).format(currentDate)
 console.log('en-US date format:', localDate)
 console.log()
