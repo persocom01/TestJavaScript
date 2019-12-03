@@ -47,10 +47,9 @@ console.log()
 // Explaination various re below:
 // ^regex$ ^ and $ used this way are called anchors. They represent the start
 // and end of a string. \b can be used instead for start of a word.
-// (?!<) is called negative lookbehind. It looks behind the text in the backets
-// to ensure it is not in front of the text behind it.
-// Replacing ! with = makes it positive. (?=<) is positive lookbehind.
-// (?=) is lookahead.
+// (?!<) is called negative lookbehind. It looks behind itself to ensure it is
+// not in front of the text behind it. Replacing ! with = makes it positive.
+// (?=<) is positive lookbehind. (?=) is lookahead.
 // ? = 0-1. + = 1+. * = 0+.
 // \b means word boundary. Other common ones are \d number, \s whitespace, \w word.
 // A capital \B means the opposite of \b.
