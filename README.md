@@ -8,8 +8,8 @@ Workable code is written on each topic to demonstrate use of JavaScript in the t
 
 Javascript can be run on any modern browser. However, some of the code requires the html file to be opened on a server. For that purpose, WinNMP was used to create a local virtual server, and the necessary files put inside the server's project files. Since atom used to run scripts, installing node.js is also necessary.
 
-* [https://winnmp.wtriple.com/] - WinNMP 19.06
-* [https://nodejs.org/en/] - node.js 10.16.0
+* [WinNMP 19.06](https://winnmp.wtriple.com/)
+* [node.js 10.16.0](https://nodejs.org/en/)
 
 ### Atom packages used:
 
