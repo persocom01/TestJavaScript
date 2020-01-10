@@ -6,11 +6,11 @@ Workable code is written on each topic to demonstrate use of JavaScript in the t
 
 ## Installation
 
-This project was written in the atom text editor. Javascript can be run on any modern browser. However, some of the code requires the html file to be opened on a server. For that purpose, WinNMP was used to create a local virtual server, and the necessary files put inside the server's project files. Since atom used to run scripts, installing node.js is also necessary.
+Javascript can be run on any modern browser. However, some of the code requires the html file to be opened on a server. For that purpose, WinNMP was used to create a local virtual server, and the necessary files put inside the server's project files. Atom was used as text editor. node.js has to be installed to enable atom to run scripts.
 
-* [atom_1.40.1](https://atom.io/)
 * [WinNMP 19.06](https://winnmp.wtriple.com/)
 * [node.js 10.16.0](https://nodejs.org/en/)
+* [atom_1.40.1](https://atom.io/)
 
 ### Atom packages used:
 
