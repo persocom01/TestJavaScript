@@ -10,7 +10,7 @@ Javascript can be run on any modern browser. However, some of the code requires 
 
 * [WinNMP 19.06](https://winnmp.wtriple.com/)
 * [node.js 10.16.0](https://nodejs.org/en/)
-* [atom_1.40.1](https://atom.io/)
+* [atom 1.40.1](https://atom.io/)
 
 ### Atom packages used:
 
