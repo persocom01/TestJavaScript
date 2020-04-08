@@ -26,8 +26,8 @@ var chkBoo = (typeof boo !== 'boolean') ? 'variable boo is not a boolean' : boo
 // Demonstrates skipping the var = document.querySelector().
 document.querySelector('#boolean').textContent = chkBoo
 
-// Demonstrates the let variable, which only works in the {} block.
-// The last variable, const is the same as let but read only.
+// The let variable only works in {} blocks.
+// The const variable is the same as let but read only.
 // const object properties and array contents are however, not protected.
 if (true) {
   let x = 5
