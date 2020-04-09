@@ -2,8 +2,10 @@
 /* Multiline comments
 are written this way. */
 
-// variable names can start with $
-var $text, text;
+// Variable names can start with $, and multiple variables can be defined at
+// the same time. ; is necessary if code is written on same line, but for
+// readability purposes it's better not to write code on the same line.
+var $text, text; text = ''
 // Variables with no value === undefined.
 // However, if you use them in math they return NaN (not a  number).
 // NaN is a special object property that isn't === 'NaN'.
