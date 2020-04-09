@@ -35,7 +35,7 @@ function Maid (name, age, b, w, h) {
 // Prototypes are unable to use arrow functions as this.propertyName will
 // return undefined.
 Maid.prototype.threeSizes = function () {
-  var arr = [ this.b, this.w, this.h ]
+  var arr = [this.b, this.w, this.h]
   return arr.join(', ')
 }
 // This was written to demonstrate that local properties are given precedence

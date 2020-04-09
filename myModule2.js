@@ -10,6 +10,7 @@ class Mod2Class {
     // in an exported class.
     this.text = text
   }
+
   mod2Fun () {
     document.querySelector('#modObject').textContent = this.text
   }

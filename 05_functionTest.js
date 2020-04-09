@@ -20,7 +20,7 @@ console.log('arrow function:', eightSquareArrow)
 // You use a named function when you want to reference the function again.
 // Also demonstrates passing function expressions to a function.
 var factorial = function fac (n) { return n < 2 ? 1 : n * fac(n - 1) }
-var inputArray = [ 3, 5, 7 ]
+var inputArray = [3, 5, 7]
 
 function map (fun, arr) {
   var result = []

@@ -25,11 +25,12 @@ var boo = 123
 var chkBoo = (typeof boo !== 'boolean') ? 'variable boo is not a boolean' : boo
 document.querySelector('#boolean').textContent = chkBoo
 
-// The let variable only works in {} blocks.
-// The const variable is the same as let but read only.
+// The let variable is a local version of var that only works in {} blocks.
+// The const variable is the same as let but read only. It is recommended for
+// use if the variable is never reassigned.
 // const object properties and array contents are however, not protected.
 if (true) {
-  let x = 5
+  const x = 5
 }
 
 if (typeof x === 'undefined') {

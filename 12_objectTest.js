@@ -1,6 +1,7 @@
 // Demonstrates use of an object in JS.
 
-// Objects are a reference type in JS. Thus two objects are never equal.
+// Objects are a reference type in JS. In practical terms, this means two
+// objects are never equal.
 var fruit = { name: 'apple' }
 var fruit2 = { name: 'apple' }
 console.log('comparison:', fruit === fruit2)

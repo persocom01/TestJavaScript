@@ -14,6 +14,7 @@ class Mod3Class {
       selection[i].style.fontWeight = 'bold'
     }
   }
+
   changeBack () {
     for (var i = 0; i < selection.length; i++) {
       // Colors may also be defined using 140 standard names. The names are
