@@ -1,25 +1,33 @@
 // Demonstrates 3 types of loops, for, while and do while.
-var alphabet = ['a', 'b', 'c', 'd', 'e']
+var letters = ['a', 'b', 'c', 'd', 'e']
 
+// For loop.
 function printAll (arr) {
   var arrForward = []
   var arrReverse = []
-  // For loops have 3 statements, the 2nd and 3rd being optional.
-  // Without them, break and i++ must be somewhere within the loop itself.
-  // Demonstrates using two variables in a for loop.
+  // For loops accept up to 3 statements as arguments, start, end and step.
+  // The 2nd and 3rd arguments are options, but without them, if break and
+  // stepVar++ must be somewhere within the loop itself.
+  // Demonstrates using two variables in a for loop. Note that only one
+  // variable needs to be the break condition.
   for (var i = 0, i2 = arr.length - 1; i < arr.length; i++, i2--) {
-    arrForward.push(arr[i])
+    // arrForward.push(arr[i])
     arrReverse.push(arr[i2])
   }
-  // Alternative that does not require defining i beforehand.
-  // for (var index in arr) {
-  //   arrForward.push(arr[index])
-  // }
+  // If you just wish to go through the whole array, for... in or for... of
+  // loops can be used instead. These loops don't require defining start, stop
+  // and step arguments.
+  // The python equivalent for for... in is: for i in range(arr)
+  // The python equivalent for for... of is: for e in arr
+  for (var i3 in arr) {
+    arrForward.push(arr[i3])
+  }
   console.log('forward:', arrForward.join(''))
   console.log('reverse:', arrReverse.join(''))
 }
 
-// Demonstrates continue, which restarts the loop.
+// while loop with continue. Continue, which restarts the loop when its
+// condition is met.
 // In this case, continue causes the loop to restart after skipping vowels.
 function noVowels (arr) {
   var vowels = ['a', 'e', 'i', 'o', 'u']
@@ -37,9 +45,9 @@ function noVowels (arr) {
   console.log('non vowels:', arr2.join(''))
 }
 
-// Demonstrates break.
-// In this case, break causes the loop to break when the letter
-// specified is encountered.
+// do while loop with break. Break ends the loop if its condition is met.
+// In this case, break causes the loop to break when the letter specified is
+// encountered.
 function stopAtLetter (letter, arr) {
   var i = 0
   var arr2 = []
@@ -53,33 +61,33 @@ function stopAtLetter (letter, arr) {
   console.log('up to letter ' + letter + ':', arr2.join(''))
 }
 
-printAll(alphabet)
-noVowels(alphabet)
-stopAtLetter('d', alphabet)
+printAll(letters)
+noVowels(letters)
+stopAtLetter('d', letters)
 console.log()
 
 // Demonstrates other types of for loops.
-var fruits = [ 'apple', 'banana', 'orange' ]
-var indexList = ''
+var fruits = ['apple', 'banana', 'orange']
+var indexes = ''
 var letterSum = 0
 
-// Demonstrates the for... in loop.
-// This one lists the array indexes.
+// for... in loop like the one at the beginning.
+// Remember that it works with indexes and not the elements themselves.
 for (var i in fruits) {
-  indexList += i
+  indexes += i
 }
-console.log('for in:', indexList)
+console.log('for in:', indexes)
 
-// Demonstrates the for... of loop.
+// for... of loop.
 // This loop sums the number of letters in the array.
-// for... of returns the value of each element in the array instead of just the index.
+// for... of returns each element in the array instead of just the index.
 letterSum = 0
 for (var fruit of fruits) {
   letterSum += fruit.length
 }
 console.log('for of:', letterSum)
 
-// Alternative way to write the above for in loop.
+// Alternative way to write the above for... of loop.
 letterSum = 0
 // Arrow functions can also be used, but in this case the loop doesn't return anything.
 fruits.forEach(function (fruit) {
