@@ -1,6 +1,8 @@
 # TestJavaScript
 
-A JavaScript testing playground based roughly on the mozillia JS tutorial: https://developer.mozilla.org/en-US/docs/Learn/JavaScript
+A JavaScript testing playground based on two sources:
+https://www.tutorialspoint.com/javascript/index.htm
+https://developer.mozilla.org/en-US/docs/Learn/JavaScript
 
 Workable code is written on each topic to demonstrate use of JavaScript in the topic area. The code written is generally meant to work in node.js as a side effect of it being easy to run as a script in atom.
 
