@@ -3,7 +3,7 @@
 are written this way. */
 
 // variable names can start with $
-var $text
+var $text, text;
 // Variables with no value === undefined.
 // However, if you use them in math they return NaN (not a  number).
 // NaN is a special object property that isn't === 'NaN'.
@@ -15,8 +15,8 @@ document.querySelector('#NaN').textContent = $text + 1
 // document.querySelector('selector') takes in CSS Selectors as argument.
 // For a full list go to https://www.w3schools.com/cssref/css_selectors.asp
 // In this case #name selects the first element with id="name".
-$text = document.querySelector('#text')
-$text.textContent = 'It\'s a test'
+text = document.querySelector('#text')
+text.textContent = 'It\'s a test'
 
 // Variables can be declared and given a value immediately.
 var boo = 123
