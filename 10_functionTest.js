@@ -1,7 +1,8 @@
 // Demonstrates functions.
 
 // Demonstrates a function expression with a simple anonymous function.
-// Unlike normal functions, function expressions are not hoisted when code is run.
+// Unlike normal functions, function expressions are not hoisted when code is
+// run.
 var square = function (number) { return number * number }
 // Demonstrates an arrow function expression equivalent of the above.
 // Arrow functions with only 1 argument do not require ().
