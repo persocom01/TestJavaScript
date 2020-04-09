@@ -1,0 +1,143 @@
+/* css for the navigation bar goes here. */
+
+/* Makes the element stick to the top of the screen when scrolling. */
+.sticky {
+  /* position allows you to move the element's block. There are 5 possible
+  values:static (default), relative, fixed, absolute and sticky.
+  Any non static value allows you to use top, right, bottom and left to
+  position the block.
+  relative postions the block relative to how it is normally positioned.
+  fixed positons the block relative to the viewport, which means the positon
+  stays the same even if the page is scrolled.
+  absolute is like fixed, except it works relative to the nearest non static
+  parent's position.
+  Sticky sticks onto the screen when you scroll past the element. */
+  position:sticky;
+  top:0;
+}
+
+/* Color of navbar. */
+.topnav {
+  /* Setting color and background on the parent makes it easy for child
+  elements to just inherit the color for consistency. */
+  background-color:black;
+  color:#66ccff;
+  /* Overflow determines what happens when content exceeds it's container.
+  It is visible by default. Hidden hides it, auto creates a scrollbar. */
+  overflow:hidden;
+}
+
+/* Color of links. */
+.topnav a {
+  color:inherit;
+  float:left;
+  font-size:17px;
+  padding:14px 16px;
+  text-align:center;
+  text-decoration:none;
+}
+
+/* Add a color to the current link */
+/* Probably requires JS to dynamically add the active class to a link. */
+.topnav a.active {
+  background-color:inherit;
+  /* Creates underline inside div element. */
+  box-shadow:inset 0 -3px #66ccff;
+  color:inherit;
+}
+
+/* Puts the dropdown div on the same level as topnav. */
+.dropdown {
+  background-color:inherit;
+  color:inherit;
+  float:left;
+  overflow:hidden;
+}
+
+/* Dropdown Button */
+.dropdown .dropbtn {
+  background-color:inherit;
+  border:none;
+  color:inherit;
+  font-size:17px;
+  /* padding is a box if only a single value is given.
+  It affects vertical and horizontal if 2 values are given.
+  More than that and it starts to fill top, right, bottom and left if possible. */
+  padding:14px 16px;
+}
+
+/* Changes the color of links on hover */
+/* Other useful attributes are :first-child and :last-child, which can be
+chained with hover:
+:first-child:hover
+This makes only the first or last elements change color. */
+.topnav a:hover, .dropdown:hover .dropbtn {
+  background-color:#555;
+  color:inherit;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  color:inherit;
+  /* Makes block invisible. */
+  display:none;
+  /* Ensures that the block doesn't displace other blocks when it appears. */
+  position:absolute;
+  background-color:inherit;
+  /* Makes the menu of consistent width. */
+  min-width:160px;
+  /* Determines who is on top when block overlap. The larger number wins. */
+  z-index:1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color:inherit;
+  float:none;
+  padding:14px 16px;
+  text-decoration:none;
+  display:block;
+  text-align:left;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color:#555;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display:block;}
+
+.topnav .search-container {
+  float:right;
+}
+
+/* Targets input with attribute type=text. */
+/* Affects the style of the search box. */
+.topnav input[type=text] {
+  border:none;
+  font-size:17px;
+  padding:6px;
+  /* This makes the top padding 14 in total, in line with the rest of the bar. */
+  margin-top:8px;
+}
+
+/* Affect the seach icon box. */
+.topnav .search-container button {
+  float:right;
+  padding:6px 10px;
+  margin-top:8px;
+  margin-right:16px;
+  background:inherit;
+  font-size:17px;
+  border:none;
+  cursor:pointer;
+}
+
+/* Customizes the imported search icon. */
+.fas.fa-search {
+  color:#66ccff;
+}
+
+/* Sets hover color change. */
+.topnav .search-container button:hover {
+  background:#555;
+}

@@ -10,14 +10,49 @@
         As the page does not load until all the css loads, the media property
         can be used to reduce the amount of css loaded.
         It is generally unnecessary to set this property. -->
-        <link rel="stylesheet" media="all" href="./css/myStyle.css">
+        <link rel="stylesheet" media="all" href="./layout/styles/myStyle.css">
+        <link rel="stylesheet" href="./layout/styles/nav.css">
         <!-- JS can be put in the head or body tag.
         This affects when the script is loaded.
         Putting it just before the end of the body tag is often
         the best strategy as JS may need HTML elements to be loaded first -->
     </head>
     <body>
+      <header>
         <h1>Title</h1>
+      </header>
+
+      <nav class="sticky">
+        <!-- div is an inline element, meaning there will not be a space
+        before and after. p on the other hand, is a block level element. -->
+        <div class="topnav">
+          <!-- A link need not be just text. However, while it is possible
+          to make an image a link, it would turns the whole image block into
+          a link instead of the image itself, so exercise caution on use. -->
+          <a class="active" title="HTML tutorial" href="./introduction.html">Home</a>
+          <a title="HTML tutorial" href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started">Tutorial link</a>
+          <div class="dropdown">
+            <button class="dropbtn" type="button" name="button">GitHub</button>
+            <div class="dropdown-content">
+              <a href="https://github.com/persocom01/TestHTML">HTML</a>
+              <a href="https://github.com/persocom01/TestJavaScript">JavaScript</a>
+              <a href="https://github.com/persocom01/TestPython">Python</a>
+            </div>
+          </div>
+          <div class="search-container">
+            <form class="" action="./action_page.php" method="get">
+              <!-- Boolean attributes may be used shorhand like disabled
+              here instead of disabled="disabled" -->
+              <!-- placeholder determines the text that you see in the box
+              before you write anything in it. -->
+              <input type="text" name="search" placeholder="Search">
+              <button type="submit" name="button"><i class="fas fa-search"></i></button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+      <p>
         <!-- At it's most basic, giving an element a unique id makes selecting
         it easy. Class makes selecting a group of similar elements easy. -->
         <div id="NaN" class="divText"></div>
@@ -51,5 +86,7 @@
         type="module" have to be called immediately and cannot be called
         in the html document. -->
         <script type="module" src="21_importExportTest.js"></script>
+      </p>
+
     </body>
 </html>
