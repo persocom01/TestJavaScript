@@ -17,9 +17,9 @@ function get (url, response = 'blob') {
   // XMLHttpRequest's main advantage is the ability to update part of
   // a webpage without reloading it. It is critical in AJAX programming.
   var request = new XMLHttpRequest()
-  // The promise constructor takes in a single argument; a callback with
-  // two function as arguments; resolve for if the operation worked, reject if
-  // it did not.
+  // The promise constructor takes in a single argument; a callback function
+  // with up to two function as arguments; resolve for if the operation worked,
+  // or reject if it did not. Reject is optional.
   return new Promise(function (resolve, reject) {
     request.open('GET', url)
     // In the case of an image, set responseType to blob for binary data.

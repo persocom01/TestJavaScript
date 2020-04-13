@@ -30,7 +30,6 @@
           to make an image a link, it would turns the whole image block into
           a link instead of the image itself, so exercise caution on use. -->
           <a id="homeButton" class="active" title="HTML tutorial" href="./index.html"></a>
-          <a title="HTML tutorial" href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started">Tutorial link</a>
           <div class="dropdown">
             <button class="dropbtn" type="button" name="button">GitHub</button>
             <div class="dropdown-content">
@@ -39,6 +38,14 @@
               <a href="https://github.com/persocom01/TestPython">Python</a>
             </div>
           </div>
+          <div class="dropdown">
+            <button class="dropbtn" type="button" name="button">Tutorial links</button>
+            <div class="dropdown-content">
+              <a href="https://www.tutorialspoint.com/javascript/index.htm">Tutorialspoint</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript">Mozilla</a>
+            </div>
+          </div>
+          <a title="HTML tutorial" href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started">Tutorial link</a>
           <div class="search-container">
             <form class="" action="./action_page.php" method="get">
               <!-- Boolean attributes may be used shorhand like disabled
@@ -77,14 +84,15 @@
             var testTitle = document.querySelector('h1');
             testTitle.textContent = 'JavaScript test page';
         </script>
-        <script src="01_variablesTest.js"></script>
-        <script src="12c_promiseTest.js"></script>
+        <script type="text/javascript" src="01_variablesTest.js"></script>
+        <script type="text/javascript" src="05c_asyncFunctionTest.js"></script>
+        <script type="text/javascript" src="12c_promiseTest.js"></script>
         <!-- type="module" is required if you want to use imported js modules.
         you also need to open file on a server instead of opening it as a file
         in a browser for it to work. Unlike typical scripts, functions in
         type="module" have to be called immediately and cannot be called
         in the html document. -->
-        <script type="module" src="22_importExportTest.js"></script>
+        <script type="module" src="23_importExportTest.js"></script>
       </p>
 
     </body>
