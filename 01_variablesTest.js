@@ -16,7 +16,7 @@ are written this way. */
 // In this case #NaN selects the first element with id="NaN".
 var $text, homeButtonText; document.querySelector('#NaN').textContent = $text + 1
 homeButtonText = document.querySelector('#homeButton')
-homeButtonText.textContent = 'It\'s a test'
+homeButtonText.textContent = 'Home'
 
 // Variables can be declared and given a value immediately.
 var boo = 123

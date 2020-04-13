@@ -27,8 +27,8 @@ function get (url, response = 'blob') {
     request.responseType = response
     request.onload = function () {
       if (request.status === 200) {
-        // The promise returns anything inside the resolve function.
-        // It may only returna a single value or object.
+        // A promise returns anything inside the resolve function.
+        // It may only return a single value or object.
         resolve(request.response)
       } else {
         reject(alert('Load unsuccessful, error code:' + request.statusText))
@@ -53,8 +53,8 @@ function saveBlob (blob, fileName) {
 // work like a link, as JS can be disabled.
 function dlImageButton () {
   // To use a promise object, one must attach .then(value => doSomething(value))
-  // to it. You may choose not to use an arrow function, but either way you
-  // need to use a new function and not immediately call an existing one.
+  // to it. You may choose not to use an arrow function, but you'll still have
+  // to define a new function and not immediately call an existing one.
   // It is possible to string promises using a .then chain.
   // To perform an action if the promise is not resolved, use .catch instead.
   // In a promise chain, a single .catch at the end will execute no matter
