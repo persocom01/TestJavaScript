@@ -2,19 +2,17 @@
 // Asynchronous functions return an implicit promise, and the webpage does not
 // need them to complete when it is loaded.
 
-function resolveAfter2Seconds () {
+function returnHomeAfter2Seconds () {
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve('resolved')
+      resolve(window.location.href = './index.html')
     }, 2000)
   })
 }
 
 async function asyncCall () {
   console.log('calling')
-  const result = await resolveAfter2Seconds()
-  console.log(result)
-  // expected output: 'resolved'
+  await returnHomeAfter2Seconds()
 }
 
 asyncCall()

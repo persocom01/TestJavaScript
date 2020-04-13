@@ -1,4 +1,4 @@
-// Javascript files are .js when independant of html files.
+// JavaScript files are .js when independant of html files.
 /* Multiline comments
 are written this way. */
 
