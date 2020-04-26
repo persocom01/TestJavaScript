@@ -18,16 +18,18 @@
           <div class="dropdown-content">
             <a href="../async.html">async</a>
             <a href="./01_first.html">tfjs first</a>
-            <a class="active" href="./02_iris.html">tfjs iris</a>
+            <a href="./02_iris.html">tfjs iris</a>
             <a href="./03_mnist.html">tfjs mnist</a>
             <a href="./04_linear.html">tfjs linear</a>
-            <a href="./05_mobilenet.html">tfjs mobilenet</a>
+            <a class="active" href="./05_mobilenet.html">tfjs mobilenet</a>
             <a href="./06_toxicity.html">tfjs toxicity</a>
           </div>
         </div>
       </div>
     </nav>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-    <script type="text/javascript" src="02_iris.js"></script>
   </body>
+  <!-- Load script after body as it requires some elements in the page to load
+  before it can run. Alternatively, the dom can be used. -->
+  <script type="text/javascript" src="05_mobilenet.js"></script>
 </html>
