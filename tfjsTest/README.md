@@ -13,3 +13,9 @@ The exercise and example in Week 3 of this course also contains a Jupyter Notebo
 
 
 Have fun learning TensorFlow.js!
+
+```
+pip install tensorflow
+pip install tensorflowjs
+pip install prompt_toolkit==3.0.3
+```
