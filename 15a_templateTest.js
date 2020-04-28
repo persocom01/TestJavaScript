@@ -11,7 +11,8 @@ console.log(temp)
 // Demonstrates output formatting.
 var suspect = 'Thomas'
 var place = 'mall'
-var temp2 = `The detective spotted ${suspect} at the ${place}.`
+// Templates can be joined together with +, just like strings.
+var temp2 = `The detective spotted ${suspect}` + ` at the ${place}.`
 console.log(temp2)
 
 // \n and \r are actually pretty much identical.
