@@ -19,3 +19,5 @@ pip install tensorflow
 pip install tensorflowjs
 pip install prompt_toolkit==3.0.3
 ```
+
+one exercise requires https://eternallybored.org/misc/wget/ to download a dataset from kaggle.
