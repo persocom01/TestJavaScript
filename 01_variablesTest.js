@@ -16,7 +16,13 @@ are written this way. */
 // In this case #NaN selects the first element with id="NaN".
 var $text, homeButtonText; document.querySelector('#NaN').textContent = $text + 1
 homeButtonText = document.querySelector('#homeButton')
-homeButtonText.textContent = 'Home'
+// .textContent inserts text into the label without recognizing html. If you
+// wish to write html into the label, use .innerHTML instead.
+// .innerText is similar to .textContent but when used to get the contents of
+// a label though document.querySelector(), does not return the contents of
+// script and style elements. It also notably does not return text that has
+// been hidden by <span style="display:none;">
+homeButtonText.innerText = 'Home'
 
 // Variables can be declared and given a value immediately.
 var boo = 123
