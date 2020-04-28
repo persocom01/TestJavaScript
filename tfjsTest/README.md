@@ -20,4 +20,6 @@ pip install tensorflowjs
 pip install prompt_toolkit==3.0.3
 ```
 
+pretrained tsjs models can be found here: https://github.com/tensorflow/tfjs-models
+
 one exercise requires https://eternallybored.org/misc/wget/ to download a dataset from kaggle.
