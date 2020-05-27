@@ -14,12 +14,32 @@
 
 ## Usage
 
-var loadSsdMobilenetv1Model = function (url) { return nets.ssdMobilenetv1.load(url); };
-var loadTinyFaceDetectorModel = function (url) { return nets.tinyFaceDetector.load(url); };
-var loadMtcnnModel = function (url) { return nets.mtcnn.load(url); };
-var loadTinyYolov2Model = function (url) { return nets.tinyYolov2.load(url); };
-var loadFaceLandmarkModel = function (url) { return nets.faceLandmark68Net.load(url); };
-var loadFaceLandmarkTinyModel = function (url) { return nets.faceLandmark68TinyNet.load(url); };
-var loadFaceRecognitionModel = function (url) { return nets.faceRecognitionNet.load(url); };
-var loadFaceExpressionModel = function (url) { return nets.faceExpressionNet.load(url); };
-var loadAgeGenderModel = function (url) { return nets.ageGenderNet.load(url); };
+face-api comes with a number of pre-trained models. To use them:
+
+1. Copy the model shards and .json files from the weights folder at https://github.com/justadudewhohacks/face-api.js and paste them into a models folder in the same folder the html file is in.
+
+2. Next, define a js async function as a script or separate js file somewhat as follows:
+
+```
+async function run () {
+  const modelPath = './models'
+  // Face detection.
+  await faceapi.loadSsdMobilenetv1Model(modelPath)
+  await faceapi.loadTinyFaceDetectorModel(modelPath)
+
+  // ?
+  await faceapi.loadMtcnnModel(modelPath)
+  await faceapi.loadTinyYolov2Model(modelPath)
+
+  // Face landmark model for face alignment.
+  await faceapi.loadFaceLandmarkModel(modelPath)
+  await faceapi.loadFaceLandmarkTinyModel(modelPath)
+
+  // ?
+  await faceapi.loadFaceRecognitionModel(modelPath)
+  await faceapi.loadFaceExpressionModel(modelPath)
+
+  // Age and gender recognition model.
+  await faceapi.loadAgeGenderModel(modelPath)
+}
+```
