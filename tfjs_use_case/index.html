@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>tfjs age detection</title>
+    <link rel="stylesheet" media="all" href="../layout/styles/myStyle.css">
+    <link rel="stylesheet" href="../layout/styles/nav.css">
+    <script src="face-api.js"></script>
+    <script type="text/javascript" src="faceDetect.js"></script>
+  </head>
+<body>
+  <header>
+    <h1>tfjs age detection</h1>
+  </header>
+  <nav class="sticky">
+    <div class="topnav">
+      <a id="homeButton" title="HTML tutorial" href="../index.html">Home</a>
+      <div class="dropdown">
+        <button class="dropbtn" type="button" name="button">Demo pages</button>
+        <div class="dropdown-content">
+          <a href="../async.html">async</a>
+          <a href="./01_first.html">tfjs first</a>
+          <a href="./02_iris.html">tfjs iris</a>
+          <a href="./03_mnist.html">tfjs mnist</a>
+          <a href="./04_toxicity.html">tfjs toxicity</a>
+          <a href="./05_mobilenet.html">tfjs mobilenet</a>
+          <a href="./06_linear.html">tfjs linear</a>
+          <a class="active" href="./07_retrain.html">tfjs retrain</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div>
+    <div>
+      <video autoplay playsinline muted id="wc" width="224" height="224"></video>
+    </div>
+  </div>
+
+</html>
