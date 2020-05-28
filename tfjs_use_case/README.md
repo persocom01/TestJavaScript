@@ -1,4 +1,6 @@
-#
+# face-api.js
+
+Instructions on how to start using face-api.js.
 
 ## Installation
 
@@ -30,7 +32,7 @@ async function run () {
   await faceapi.loadMtcnnModel(modelPath)
 
   // ?
-    await faceapi.loadTinyYolov2Model(modelPath)
+  await faceapi.loadTinyYolov2Model(modelPath)
 
   // Face landmark model for face alignment.
   await faceapi.loadFaceLandmarkModel(modelPath)
