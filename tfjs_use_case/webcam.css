@@ -1,0 +1,14 @@
+#wc {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -112px;
+  z-index: 1;
+}
+canvas {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -112px;
+  z-index: 2;
+}
