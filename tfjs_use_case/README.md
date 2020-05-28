@@ -26,10 +26,11 @@ async function run () {
   // Face detection.
   await faceapi.loadSsdMobilenetv1Model(modelPath)
   await faceapi.loadTinyFaceDetectorModel(modelPath)
+  // Depreciated.
+  await faceapi.loadMtcnnModel(modelPath)
 
   // ?
-  await faceapi.loadMtcnnModel(modelPath)
-  await faceapi.loadTinyYolov2Model(modelPath)
+    await faceapi.loadTinyYolov2Model(modelPath)
 
   // Face landmark model for face alignment.
   await faceapi.loadFaceLandmarkModel(modelPath)
