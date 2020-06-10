@@ -41,6 +41,8 @@ http://localhost:3000/
 http://127.0.0.1:3000/
 ```
 
+If cmd was used to start the server, ctrl+c will end the service. If git bash was used, use the task manager and kill all node.js processes.
+
 ### AWS
 
 1. Spin up an Ubuntu 18.04 AWS EC2 instance and configure it to accept SSH, HTTP (port 80), and HTTPS (port 443) connections from anywhere.
