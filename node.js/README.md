@@ -26,7 +26,7 @@ Express generator is based on the express framework and provides a boilerplate f
 express -v pug webapp_folder
 ```
 
--v determines the html templating engine that will be used. The most common are pug, mustache and ejs. The webapp will then be setup in the folder. To run it, enter the following commands to navigate to the folder start the webserver:
+-v determines the html templating engine that will be used. The most common are pug, mustache and ejs. This affects how you write the html files in the website. pug is said to be easiest to write, but ejs is the most easily adapted to/from actual html. The webapp will be setup in the folder. To run it, enter the following commands to navigate to the folder start the webserver:
 
 ```
 cd webapp_folder
@@ -107,7 +107,7 @@ Express generator is based on the express framework and provides a boilerplate f
 express -v pug webapp_folder
 ```
 
--v determines the html templating engine that will be used. The most common are pug, mustache and ejs. The webapp will then be setup in the folder. To run it, enter the following commands to navigate to the folder start the webserver:
+-v determines the html templating engine that will be used. The most common are pug, mustache and ejs. This affects how you write the html files in the website. pug is said to be easiest to write, but ejs is the most easily adapted to/from actual html. The webapp will be setup in the folder. To run it, enter the following commands to navigate to the folder start the webserver:
 
 ```
 cd webapp_folder
@@ -121,3 +121,7 @@ SET DEBUG allows you to see what requests are being sent to the server. Access i
 http://localhost:3000/
 http://127.0.0.1:3000/
 ```
+
+## Usage
+
+Any modules used in the app need to be defined in package.json
