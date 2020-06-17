@@ -59,5 +59,5 @@ function dlImageButton () {
   // To perform an action if the promise is not resolved, use .catch instead.
   // In a promise chain, a single .catch at the end will execute no matter
   // where in the chain the promise failed.
-  get(url).then(blob => saveBlob(blob, fileName))
+  get(url).then(blob => saveBlob(blob, fileName)).catch(err => console.error(err))
 }
