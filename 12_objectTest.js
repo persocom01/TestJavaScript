@@ -2,16 +2,21 @@
 
 // Objects are a reference type in JS. In practical terms, this means two
 // objects are never equal.
-var fruit = { name: 'apple' }
-var fruit2 = { name: 'apple' }
+var fruit = { name: 'apple', 1: 23 }
+var fruit2 = { name: 'apple', 1: 23 }
 console.log('comparison:', fruit === fruit2)
 fruit2 = fruit
 // They are now equal because their references are the same.
 console.log('comparison2:', fruit === fruit2)
-// However, changing the first object causes the second object to change.
-// This isn't true with normal variables.
+// Object properties are referenced using object.property. However, numerical
+// keys cannot be referenced this way, and must instead be referenced using
+// object[number]. object['number'] does the same thing because numerical keys
+// are not differentiated from their string equivalents.
+console.log('object numberical property:', fruit[1])
 // Deletes an object property.
 delete fruit.name
+// Changing the first object causes the second object to change.
+// This isn't true with normal variables.
 console.log('both are changed:', fruit2.name)
 console.log()
 
@@ -136,7 +141,7 @@ var objContinued = {
 
 }
 
-// Demonstrates how to retrive unusual keys.
+// Unusual keys can still be retrieve the same way as numberical keys.
 console.log(objContinued[''])
 console.log(objContinued['!'])
 console.log(objContinued.printMethod())
