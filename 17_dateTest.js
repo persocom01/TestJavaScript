@@ -6,6 +6,10 @@ var currentDate = new Date()
 // Note that currentDateStr is not a date object, but a string.
 console.log(currentDateStr)
 console.log(currentDate)
+// With a date object, various get methods can be called to return a simple
+// date string.
+var twoDigitMonth = ('0' + (currentDate.getMonth() + 1)).slice(-2)
+console.log(currentDate.getFullYear() + '-' + twoDigitMonth)
 // Demonstrates how to format a date object into a customized string.
 var options = {
   year: '2-digit',
