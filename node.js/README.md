@@ -45,7 +45,7 @@ If cmd was used to start the server, ctrl+c will end the service. If git bash wa
 
 ### AWS
 
-1. Spin up an Ubuntu 18.04 AWS EC2 instance and configure it to accept SSH, HTTP (port 80), and HTTPS (port 443) connections from anywhere.
+1. Spin up an Ubuntu 18.04 AWS EC2 instance and configure it to accept SSH, HTTP (port 80), HTTPS (port 443), node.js(port 3000) and flask (port 5000) connections from anywhere.
 
 2. Download the .pem key.
 
@@ -60,7 +60,7 @@ which gives the user permission to read the file (4) and no permissions (0) to t
 4. Connect to the aws instance using the following command:
 
 ```
-ssh -i keyname.pem ubuntue@aws_instance_public_dns
+ssh -i keyname.pem ubuntu@aws_instance_public_dns
 ```
 
 To remove the added ip from the known hosts list, use:
