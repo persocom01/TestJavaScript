@@ -31,3 +31,24 @@ To use face-api.js, include the following into the html page:
 ```
 
 https://github.com/justadudewhohacks/face-api.js
+
+# Model conversion
+
+tensorflow, keras HDF5 and tensorflow hub modules can be converted to tfjs models. To convert a model:
+
+1. Navigate to the directory with the model folder using cmd with tfjs installed. To get the folder address, right click on the address bar in explorer and choose copy address:
+
+2. Use the tensorflowjs_converter command line utility to convert the model.
+
+```
+tensorflowjs_converter --input_format=tf_saved_model in_model_dir_name out_model_dir_name
+```
+
+The most important parameter is input_format, which should be defined in the following manner:
+
+| model type | input_format |
+| ------ | ------ |
+| SavedModel | tf_saved_model |
+| TensorFlow Hub module | tf_hub |
+| TensorFlow.js JSON | tfjs_layers_model |
+| Keras HDF5 | keras |
