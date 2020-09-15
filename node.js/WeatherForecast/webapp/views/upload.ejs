@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" media="all" href="./stylesheets/framework.css">
+    <link rel="stylesheet" href="./stylesheets/layout.css">
+    <link rel="icon" type="image/png" href="./images/weather icon.png">
+  </head>
+  <body>
+    <header>
+      <h1><%= title %></h1>
+    </header>
+    <nav class="sticky">
+      <div class="topnav">
+        <img src="./images/dxc logo.jpg" alt="">
+        <a href="./">Home</a>
+        <a class="active" href="./upload">Upload Data</a>
+        <a href="./record">View Records</a>
+      </div>
+    </nav>
+    <h2 class="aleft">Upload instructions</h2>
+    <div class="aleft">
+      <div class="first one_third aleft">
+        The data used to train the model used in this weather forecasting app came from <a href="http://www.weather.gov.sg/climate-historical-daily/">Meteorological Service Singapore</a>. The data uploaded should be in csv format and contain the headers in the table displayed. If the same data is uploaded, the new data will overwrite the old.
+      </div>
+      <div class="two_third">
+        <table>
+            <tr>
+              <td>Station</td>
+              <td>Daily Rainfall Total (mm)</td>
+              <td>Mean Temperature (°C)</td>
+            </tr>
+            <tr>
+              <td>Year</td>
+              <td>Highest 30 Min Rainfall (mm)</td>
+              <td>Maximum Temperature (°C)</td>
+            </tr>
+            <tr>
+              <td>Month</td>
+              <td>Highest 60 Min Rainfall (mm)</td>
+              <td>Minimum Temperature (°C)</td>
+            </tr>
+            <tr>
+              <td>Day</td>
+              <td>Highest 120 Min Rainfall (mm)</td>
+              <td>Mean Wind Speed (km/h)</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Max Wind Speed (km/h)</td>
+            </tr>
+        </table>
+        <div class="inspace-10"><span style=<%= status_color %>><%= status_text %></span>
+          <form enctype="multipart/form-data" method="POST" action="./upload">
+            <input type="file" name="csv_file" accept=".csv" required>
+            <input type="submit" value="Upload csv">
+          </form>
+          <br>
+          <form enctype="multipart/form-data" method="POST" action="./upload/retrain">
+            <input type="submit" value="Retrain model">
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<!-- Page Title -->
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/display_style.css' />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS for Styling -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
+		<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"> -->
+
+
+		<!-- JavaScript for Interactivity -->
+		<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
+  </head>
+  <body>
+    <h1 style = font-size:50px>Historical weather data</h1>
+    <div>
+      <form action="/display/queryData" method="POST">
+        <label style=font-size:20px>
+          Please input desired date:
+          <input type="date" id="query_date" name="query_dates" required>
+        </label>
+        <input type="submit" value="Get Data">
+      </form>
+    </div>
+    <div class=button-wrap>
+      <a href="/" class="button">Return to home page</a>
+  </div>
+    <main class="main-container">
+      <% for(var i=0; i<data.length; i++) { %>
+
+      <div class="location-and-date">
+        <h1 class="location-and-date__location"><%= data[i].station %></h1>
+        <div><%= data[i].year%>-<%= data[i].month%>-<%= data[i].day%></div>
+      </div>
+
+      <div class="current-temperature">
+        <div class="current-temperature__icon-container">
+          <img src="/images/mostly-sunny.svg" class="current-temperature__icon" alt="">
+        </div>
+        <div class="current-temperature__content-container">
+          <div class="current-temperature__value"><%= data[i].mean_temperature_c%>&degC</div>
+          <div class="current-temperature__summary">Mostly Sunny</div>
+        </div>
+      </div>
+
+      <div class="current-stats">
+        <div>
+          <div class="current-stats__value"><%= data[i].maximum_temperature_c%>&degC</div>
+          <div class="current-stats__label">High</div>
+          <div class="current-stats__value"><%= data[i].minimum_temperature_c%>&degC</div>
+          <div class="current-stats__label">Low</div>
+        </div>
+        <div>
+          <div class="current-stats__value"><%= data[i].mean_wind_speed_kmh%> km/h</div>
+          <div class="current-stats__label">Mean Wind Speed</div>
+          <div class="current-stats__value"><%= data[i].max_wind_speed_kmh%> km/h</div>
+          <div class="current-stats__label">Max Wind Speed</div>
+        </div>
+        <div>
+          <div class="current-stats__value"><%= data[i].daily_rainfall_total_mm%> mm</div>
+          <div class="current-stats__label">Rainfall Total</div>
+        </div>
+      </div>
+      <% } %>
+    </main>
+  </body>
+</html>

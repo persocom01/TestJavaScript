@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<!-- Page Title -->
+    <title>Database Connect</title>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+		
+		<!-- CSS for Styling -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+		
+		<!-- JavaScript for Interactivity -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <h1>Display raw data: <%= title%></h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">station</th>
+					<th scope="col">year</th>
+                    <th scope="col">month</th>
+                    <th scope="col">day</th>
+                    <th scope="col">daily_rainfall_total</th>
+                    <th scope="col">highest_30_min_rainfall</th>
+                    <th scope="col">highest_60_min_rainfall</th>
+                    <th scope="col">highest_120_min_rainfall</th>
+                    <th scope="col">mean_temp</th>
+                    <th scope="col">max_temp</th>
+                    <th scope="col">min_temp</th>
+                    <th scope="col">min_wind_speed</th>
+                    <th scope="col">max_wind_speed</th>           
+				</tr>
+			</thead>
+			<tbody>
+				<% for(var i=0; i<data.length; i++) { %>
+				<tr>
+                    <td><%= data[i].station%></td>
+                    <td><%= data[i].year%></td>
+                    <td><%= data[i].month%></td>
+                    <td><%= data[i].day%></td>
+                    <td><%= data[i].daily_rainfall_total%></td>
+                    <td><%= data[i].highest_30_min_rainfall%></td>
+                    <td><%= data[i].highest_60_min_rainfall%></td>
+                    <td><%= data[i].highest_120_min_rainfall%></td>
+                    <td><%= data[i].mean_temp%></td>
+                    <td><%= data[i].max_temp%></td>
+                    <td><%= data[i].min_temp%></td>
+                    <td><%= data[i].min_wind_speed%></td>
+                    <td><%= data[i].max_wind_speed%></td>     
+				</tr>
+				<% } %>
+			</tbody>
+		</table>
+  </body>
+</html>

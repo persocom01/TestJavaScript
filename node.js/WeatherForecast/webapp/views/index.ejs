@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" media="all" href="./stylesheets/framework.css">
+    <link rel="stylesheet" href="./stylesheets/layout.css">
+    <link rel="icon" type="image/png" href="./images/weather icon.png">
+  </head>
+  <body>
+    <header>
+      <h1><%= title %></h1>
+    </header>
+    <nav class="sticky">
+      <div class="topnav">
+        <img src="./images/dxc logo.jpg" alt="">
+        <a class="active" href="./">Home</a>
+        <a href="./upload">Upload Data</a>
+        <a href="./record">View Records</a>
+      </div>
+    </nav>
+    <div class="">
+      <h2>Tomorrow's weather will be:</h2>
+    </div>
+    <img class="rs-40" src=<%= image %> alt="failed image load">
+    <div class="">
+      Prediction probability: <%= probability %>
+    </div>
+    <p class="">
+      <form enctype="multipart/form-data" method="POST" action="./">
+        <input type="submit" value="Refresh prediction">
+      </form>
+    </p>
+  </body>
+</html>

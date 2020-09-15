@@ -1,0 +1,114 @@
+* {  
+  -webkit-font-smoothing: antialiased;  
+  -moz-osx-font-smoothing: grayscale;  
+  box-sizing: border-box;  
+}
+
+  
+.main-container {  
+  display: flex;  
+  flex-wrap: wrap;  
+}  
+
+@media screen and (min-width: 1140px) {
+  .main-container {
+    width: 1120px;
+    margin: 16px auto;
+    font-size: 1.1em;
+  }
+}
+  
+.location-and-date {
+  width: 100%;
+}
+.location-and-date__location {
+  margin: 0;
+  font-size: 2em;
+  font-weight: 600;
+}  
+  
+.current-temperature {  
+  display: flex;  
+  margin-top: 0.25em;  
+  width: 100%;  
+}  
+  
+.current-temperature__icon-container {  
+  flex-grow: 1.25;  
+  text-align: center;  
+}  
+  
+.current-temperature__content-container {  
+  flex-grow: 1;  
+  text-align: center;  
+}  
+  
+.current-temperature__icon {  
+  width: 10em;  
+}  
+  
+.current-temperature__value {  
+  font-size: 5.25em;  
+  font-weight: 300;  
+}  
+  
+.current-temperature__summary {  
+  margin-top: -0.5em;  
+  margin-left: -0.6em;  
+  font-size: 1.125em;  
+}  
+  
+/* current-stats */
+.current-stats {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 1em;
+  width: 100%;
+  border-top: 1px solid rgba(255,255,255,0.5);
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+}
+
+@media screen and (min-width: 700px) {
+  .current-stats {
+    margin-bottom: 1em;
+    padding-bottom: 0;
+    border-top: none;
+    border-bottom: none;
+    border-left: 4px solid rgba(255,255,255,0.5);
+  }
+}
+
+.current-stats__value {
+  margin-top: 1em;
+  font-size: 1.44em;
+}
+
+.current-stats__label {
+  color: rgba(255,255,255,0.6);
+}
+
+@media screen and (min-width: 768px) {
+  .current-temperature,
+  .current-stats {
+    width: 50%;
+  }
+}
+  
+.next-5-days {  
+  width: 100%;  
+  border: 3px solid yellow;  
+}
+
+
+
+
+body {  
+  margin: 30px;  
+  font-size: 100%;  
+  font-family: 'Roboto', sans-serif;  
+  color: white;  
+  height: 100%;  
+  background: linear-gradient(to bottom, rgb(128, 133, 245) 0%, rgb(22, 145, 216) 100%);  
+  background-repeat: no-repeat;  
+  background-attachment: fixed;  
+}
