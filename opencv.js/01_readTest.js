@@ -56,9 +56,6 @@ async function readWriteCanvas () {
   // Color must be converted back to RGBA to be displayed on canvas.
   cv.cvtColor(dst, dst, cv.COLOR_GRAY2RGBA)
 
-  // Display image.
-  // cv.imshow('cOut2', dst)
-
   canvas = document.getElementById('cOut2')
   ctx = canvas.getContext('2d')
   // new ImageData(array, width). Alternatively:

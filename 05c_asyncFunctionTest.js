@@ -1,6 +1,9 @@
 // Demonstrates asynchronous functions.
-// Asynchronous functions return an implicit promise, and the webpage does not
-// need them to complete when it is loaded.
+// async functions return an implicit promise, and the webpage does not need
+// them to complete when it is loaded.
+// async functions are useful when execution of a function is not expected to
+// complete when the webpage is initially loaded. It allows the function to
+// make changes to the page after the rest of the page has completed loading.
 
 function returnHomeAfter2Seconds () {
   return new Promise(resolve => {
