@@ -28,7 +28,7 @@ homeButtonText.innerText = 'Home'
 var boo = 123
 // Demonstrates a conditional variable.
 // The format is condition ? valIfTrue : valIfFalse.
-var chkBoo = (typeof boo !== 'boolean') ? 'variable boo is not a boolean' : boo
+var chkBoo = (typeof boo === 'boolean') ? boo : 'variable boo is not a boolean'
 document.querySelector('#boolean').textContent = chkBoo
 
 // The let variable is a local version of var that only works in {} blocks.
