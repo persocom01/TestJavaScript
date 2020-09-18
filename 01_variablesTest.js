@@ -27,7 +27,8 @@ homeButtonText.innerText = 'Home'
 // Variables can be declared and given a value immediately.
 var boo = 123
 // Demonstrates a conditional variable.
-// The format is condition ? valIfTrue : valIfFalse.
+// The format is var = condition ? valIfTrue : valIfFalse.
+// var = condition is the equivalent of var = condition ? true : false.
 var chkBoo = (typeof boo === 'boolean') ? boo : 'variable boo is not a boolean'
 document.querySelector('#boolean').textContent = chkBoo
 
