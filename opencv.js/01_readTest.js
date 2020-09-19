@@ -23,7 +23,7 @@ async function readWriteImg () {
 }
 
 async function readWriteCanvas () {
-  let img = document.getElementById('img1')
+  const img = document.getElementById('img1')
   // Resize new canvas to input image dimensions.
   let canvas = document.getElementById('cIn1')
   canvas.height = img.height
