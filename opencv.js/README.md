@@ -4,9 +4,9 @@ An opencv.js testing playground.
 
 ## Installation
 
-1. Download the opencv.js file.
+1. Download `opencv.js` file.
 
-opencv.js can be downloaded from https://github.com/opencv/opencv/releases
+`opencv.js` can be downloaded from https://github.com/opencv/opencv/releases
 
 Download opencv-version_number-docs.zip and unpack it. opencv.js is in the first folder.
 

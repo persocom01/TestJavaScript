@@ -1,11 +1,11 @@
-Course 1 - Browser-based Models with TensorFlow.js – Examples and Exercises
+# Course 1 - Browser-based Models with TensorFlow.js – Examples and Exercises
 ===========================================================================
 
 https://www.coursera.org/learn/browser-based-models-tensorflow/home/welcome
 
 This repository contains the examples and exercises that accompany Course 1 - Browser-based Models with TensorFlow.js of the TensorFlow for Data and Deployment Specialization at Coursera.
 
-# Setting Up
+## Setting Up
 
 You will need to have an internet browser, an HTML editor, and a web server installed on your machine to run the examples and exercises. We recommend you use [Chrome](https://www.google.com/chrome/) as your internet browser,  [Brackets](http://brackets.io/) as your HTML editor and the [Web Server for Chrome App](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb?hl=en) as your web server. All of these are free and are available for various platforms including Windows, Mac OS, and Linux.
 
@@ -32,7 +32,7 @@ To use face-api.js, include the following into the html page:
 
 https://github.com/justadudewhohacks/face-api.js
 
-# Model conversion
+## Model conversion
 
 tensorflow, keras HDF5 and tensorflow hub modules can be converted to tfjs models. To convert a model:
 
