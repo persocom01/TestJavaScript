@@ -6,7 +6,7 @@ Instructions on how to start using face-api.js.
 
 ### face-api.js
 
-1. Copy the face-api.js and face-api.js.map from the dist folder of https://github.com/justadudewhohacks/face-api.js into the same folder as the html page.
+1. Copy the `face-api.js` and `face-api.js.map` from the `dist` folder of https://github.com/justadudewhohacks/face-api.js into the same folder as the html page.
 
 2. include the following code in the html page:
 

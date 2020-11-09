@@ -31,11 +31,13 @@ function get (url, response = 'blob') {
         // It may only return a single value or object.
         resolve(request.response)
       } else {
-        reject(alert('Load unsuccessful, error code:' + request.statusText))
+        // Linter rules state that reject must always be followed by an error
+        // object.
+        reject(new Error('Load unsuccessful, error code:' + request.statusText))
       }
     }
     request.onerror = function () {
-      reject(alert('There was a network error.'))
+      reject(new Error('There was a network error.'))
     }
     request.send()
   })

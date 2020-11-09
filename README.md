@@ -8,13 +8,14 @@ Workable code is written on each topic to demonstrate use of JavaScript in the t
 
 ## Installation
 
-Javascript can be run on any modern browser. However, some of the code requires the html file to be opened on a server. For that purpose, WinNMP was used to create a local virtual server, and the necessary files put inside the server's project folder. Atom was used as text editor. node.js has to be installed to enable atom to run scripts.
+Javascript can be run on any modern browser. However, some of the code requires the html file to be opened on a server. For that purpose, WinNMP was used to create a local server, and the necessary files put inside the server's project folder. Atom was used as text editor. As an alternative to WinNMP, the atom package atom-live-server can also be used to run a local server. node.js has to be installed to enable atom to run scripts.
 
 * [WinNMP 20.01](https://winnmp.wtriple.com/)
 * [node.js 10.16.0](https://nodejs.org/en/)
 * [atom 1.40.1](https://atom.io/)
 
 Once the local server is running, access the file by opening the browser and typing:
+
 ```
 http://127.0.0.1/project_name/file_name
 ```
@@ -26,6 +27,7 @@ http://127.0.0.1/project_name/file_name
 * emmet
 * javascript-snippets
 * linter-js-standard
+* atom-live-server
 
 ### General packages:
 
