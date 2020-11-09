@@ -16,13 +16,13 @@ import * as mod1 from './modules/mod1.js'
 // by separating them with a ,.
 // You are generally recommended to rename the objects on import instead
 // of when they are exported.
-import { Mod2Class as MyMod2Class } from './myModuleAggregator.js'
+import { Mod2Class as MyMod2Class } from './module-aggregator.js'
 
 // Demonstrates a default import. Unlike named imports, no {} is needed.
 // You have to name the module object immediately instead of optionally.
 // Default imports are not recommended by some users as it is difficult to see
 // what the imported object contains.
-import myMod1 from './myModule1.js'
+import myMod1 from './module1.js'
 
 document.querySelector('#import').textContent = mod1.mod1
 var m2c = new MyMod2Class()
@@ -43,11 +43,11 @@ squareBtn.addEventListener('click', () => {
   // on the condition of the event (a click) being executed.
   // The import function always returns a module object, and any references
   // to what is imported have to be done through that object.
-  import('./myModuleAggregator.js').then(Module => {
+  import('./module-aggregator.js').then(Module => {
     // This line is necessary because the import is a class object.
     let m3c = new Module.Mod3Class()
     // The innerHTML property determines the text on a button.
-    if (squareBtn.innerHTML == 'Change color!') {
+    if (squareBtn.innerHTML === 'Change color!') {
       m3c.changeColor()
       squareBtn.innerHTML = 'Change back!'
     } else {

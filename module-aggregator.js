@@ -7,5 +7,5 @@
 
 // Demonstrated here with a class export, as putting all exports in a file into
 // a single object makes the syntax when exporting and importing easier.
-export { Mod2Class } from './myModule2.js'
-export { Mod3Class } from './myModule3.js'
+export { Mod2Class } from './module2.js'
+export { Mod3Class } from './module3.js'
