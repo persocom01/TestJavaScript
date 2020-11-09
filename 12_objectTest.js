@@ -1,16 +1,20 @@
-// Demonstrates use of an object in JS.
+// Demonstrates use of an object in JS. Objects are the javascript equivalent
+// of python dictionaries, with a few exceptions.
 
 // Objects are a reference type in JS. In practical terms, this means two
-// objects are never equal.
-var fruit = { name: 'apple', 1: 23 }
-var fruit2 = { name: 'apple', 1: 23 }
+// objects are never equal. Unlike python, all object keys are converted to
+// strings, so { key: value } is the same as { 'key': value }. However, it can
+// be beneficial to use 'key' instead of key if the key contains problematic
+// characters.
+var fruit = { name: 'apple', 1: 23, 'origin.country': 'usa' }
+var fruit2 = { name: 'apple', 1: 23, 'origin.country': 'usa' }
 console.log('comparison:', fruit === fruit2)
 fruit2 = fruit
 // They are now equal because their references are the same.
 console.log('comparison2:', fruit === fruit2)
-// Object properties are referenced using object.property. However, numerical
-// keys cannot be referenced this way, and must instead be referenced using
-// object[number]. object['number'] does the same thing because numerical keys
+// Unlike python dictionaries, object properties can be referenced using
+// object.property. However, numerical keys cannot be referenced this way, and
+// must instead be referenced using object[number]. object['number'] does the same thing because numerical keys
 // are not differentiated from their string equivalents.
 console.log('object numberical property:', fruit[1])
 // Deletes an object property.
