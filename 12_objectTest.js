@@ -119,6 +119,10 @@ console.log('keys:', Object.keys(stile))
 console.log('get own property:', Object.getOwnPropertyNames(stile))
 // Using reflect to do the same thing.
 console.log('reflect:', Reflect.ownKeys(stile))
+// Lists all object values.
+console.log('values:', Object.values(stile))
+// Lists all object keys and values.
+console.log('entries:', Object.entries(stile))
 // Demonstrates usage of the in operator to check keys.
 console.log('in:', 'maids' in stile)
 console.log('property:', stile.maids)

@@ -68,15 +68,28 @@ console.log()
 
 // Demonstrates other types of for loops.
 var fruits = ['apple', 'banana', 'orange']
-var indexes = ''
+var fruitBox = { fruit: 'mango', origin: 'mexico' }
+var str = ''
 var letterSum = 0
 
 // for... in loop like the one at the beginning.
 // Remember that it works with indexes and not the elements themselves.
 for (var i in fruits) {
-  indexes += i
+  str += i
 }
-console.log('for in:', indexes)
+console.log('for in array:', str)
+
+// for... in also works on object keys. However, it will also return the keys
+// of the object prototype, so if (object.hasOwnProperty(key)) {} is needed.
+// The prefered way to iterate over object keys is for... of on
+// Object.keys(object)
+str = ''
+for (var k in fruitBox) {
+  if (fruitBox.hasOwnProperty(k)) {
+    str += k + ' '
+  }
+}
+console.log('for in object:', str)
 
 // for... of loop.
 // This loop sums the number of letters in the array.
@@ -85,15 +98,26 @@ letterSum = 0
 for (var fruit of fruits) {
   letterSum += fruit.length
 }
-console.log('for of:', letterSum)
+console.log('for of array:', letterSum)
 
-// Alternative way to write the above for... of loop.
+// One cannot use for... of directly on an object, but one can specifically
+// turn an object into an array using Object.keys(object),
+// Object.values(object) or Object.entries(object).
+str = ''
+for (var v of Object.values(fruitBox)) {
+  str += v + ' '
+}
+console.log('for of object:', str)
+
+// Alternative way to write for... in and for... of loops.
+str = ''
 letterSum = 0
 // Arrow functions can also be used, but in this case the loop doesn't return anything.
-fruits.forEach(function (fruit) {
+fruits.forEach(function (fruit, i) {
+  str += i
   letterSum += fruit.length
 })
-console.log('for each:', letterSum)
+console.log('for each:', str, letterSum)
 console.log()
 
 // Demonstrates how to loop through nested objects.
