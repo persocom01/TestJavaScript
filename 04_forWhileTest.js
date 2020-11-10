@@ -113,7 +113,7 @@ console.log('for of object:', str)
 str = ''
 letterSum = 0
 // Arrow functions can also be used, but in this case the loop doesn't return anything.
-fruits.forEach(function (fruit, i) {
+fruits.forEach((fruit, i) => {
   str += i
   letterSum += fruit.length
 })
