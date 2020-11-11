@@ -13,11 +13,23 @@ document.getElementById('demo').innerHTML = 'Hello World!'
 class HtmlDomTest {
   constructor (params) {
     let p = params || {}
+    if (typeof params === 'string') {
+      p = { text: params }
+    }
 
-    this.logsEnabled = (typeof p.logsEnabled)
+    this.logsEnabled = (typeof p.logsEnabled === 'undefined') ? true : p.logEnabled
   }
 
   log (msg) {
+    if (this.logsEnabled) console.log(this.tag, msg)
+  }
 
+  documentObjectTest () {
+    document.getElementById('demo').innerHTML = 'Hello World!'
+  }
+
+  init () {
+    this.documentObjectTest()
   }
 }
+window.HtmlDomTest = HtmlDomTest
