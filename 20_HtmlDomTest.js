@@ -7,3 +7,17 @@
 // this project, the differences between BOM and DOM are not important.
 // A list of aspects of DOM that JS can use can be found here:
 // https://www.w3schools.com/js/js_htmldom.asp
+
+document.getElementById('demo').innerHTML = 'Hello World!'
+
+class HtmlDomTest {
+  constructor (params) {
+    let p = params || {}
+
+    this.logsEnabled = (typeof p.logsEnabled)
+  }
+
+  log (msg) {
+
+  }
+}

@@ -5,7 +5,7 @@ var menu = ['coffee', 'tea']
 
 // Classes can be made in two ways, the first being class declarations.
 class Maid {
-  // All classses have a special mthod called constructor.
+  // All classses have a special method called constructor.
   // It initializes the class object.
   constructor (name, attribute) {
     this.name = name

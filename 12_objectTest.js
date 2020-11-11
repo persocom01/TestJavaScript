@@ -122,6 +122,10 @@ console.log('reflect:', Reflect.ownKeys(stile))
 // Lists all object values.
 console.log('values:', Object.values(stile))
 // Lists all object keys and values.
+// To iterate over the object, use Object.entries(object).forEach((item) => {
+//   key = item[0]
+//   value = item[1]
+// })
 console.log('entries:', Object.entries(stile))
 // Demonstrates usage of the in operator to check keys.
 console.log('in:', 'maids' in stile)
