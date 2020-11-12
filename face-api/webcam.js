@@ -23,8 +23,43 @@ class Webcam {
    * @param {HTMLVideoElement} webcamElement A HTMLVideoElement representing the
    *     webcam feed.
    */
-  constructor(webcamElement) {
+  constructor (webcamElement) {
+    webcamElement = webcamElement || document.getElementById('webcam')
+    const type = 'video'
+    const properties = { attributes: ['autoplay', 'playsinline', 'muted'], id: 'webcam', width: 240, height: 240 }
+
+    function loadElement (type, properties) {
+      if (type) {
+        return new Promise((resolve, reject) => {
+          const div = document.createElement('div')
+          const element = document.createElement(type)
+
+          div.setAttribute('id', 'webcam-container')
+
+          Object.entries(properties).forEach((item) => {
+            if (item[0] === 'attributes') {
+              item[1].forEach((item) => {
+                element.setAttribute(item, '')
+              })
+            } else {
+              element.setAttribute(item[0], item[1])
+            }
+          })
+
+          div.appendChild(element)
+          document.body.appendChild(div)
+        })
+      }
+    }
+
+    // Create video element necessary for the webcam to function if one is not already present.
+    if (webcamElement === null) {
+      loadElement(type, properties)
+      webcamElement = document.getElementById('webcam')
+    }
+
     this.webcamElement = webcamElement
+    this.tag = '[Webcam]'
   }
 
   /**
@@ -86,28 +121,19 @@ class Webcam {
   }
 
   async setup () {
-    return new Promise((resolve, reject) => {
-      navigator.getUserMedia = navigator.getUserMedia ||
-          navigator.webkitGetUserMedia || navigator.mozGetUserMedia ||
-          navigator.msGetUserMedia
-      if (navigator.getUserMedia) {
-        navigator.getUserMedia(
-          { video: { width: 224, height: 224 } },
-          stream => {
-            this.webcamElement.srcObject = stream
-            this.webcamElement.addEventListener('loadeddata', async () => {
-              this.adjustVideoSize(
-                this.webcamElement.videoWidth,
-                this.webcamElement.videoHeight)
-              resolve()
-            }, false)
-          },
-          error => {
-            reject(error)
-          })
-      } else {
-        reject()
-      }
-    })
+    let stream = null
+
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: { width: this.webcamElement.width, height: this.webcamElement.height } })
+      this.webcamElement.srcObject = stream
+      this.webcamElement.addEventListener('loadeddata', async () => {
+        this.adjustVideoSize(
+          this.webcamElement.videoWidth,
+          this.webcamElement.videoHeight)
+      }, false)
+    } catch (err) {
+      console.log(this.tag, 'failure to load')
+    }
   }
 }
+window.Webcam = Webcam

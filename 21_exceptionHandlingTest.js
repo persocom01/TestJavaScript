@@ -32,7 +32,9 @@ function tryWrapper (num) {
     countToTen(num)
   // catch catches errors, which in this case is defined as e.
   } catch (e) {
-    console.log('error encountered!:')
+    // console.error() is functionally identical to console.log() in most cases,
+    // but can be used to print messages to a different stream.
+    console.error('error encountered!:')
     // throw e is known as re-throwing the error, since catch statements are
     // meant to perform something in the case of an error.
     // Re-throwing the error can be useful is you want it to be caught again
