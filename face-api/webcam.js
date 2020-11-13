@@ -17,7 +17,6 @@
  * A class that wraps webcam video elements to capture Tensor4Ds.
  */
 
-
 class Webcam {
   /**
    * @param {HTMLVideoElement} webcamElement A HTMLVideoElement representing the
