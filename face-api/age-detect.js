@@ -2,6 +2,7 @@ const webcam = new Webcam()
 const modelPath = './models'
 const ageRange = [0, 19, 29, 39, 49, 59, 69, 79, 999]
 const mortalityRate = [0.00, 0.05, 0.11, 0.19, 0.30, 0.80, 2.70, 7.98, 15.90]
+const interval = 3000
 
 async function loadModels () {
   await faceapi.loadTinyFaceDetectorModel(modelPath)
@@ -61,7 +62,7 @@ async function onPlay (video, period) {
 async function run () {
   await webcam.setup()
   await loadModels()
-  await onPlay(webcam.webcamElement, 5000)
+  await onPlay(webcam.webcamElement, interval)
 }
 
 run()

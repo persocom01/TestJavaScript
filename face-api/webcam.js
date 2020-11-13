@@ -23,18 +23,28 @@ class Webcam {
    * @param {HTMLVideoElement} webcamElement A HTMLVideoElement representing the
    *     webcam feed.
    */
-  constructor (webcamElement) {
-    webcamElement = webcamElement || document.getElementById('webcam')
-    const type = 'video'
-    const properties = { attributes: ['autoplay', 'playsinline', 'muted'], id: 'webcam', width: 240, height: 240 }
+  constructor (webcamElement = document.getElementById('webcam')) {
+    let div
+    const elements = {
+      video: {
+        attributes: ['autoplay', 'playsinline', 'muted'],
+        id: 'webcam',
+        width: 240,
+        height: 240
+      }
+    }
+
+    function createContainer () {
+      return new Promise(function (resolve, reject) {
+        div = document.createElement('div')
+        div.setAttribute('id', 'webcam-container')
+      })
+    }
 
     function loadElement (type, properties) {
       if (type) {
-        return new Promise((resolve, reject) => {
-          const div = document.createElement('div')
+        return new Promise(function (resolve, reject) {
           const element = document.createElement(type)
-
-          div.setAttribute('id', 'webcam-container')
 
           Object.entries(properties).forEach((item) => {
             if (item[0] === 'attributes') {
@@ -54,7 +64,10 @@ class Webcam {
 
     // Create video element necessary for the webcam to function if one is not already present.
     if (webcamElement === null) {
-      loadElement(type, properties)
+      createContainer()
+      Object.entries(elements).forEach((item) => {
+        loadElement(item[0], item[1])
+      })
       webcamElement = document.getElementById('webcam')
     }
 
@@ -66,7 +79,6 @@ class Webcam {
    * Captures a frame from the webcam and normalizes it between -1 and 1.
    * Returns a batched image (1-element batch) of shape [1, w, h, c].
    */
-
 
   capture () {
     return tf.tidy(() => {
@@ -93,7 +105,6 @@ class Webcam {
    * @param {Tensor4D} img An input image Tensor to crop.
    */
 
-
   cropImage (img) {
     const size = Math.min(img.shape[0], img.shape[1])
     const centerHeight = img.shape[0] / 2
@@ -109,7 +120,6 @@ class Webcam {
    * @param {number} width The real width of the video element.
    * @param {number} height The real height of the video element.
    */
-
 
   adjustVideoSize (width, height) {
     const aspectRatio = width / height
