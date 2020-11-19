@@ -35,5 +35,6 @@ console.log()
 
 // The types of typeof are:
 // 'number', 'string', 'boolean', 'undefined', 'object', 'symbol'.
-// null is considered an object.
+// null and arrays are considered objects.
+// To differentiate between an object and an array, use Array.isArray(obj)
 console.log(typeof x)
