@@ -22,6 +22,16 @@ class Maid {
     return this.#age
   }
 
+  #formatArray (arr) {
+    let output = ''
+    for (var i = 0; i < (arr.length - 1); i++) {
+      output += arr[i] + ', '
+    }
+    output = output.slice(0, -2)
+    output += ' and ' + this.arr[arr.length - 1]
+    return output
+  }
+
   static lookAtMenu () {
     let output = ''
     for (var i = 0; i < (this.#menu.length - 1); i++) {
@@ -34,9 +44,10 @@ class Maid {
 }
 
 var maika = new Maid({name: 'Maika', age: 16})
+var tag = '[PrivateClassTest]'
 
-console.log(maika.name)
+console.log(tag, maika.name)
 // Returns an error because private properties are not directly accessible.
 // console.log(maika.#age)
-console.log(maika.askAge())
-console.log(Maid.lookAtMenu())
+console.log(tag, maika.askAge())
+console.log(tag, Maid.lookAtMenu())
