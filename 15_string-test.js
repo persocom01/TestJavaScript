@@ -40,12 +40,13 @@ console.log('return index of first instance:', sentence.indexOf('the', 10))
 // Returns -1 if nothing is found.
 console.log('search:', sentence.search(/[A-Z]\w+/gm))
 console.log('return index of last instance:', sentence.lastIndexOf('fox'))
-// You can also slice from the end of the string using -ve numbers.
+// .slice(start, end)
+// You can also slice from the end of the string using -ve numbers like
+// .slice(0, -2) to return the string minus the last two characters.
 // Leaving out the 2nd argument return the rest of the string.
-// A second method, substring() is similar to slice with a few differences.
-// Most notably -ve numbers === 0.
 console.log('slice:', sentence.slice(16, 19))
-// substr() uses length as second argument instead of endpoint.
+// .substr(start, length) is similar to slice but uses length as second
+// argument instead of endpoint. -ve numbers passed to length === 0.
 console.log('substr:', sentence.substr(16, 3))
 console.log()
 

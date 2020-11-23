@@ -1,10 +1,14 @@
 // Classes are special functions in JS.
 // Unlike functions, classes are not hoisted. They need to be declared
 // before use.
-var menu = ['coffee', 'tea']
+var menu = ['coffee', 'tea', 'strawberry shortcake']
 
 // Classes can be made in two ways, the first being class declarations.
 class Maid {
+  // stack properties are recent additions to javascript. They work like static
+  // methods but for properties.
+  // static menu = ['coffee', 'tea']
+
   // All classses have a special method called a constructor. It initializes
   // the class object.
   // Classes can commonly accept arguments. For small numbers of aruments, this
@@ -12,29 +16,44 @@ class Maid {
   constructor (name, attribute) {
     this.name = name
     this.attrib = attribute
-  // Unlike with normal objects, a , isn't needed between methods.
   }
 
   // Demonstrates a get set pair inside a class.
-  set gsName (newName) {
-    this.name = newName
+  // The use of get set methods is that they replace what would otherwise be a
+  // normal property call such as class.name, thus allow you to do such things
+  // as defining a custom message.
+  get name () {
+    // You need to put a _ in front of the property to prevent looping errors
+    // where the program is unsure whether you are calling the value or the get
+    // method.
+    return `My name is ${this._name}, master.`
   }
 
-  get gsName () {
-    return `My name is ${this.name}, master.`
+  set name (newName) {
+    if (typeof newName !== 'string') {
+      console.error('name must be a string')
+    }
+    // Note the _
+    this._name = newName
   }
 
   // Demonstrates a normal method.
   title (name) {
     var firstCaps = this.attrib.charAt(0).toUpperCase() + this.attrib.slice(1)
-    return `${firstCaps} maid ${this.name} at your service, master ${name}.`
+    return `${firstCaps} maid ${this._name} at your service, master ${name}.`
   }
 
   // A static method is one that is called using the base class instead of the
   // class instance. Calling it inside a class instance causes an error.
   // Normally used for utility functions.
   static lookAtMenu () {
-    return `They have ${menu} on their menu.`
+    let output = ''
+    for (var i = 0; i < (menu.length - 1); i++) {
+      output += menu[i] + ', '
+    }
+    output = output.slice(0, -2)
+    output += ' and ' + menu[menu.length - 1]
+    return `They have ${output} on their menu.`
   }
 }
 
@@ -44,8 +63,8 @@ Maid.prototype.greet = function () {
 }
 
 var maika = new Maid('Maika', 'sadistic')
-console.log(maika.gsName)
 // Normal methods require () unlike get methods.
+console.log(maika.name)
 console.log(maika.title('Dino'))
 console.log(Maid.lookAtMenu())
 console.log(maika.greet())
