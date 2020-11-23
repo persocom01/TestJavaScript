@@ -23,6 +23,7 @@
   elements to just inherit the color for consistency. */
   background-color:black;
   color:#66ccff;
+  font-family: Arial;
   /* Overflow determines what happens when content exceeds it's container.
   It is visible by default. Hidden hides it, auto creates a scrollbar. */
   overflow:hidden;

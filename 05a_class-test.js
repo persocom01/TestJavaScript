@@ -5,8 +5,10 @@ var menu = ['coffee', 'tea']
 
 // Classes can be made in two ways, the first being class declarations.
 class Maid {
-  // All classses have a special method called constructor.
-  // It initializes the class object.
+  // All classses have a special method called a constructor. It initializes
+  // the class object.
+  // Classes can commonly accept arguments. For small numbers of aruments, this
+  // works. For larger numbers of arguments, try accepting an object instead.
   constructor (name, attribute) {
     this.name = name
     this.attrib = attribute
@@ -29,7 +31,7 @@ class Maid {
   }
 
   // A static method is one that is called using the base class instead of the
-  // class instance. In fact, calling it inside a class instance causes an error.
+  // class instance. Calling it inside a class instance causes an error.
   // Normally used for utility functions.
   static lookAtMenu () {
     return `They have ${menu} on their menu.`
@@ -41,12 +43,12 @@ Maid.prototype.greet = function () {
   return 'Welcome back, master.'
 }
 
-var mafuyu = new Maid('Mafuyu', 'sadistic')
-console.log(mafuyu.gsName)
+var maika = new Maid('Maika', 'sadistic')
+console.log(maika.gsName)
 // Normal methods require () unlike get methods.
-console.log(mafuyu.title('Dino'))
+console.log(maika.title('Dino'))
 console.log(Maid.lookAtMenu())
-console.log(mafuyu.greet())
+console.log(maika.greet())
 console.log()
 
 // Demonstrates a mixin.
@@ -86,7 +88,7 @@ var narberal = new BM('Narberal', 3)
 // Unlike normal objects, protoype properties of the subclass are automatically
 // inherited.
 console.log(narberal.greet())
-// Subclass methods overwrite baseclass methods.
+// Subclass methods overwrite base class methods.
 console.log(narberal.title('Ains'))
 // Mixin method.
 console.log(narberal.twinDragonLightning('Skeletal Dragon'))
