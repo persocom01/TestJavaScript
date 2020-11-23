@@ -3,7 +3,7 @@
 // seen in a browser.
 
 class Maid {
-  // A private class variable is defined using #, normally at the top of the
+  // A private class property is defined using #, normally at the top of the
   // class. They can only be accessed within the class itself. Subclasses are
   // also unable to access them.
   #age
@@ -22,6 +22,7 @@ class Maid {
     return this.#age
   }
 
+  // Demonstrates a private method. static methods can also be private.
   #formatArray (arr) {
     let output = ''
     for (var i = 0; i < (arr.length - 1); i++) {
