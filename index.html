@@ -11,7 +11,6 @@
         can be used to reduce the amount of css loaded.
         It is generally unnecessary to set this property. -->
         <link rel="stylesheet" media="all" href="./layout/styles/framework.css">
-        <link rel="stylesheet" href="./layout/styles/layout.css">
         <!-- JS can be put in the head or body tag.
         This affects when the script is loaded.
         Putting it just before the end of the body tag is often
@@ -29,7 +28,7 @@
           <!-- A link need not be just text. However, while it is possible
           to make an image a link, it would turns the whole image block into
           a link instead of the image itself, so exercise caution on use. -->
-          <a id="home" class="active" href="./index.html">Home</a>
+          <a class="active" href="./index.html">Home</a>
           <div class="dropdown">
             <button class="dropbtn" type="button" name="button">Tutorial links</button>
             <div class="dropdown-content">
@@ -79,7 +78,7 @@
         it easy. Class makes selecting a group of similar elements easy. -->
         <div id="NaN" class="divText"></div>
         <div id="boolean" class="divText"></div>
-        <div id="let" class="divText"></div>
+        <div id="const" class="divText"></div>
         <div id="import" class="divText"></div>
         <div id="default1" class="divText"></div>
         <div id="default2" class="divText"></div>
@@ -95,13 +94,10 @@
         <!-- Demonstrates two different ways to insert JS. Internal and external. -->
         <!-- Type indicates the type of script. The default is
         application/javascript. -->
+        <script type="text/javascript" src="99_script-aggregator.js"></script>
         <script type="application/javascript">
-            var testTitle = document.querySelector('h1');
-            testTitle.textContent = 'JavaScript test page';
+            var sa = new ScriptAggregator()
         </script>
-        <script type="text/javascript" src="01_variables-test.js"></script>
-        <script type="text/javascript" src="05b_private-class-test.js"></script>
-        <script type="text/javascript" src="12c_promiseTest.js"></script>
         <!-- type="module" is required if you want to use imported js modules.
         you also need to open file on a server instead of opening it as a file
         in a browser for it to work. Unlike typical scripts, functions in

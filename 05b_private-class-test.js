@@ -52,3 +52,5 @@ console.log(tag, maika.name)
 // console.log(maika.#age)
 console.log(tag, maika.askAge())
 console.log(tag, Maid.lookAtMenu())
+
+window.PrivateClassTest = 1

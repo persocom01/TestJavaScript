@@ -63,3 +63,5 @@ function dlImageButton () {
   // where in the chain the promise failed.
   get(url).then(blob => saveBlob(blob, fileName)).catch(err => console.error(err))
 }
+
+window.PromiseTest = 1
