@@ -26,6 +26,9 @@ class ScriptAggregator {
     if (this.logsEnabled) console.log(this.tag, msg)
   }
 
+  // Most javascript library imports create their own class object in window,
+  // which can be checked for to see if they have been loaded. For instance,
+  // opencv allows use of methods from the cv class.
   checkDependencies (deps) {
     const checkedDeps = []
     if ((typeof deps === 'object') && (Array.isArray(deps))) {
