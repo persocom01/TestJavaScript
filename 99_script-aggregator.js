@@ -28,6 +28,11 @@ class ScriptAggregator {
     if (this.logsEnabled) console.log(this.tag, msg)
   }
 
+  raiseEvent (name, data) {
+    var e = new CustomEvent('[ScriptAggregator]-' + name, { detail: data, bubbles: true, cancelable: true })
+    this.container.dispatchEvent(e)
+  }
+
   // Most javascript library imports create their own class object in window
   // properties, which can be checked for to see if they have been loaded. For
   // instance, opencv.js allows use of methods from the cv class.
@@ -111,6 +116,7 @@ class ScriptAggregator {
 
   onDependenciesLoaded () {
     this.log('Scripts loaded.')
+    this.raiseEvent('ready')
   }
 
   init () {
