@@ -20,6 +20,7 @@ class ScriptAggregator {
     this.path = p.distPath || './'
     this.logsEnabled = (typeof p.logsEnabled === 'undefined') ? true : p.logEnabled
     this.tag = '[ScriptAggregator]'
+    this.container = p.container || document.body
 
     this.init()
   }
