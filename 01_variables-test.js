@@ -52,4 +52,6 @@ if (typeof x === 'undefined') {
 // Variables can also be defined as functions using function expressions.
 // This is covered under the functions chapter.
 
+// This lines if for script aggregation purposes as it is used to tell if this
+// script has already been loaded.
 window.VariablesTest = 1

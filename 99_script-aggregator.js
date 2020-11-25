@@ -7,6 +7,8 @@ class ScriptAggregator {
       p = { text: params }
     }
 
+    // Some scripts need to be loaded before others. This is the purpose of the
+    // two step script loading process.
     this.scriptDeps1 = {}
     this.scriptDeps2 = {
       '01_variables-test': 'VariablesTest',
