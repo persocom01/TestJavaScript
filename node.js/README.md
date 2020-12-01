@@ -124,7 +124,15 @@ http://127.0.0.1:3000/
 
 ## Usage
 
-Any modules used in the app need to be defined in package.json, which looks something like this:
+By default, the html file is assumed to be located in the public folder of the webapp. This means the default paths for images, javascript and css are:
+
+```
+./images/
+./javascripts/
+./stylesheets/
+```
+
+Which have to be noted when converting html to ejs. Any modules used in the app need to be defined in package.json, which looks something like this:
 
 ```
 {
