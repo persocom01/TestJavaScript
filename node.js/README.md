@@ -124,7 +124,9 @@ http://127.0.0.1:3000/
 
 ## Usage
 
-By default, the html file is assumed to be located in the public folder of the webapp. This means the default paths for images, javascript and css are:
+### File locations
+
+The webapp assumes that the html file is run from the public folder of the webapp. This means the default paths for images, javascript and css are:
 
 ```
 ./images/
@@ -132,7 +134,23 @@ By default, the html file is assumed to be located in the public folder of the w
 ./stylesheets/
 ```
 
-Which have to be noted when converting html to ejs. Any modules used in the app need to be defined in package.json, which looks something like this:
+Which have to be noted when converting html to ejs.
+
+### Routing
+
+By default the webapp is built with a ready made index page. To add new pages, 3 things are needed:
+1. The page itself in the `views` folder with the correct extension for its templating engine, such as `page.ejs`.
+2. A routing file for the page in the `routes` folder.
+3. The following entries into the `app.js` file.
+
+```
+var pageRouter = require('./routes/page');
+app.use('/page', pageRouter);
+```
+
+### Adding node.js modules
+
+Any modules used in the app need to be defined in package.json, which looks something like this:
 
 ```
 {
