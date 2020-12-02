@@ -30,6 +30,10 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 
+// Deals with post requests to the upload page. Normally, a submit button will
+// route to a different url with it's own router.post() method, but it is
+// possible to have it route to the same page. If more than one form exists,
+// processing it this way will be confusing though.
 router.post('/', upload.single('csv_file'), function (req, res, next) {
   const file = req.file
   if (!file) {
