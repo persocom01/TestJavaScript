@@ -139,12 +139,16 @@ Which have to be noted when converting html to ejs.
 ### Routing
 
 By default the webapp is built with a ready made index page. To add new pages, 3 things are needed:
-1. The page itself in the `views` folder with the correct extension for its templating engine, such as `page.ejs`.
+1. The page itself in the `views` folder.
+The page should have the correct extension for its templating engine, such as `page.ejs`.
 2. A routing file for the page in the `routes` folder.
-3. The following entries into the `app.js` file.
+More detail on how this works in the file itself.
+3. The following entries in the `app.js` file.
 
 ```
+<!-- Initializes the file in the routes folder -->
 var pageRouter = require('./routes/page');
+<!-- Sets the url that triggers the route file. -->
 app.use('/page', pageRouter);
 ```
 
