@@ -177,7 +177,6 @@ Any modules used in the app need to be defined under dependencies in package.jso
 
 ### Useful modules
 
-* "body-parser": "~1.19.0" - required to read from text data.
-* "multer": "~1.4.2" - bodyparser but for form enctype="multipart/form-data".
+* "multer": "~1.4.2" - for form enctype="multipart/form-data".
 * "axios": "~0.19.2" - the node version of the python requests module.
 * "mariadb": "~2.4.0"
