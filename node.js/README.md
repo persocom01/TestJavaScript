@@ -152,9 +152,9 @@ var pageRouter = require('./routes/page');
 app.use('/page', pageRouter);
 ```
 
-### Adding node.js modules
+## Adding node.js modules
 
-Any modules used in the app need to be defined in package.json, which looks something like this:
+Any modules used in the app need to be defined under dependencies in package.json, which looks something like this:
 
 ```
 {
@@ -170,10 +170,14 @@ Any modules used in the app need to be defined in package.json, which looks some
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1",
-    "multer": "~1.4.2",
-    "axios": "~0.19.2",
-    "mariadb": "~2.4.0"
+    "morgan": "~1.9.1"
   }
 }
 ```
+
+### Useful modules
+
+* "body-parser": "~1.19.0" - required to read from text data.
+* "multer": "~1.4.2" - bodyparser but for form enctype="multipart/form-data".
+* "axios": "~0.19.2" - the node version of the python requests module.
+* "mariadb": "~2.4.0"
