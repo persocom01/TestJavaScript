@@ -9,7 +9,9 @@ class ScriptAggregator {
 
     // Some scripts need to be loaded before others. This is the purpose of the
     // two step script loading process.
-    this.scriptDeps1 = {}
+    this.scriptDeps1 = {
+      'jQuery/jquery-3.5.1.min': 'jQuery'
+    }
     this.scriptDeps2 = {
       '01_variables-test': 'VariablesTest',
       '05b_private-class-test': 'PrivateClassTest',

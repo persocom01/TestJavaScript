@@ -31,10 +31,15 @@ express -v pug webapp_folder
 ```
 cd webapp_folder
 npm install
+<!-- cmd -->
 SET DEBUG=webapp:* & npm start
+<!-- powershell -->
+SET DEBUG=webapp:*; npm start
+<!-- bash -->
+DEBUG=webapp:* npm start
 ```
 
-SET DEBUG allows you to see what requests are being sent to the server, otherwise `npm start` is sufficient. The name `webapp` comes from the name property of `package.json` npm install creates. Access the webapp by going to the browser and entering the following into the address bar:
+`SET DEBUG` allows you to see what requests are being sent to the server, otherwise `npm start` is sufficient. The name `webapp` comes from the name property of `package.json` npm install creates. Access the webapp by going to the browser and entering the following into the address bar:
 
 ```
 http://localhost:3000/
