@@ -117,7 +117,7 @@ express -v pug webapp_folder
 ```
 cd webapp_folder
 npm install
-SET DEBUG=webapp_folder:* $ npm start
+DEBUG=webapp_folder:* && npm start
 ```
 
 SET DEBUG allows you to see what requests are being sent to the server. Access it by going to the browser and entering the following into the address bar:
@@ -184,4 +184,4 @@ Any modules used in the app need to be defined under dependencies in package.jso
 
 * "multer": "~1.4.2" - for form enctype="multipart/form-data".
 * "axios": "~0.19.2" - the node version of the python requests module.
-* "mariadb": "~2.4.0"
+* "mariadb": "~2.4.2"

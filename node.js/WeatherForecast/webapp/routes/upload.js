@@ -18,7 +18,8 @@ router.get('/', function (req, res, next) {
   res.render('upload', { title: 'Upload Data', status_color: 'color:black;', status_text: '_' })
 })
 
-// SET STORAGE
+// Set storage location.
+// cb stands for callback.
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './tmp')
