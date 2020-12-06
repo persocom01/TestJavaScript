@@ -3,7 +3,6 @@ var router = express.Router()
 var multer = require('multer')
 var { spawn } = require('child_process')
 var axios = require('axios')
-var pythonData
 
 async function getApiData (options, res) {
   try {
@@ -43,6 +42,7 @@ router.post('/', upload.single('csv_file'), function (req, res, next) {
   }
   // use spawn('python3', ['./upload_data.py']) on ubuntu.
   const python = spawn('python', ['./upload_data.py'])
+  let pythonData
   python.stdout.on('data', function (data) { pythonData = data.toString() })
   python.on('close', code => res.render('upload', { title: 'Upload Data', status_color: 'color:white;', status_text: pythonData }))
 })
