@@ -17,8 +17,7 @@ sudo apt-get install gunicorn3
 
 cd inp-one-dil-virtual-lab/WeatherForecast/webapp
 npm install
-pm2 --name webapp start npm -- start
+pm2 -n webapp start npm -- start
 cd ..
 cd flaskapp
 gunicorn3 -b 0.0.0.0:5000 -w 4 api:app --timeout 180 --daemon
-

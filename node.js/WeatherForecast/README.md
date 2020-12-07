@@ -46,6 +46,14 @@ chmod 774 ./setup.sh
 ./setup.sh
 ```
 
+Note that a bash .sh will contain bad character ^M if written in windows. To prevent this, write the file in git bash by entering:
+
+```
+vim -b setup.sh
+```
+
+Press i for insert, :w to save and :q to quit.
+
 ## Stopping service
 
 You may stop services on the server by entering:
