@@ -157,6 +157,16 @@ var pageRouter = require('./routes/page');
 app.use('/page', pageRouter);
 ```
 
+### Changing port
+
+Open the `www.js` file in the `bin` folder and change the following line:
+
+```
+var port = normalizePort(process.env.PORT || '3000');
+```
+
+Change 3000 to the desired port.
+
 ## Adding node.js modules
 
 Any modules used in the app need to be defined under dependencies in package.json, which looks something like this:
