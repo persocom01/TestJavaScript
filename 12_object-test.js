@@ -1,5 +1,7 @@
 // Demonstrates use of an object in JS. Objects are the javascript equivalent
-// of python dictionaries, with a few exceptions.
+// of python dictionaries, with a few exceptions. When JS is run in a browser,
+// the window object is present by default. console.log(this.property) refers
+// to this object in the absence of any other context.
 
 // Objects are a reference type in JS. In practical terms, this means two
 // objects are never equal. Unlike python, all object keys are converted to
@@ -29,18 +31,26 @@ console.log()
 // this is covered under prototypeTest.
 var cafe = {
   // Demonstrates a getter method. Getters take no arguments.
-  // The advantage seems to be that calling this method uses cafe.getMenu
-  // instead of cafe.getMenu().
+  // Calling this method uses cafe.getMenu instead of cafe.getMenu().
   get getMenu () {
     // Demonstrates use of a template referencing an object property.
     return `We have ${this.menu} on our menu, master.`
   },
   // Demonstrates a get set pair, which use the same method name.
-  set gsName (name) {
-    this.name = name
+  // This pair is also made to set the property of the same name. When doing so
+  // the property must be refered to as this._propertyname, or a RangeError
+  // will occur.
+  set name (name) {
+    // Using a method to set object properties is recommended as one is able to
+    // perform things like input validation.
+    if (typeof name === 'string') {
+      this._name = name
+    } else {
+      console.log('name must be a string')
+    }
   },
-  get gsName () {
-    return this.name
+  get name () {
+    return this._name
   },
   // Demonstrates how to define a 'normal' object property.
   industry: { value: 'service' },
@@ -57,7 +67,7 @@ var cafe = {
   }
 }
 
-// Demonstrates how to set the above getMenu and gsName methods after the
+// Demonstrates how to set the above getMenu and name methods after the
 // object is defined instead of when it is defined.
 // If you comment out the whole section below, the section aboves should work
 // the exact same way.
@@ -73,12 +83,16 @@ Object.defineProperties(cafe, {
       return `We have ${this.menu} on our menu, master.`
     }
   },
-  gsName: {
+  name: {
     set: function (name) {
-      this.name = name
+      if (typeof name === 'string') {
+        this._name = name
+      } else {
+        console.log('name must be a string')
+      }
     },
     get: function () {
-      return this.name
+      return this._name
     }
   }
 })
@@ -89,7 +103,7 @@ var i = 0
 // It is said to be easier to extend the properties of a base object this way.
 var stile = Object.create(cafe, {
   name: {
-    // Note the somewhat convoluted of setting the value of an object property.
+    // Note the somewhat convoluted way in which an object property is set.
     value: 'Stile',
     // However, it is possible to set property attributes
     // enumerable, writable, or configurable more easily this way.
@@ -134,9 +148,9 @@ console.log('property:', stile.maids)
 console.log('property sq:', stile['takeOrder']('cola'))
 // The get method doesn't require ().
 console.log('get method:', stile.getMenu)
-// Set methods use = instead of .gsName(name).
-stile.gsName = 'Wagnaria'
-console.log('set method:', stile.gsName)
+// Set methods use = instead of .name(name).
+stile.name = 'Wagnaria'
+console.log('set method:', stile.name)
 // Demonstrates access of nested object in object.
 // Also demonstrates use of numerical keys, which can be accessed using obj[num].
 console.log('property num:', stile.maids[1])
@@ -153,21 +167,23 @@ var objContinued = {
 
 }
 
-// Unusual keys can still be retrieve the same way as numberical keys.
+// Unusual keys can still be retrieve the same way as numerical keys.
 console.log(objContinued[''])
 console.log(objContinued['!'])
 console.log(objContinued.printMethod())
 console.log()
 
 // Demonstrates copying and merging objects.
-// It is possible to use sprad properties to do this but this method works
-// for node.js.
+// It is possible to use spread properties to do this but this method works
+// for older versions of node.js.
 var target = { a: '1', b: '2' }
 var source = { b: '2', c: '3' }
 var clonedObj = Object.assign({}, source)
 var mergedObj = Object.assign(target, source)
+var spreadMerge = { ...target, ...source }
 console.log(clonedObj)
 console.log(mergedObj)
+console.log(spreadMerge)
 console.log()
 
 // Demonstrates turning object elements into individual variables.
