@@ -14,16 +14,22 @@ are written this way. */
 // document.querySelector('selector') takes in CSS Selectors as argument.
 // For a full list go to https://www.w3schools.com/cssref/css_selectors.asp
 // In this case #NaN selects the first element with id="NaN".
+// document.getElementById('id') is an alternative that only applies to ids.
+// document.getElementsByClassName('class') can be used for classes. However,
+// it returns multiple results, unlike querySelector(), so it is more
+// accurately an alternative to querySelectorAll().
 var $text, title; document.querySelector('#NaN').textContent = $text + 1
 
-title = document.querySelector('h1')
+// For selections that can potentially return multiple results, querySelector()
+// only returns the first one. To get all of them, use querySelectorAll()
+title = document.querySelectorAll('h1')
 // .textContent inserts text into the label without recognizing html. If you
 // wish to write html into the label, use .innerHTML instead.
 // .innerText is similar to .textContent but when used to get the contents of
 // a label though document.querySelector(), does not return the contents of
 // script and style elements. It also notably does not return text that has
 // been hidden by <span style="display:none;">
-title.innerText = 'JavaScript test page'
+title[0].innerText = 'JavaScript test page'
 
 // Variables can be declared and given a value immediately.
 var boo = 123
