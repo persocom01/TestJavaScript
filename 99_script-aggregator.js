@@ -17,7 +17,7 @@ class ScriptAggregator {
       '05b_private-class-test': 'PrivateClassTest',
       '12c_promise-test': 'PromiseTest'
     }
-    this.cssDeps = ['./layout/styles/layout']
+    this.cssDeps = ['./stylesheets/all', './stylesheets/layout']
 
     this.path = p.distPath || './'
     this.logsEnabled = (typeof p.logsEnabled === 'undefined') ? true : p.logEnabled

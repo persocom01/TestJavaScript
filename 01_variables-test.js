@@ -21,7 +21,8 @@ are written this way. */
 var $text, title; document.querySelector('#NaN').textContent = $text + 1
 
 // For selections that can potentially return multiple results, querySelector()
-// only returns the first one. To get all of them, use querySelectorAll()
+// only returns the first one. To get all of them as a list, use
+// querySelectorAll().
 title = document.querySelectorAll('h1')
 // .textContent inserts text into the label without recognizing html. If you
 // wish to write html into the label, use .innerHTML instead.
