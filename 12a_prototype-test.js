@@ -25,8 +25,13 @@ function Maid (name, age, b, w, h) {
   this.h = h || ''
   // Demonstrates an arrow function expression.
   // This one is equivalent to: function () { return this.age++ }
-  // Using an anonymous function means this.age refers to this.age in the
-  // outer function.
+  // Using an anonymous function has the unique property of preserving the
+  // context of the outer function. This means that this refers to the outer
+  // function instead of itself. An alternative way to replicate this behaviour
+  // is to use .bind():
+  // this.growup = this.growup.bind(this);
+  // This ensures that this in a named function does not refer to the function
+  // itself, but its outer context.
   this.growup = () => this.age++
 }
 
