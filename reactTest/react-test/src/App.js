@@ -15,47 +15,74 @@ function TestLink(props) {
     // <div></div>
     // <div></div>
     // If you don't want to use a parent tag, you can use:
-    // <React.Fragment></React.Fragment>
-    // instead, or its short hand:
+    // <React.Fragment key={var}></React.Fragment>
+    // When using React.Fragment, one can also pass it a key attribute whereby
+    // the fragment will return a key warning. error if it is not present. React.Fragment
+    // can also be written in short hand without key like this:
     // <></>
     <div>
       {/* Commenting within html tags in JSX must be done this way.*/}
       <a href={props.href}>{props.text}</a>
     </div>
-    <div>
-    </div>
   )
 }
 
-function App(user) {
-  if (user.name) {
-    return (
-      <div className="App">
-        hello {user.name}
-        {/* The main function can reference other functions in the same file.*/}
-        <TestLink href="./test.html" text="test link"/>
-      </div>
-
-    );
-  }
-  return (
-    <div className="App">
-      hello world
-      <TestLink href="./test.html" text="test link"/>
-    </div>
-  );
-}
-
-// class App extends React.Component {
-//   render() {
+// function App(user) {
+//   if (user.name) {
 //     return (
 //       <div className="App">
-//         hello world
+//         hello {user.name}
+//         {/* The main function can reference other functions in the same file.*/}
 //         <TestLink href="./test.html" text="test link"/>
 //       </div>
-//     )
+//     );
 //   }
+//   return (
+//     <div className="App">
+//       hello world
+//       <TestLink href="./test.html" text="test link"/>
+//     </div>
+//   );
 // }
 
+// Alternatively, write:
+// import {Component} from 'react';
+// at the top of the app. This allows you to use:
+// class App extends Component {}
+// instead.
+class App extends React.Component {
+  constructor(user) {
+    super(user);
+  }
+
+  if (user.name) {
+    render() {
+      return (
+        <div className="App">
+          hello {user.name}
+          {/* The main function can reference other functions in the same file.*/}
+          <TestLink href="./test.html" text="test link"/>
+        </div>
+      );
+    }
+  }
+  render() {
+    return (
+      <div className="App">
+        hello world
+        <TestLink href="./test.html" text="test link"/>
+      </div>
+    )
+  }
+  // render() {
+  //   return (
+  //     <div className="App">
+  //       hello world
+  //       <TestLink href="./test.html" text="test link"/>
+  //     </div>
+  //   )
+  // }
+
+}
 
 export default App;
