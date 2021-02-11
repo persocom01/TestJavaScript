@@ -19,7 +19,13 @@ react does not accept names with caps.
 
 ## Usage
 
-In the react app folder, the `src` folder contains the files for the react components.
+The react app contains two folders:
+
+1. The `src` folder.
+This folder contains react files and supporting files like images and css. The main file here is `index.js` which uses the `App.js` component. All assets used by react during compilation should be included in this. While the default app structure does not separate react.js files from images and css, it is good practice to do so.
+
+2. The `public` folder.
+This folder contains the actual html page `index.html`. Any files not used by react but referenced by the html files in this folder should go into this folder.
 
 ### JSX
 
@@ -36,7 +42,7 @@ function helloUser(user) {
   if (user) {
     return (
       <div className="App">
-        hello {user}
+        hello {user.name}
       </div>
     );
   }

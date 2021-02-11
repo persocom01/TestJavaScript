@@ -187,8 +187,9 @@ console.log(spreadMerge)
 console.log()
 
 // Demonstrates turning object elements into individual variables.
-// {var} must be a property of the target. You can choose to retrieve a subset
-// of object properties instead of all of them.
+// {var} must be a property of the target. Most commonly seen in import
+// statements when importing part of a library in the form:
+// import {component} from 'library-path'
 var { a, c } = target
 // Demonstrates renaming the individual elements.
 // Also demonstrates giving a default value to alpha, which in this case
