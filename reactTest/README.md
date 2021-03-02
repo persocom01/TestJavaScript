@@ -31,11 +31,13 @@ This folder contains the actual html page `index.html`. Any files not used by re
 
 JavaScript (JS) files in react are written in a language called JSX, which is a syntax extension to JS. It is basically a merger between html and JS such that one can use html tags in a JS file without passing it as a string. The things of note about JSX are as follows:
 
-1. Because class is a reserved keyword in JS, html tags in JSX use className instead.
+1. Because `class` is a reserved keyword in JS, html tags in JSX use `className` instead.
 
-2. {var} can be used to insert code into JSX html blocks much like python f-strings.
+2. Because `for` is a reserved keyword in JS, html tags in JSX use `htmlFor` instead.
 
-These two features are demonstrated below:
+3. `{var}` can be used to insert variables into JSX html blocks much like python f-strings.
+
+Two of these features are demonstrated below:
 
 ```
 function helloUser(user) {

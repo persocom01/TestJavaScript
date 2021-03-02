@@ -2,23 +2,32 @@
 // Allows use of: class App extends Component {}
 // instead of: class App extends React.Component {}
 import React from 'react';
+// Allows use of state hooks in function components. Can also be written as a
+// one liner with the above import:
+// import React, {useState} from 'react';
+import {useState} from 'react';
 
 // Add new webpages to react. Files are assumed to .js by default.
-import NewPage from './newPage';
+// import NewPage from './newPage';
 
 import logo from './images/logo.svg';
 import './stylesheets/App.css';
 
 // Arguments passed to react function components are always passed as objects.
-// As such, reference specific object properties to get the value of the
-// argument passed.
-// is not allowed.
-function SayHello(user) {
-  // Demonstrates setting a defualt value. In react, input properties are read
+// As such, you normally need to reference specific object properties to get
+// the value of the argument passed. You can shortcut this using JS
+// destructuring syntax as demonstrated later.
+function SayHello(prop) {
+  // Demonstrates setting a default value. In react, input properties are read
   // only and cannot be modified. For example:
   // props.sum = props.sum + var
   // would be invalid. This is why a new variable needs to be defined.
-  const userName = user.name || 'world'
+  let userName = prop.name || 'world';
+  // Demonstrates the use of state hooks.
+  // Note that useState(initialState) returns an array containing the current
+  // state as well as a function with which to change the state. The function
+  // can be called using functionName(newState).
+  const [name, setName] = useState(userName);
   // All react components may only have a single tag at the highest level.
   // This means, for example, that you cannot return:
   // <div></div>
@@ -31,65 +40,48 @@ function SayHello(user) {
   // <></>
   return (
     <div>
-      {/* Commenting within html tags in JSX must be done this way.*/}
-      hello {user.name}
+      {/* Commenting within html tags in JSX must be done this way. */}
+      hello {name}
+    </div>
+  )
+}
+
+function handleUserChange(e) {
+  console.log(e.target.value)
+}
+
+// Demonstrates use of JS destructuring syntax to reference the object property
+// directly using the property name as well as set its default value.
+// {placeholder} gets the value of the placeholder property from the object
+// passed.
+function InputBox({placeholder='type text here'}) {
+  return (
+    <div>
+      {/* onChange returns a synthetic event with properties such as:
+        name, value */}
+      <input type="text" name="user" placeholder={placeholder} onChange={handleUserChange}/>
     </div>
   )
 }
 
 function TestLink(props) {
+  // Demonstrates an if statement in a function component.
   if (props.href && props.text) {
     return (<div><a href={props.href}>{props.text}</a></div>)
   }
   return (<div>insufficient link parameters</div>)
 }
 
-// function App(user) {
-//   return (
-//     <div className="App">
-//       {/* Function can reference other functions in the same file.*/}
-//       <SayHello name={user.name}/>
-//       <img src={logo} className="App-logo" alt="logo"/>
-//       <TestLink href="./new-page.html" text="test link"/>
-//     </div>
-//   )
-// }
-
-// Below is the class version of a react function component. Prior to the
-// introduction of state and effect hooks in React 16.8, function components
-// were inferior to class components in functionality. Currently, it is hinted
-// that function components may confer performance advantages over class
-// components.
-
-class App extends React.Component {
-  constructor(user) {
-    // Any class component with a constructor must call the super function.
-    super(user);
-    // You can define default values if needed here.
-    this.userName = user.name
-  }
-
-  render() {
-    // If if is needed, it is defined inside the render block:
-
-    // if (this.userName) {
-    //   return (
-    //     <div className="App">
-    //       <SayHello name={this.userName}/>
-    //       <img src={logo} className="App-logo" alt="logo"/>
-    //       <TestLink href="./new-page.html" text="test link"/>
-    //     </div>
-    //   )
-    // }
-
-    return (
-      <div className="App">
-        <SayHello name={this.userName}/>
-        <img src={logo} className="App-logo" alt="logo"/>
-        <TestLink href="./new-page.html" text="test link"/>
-      </div>
-    )
-  }
+function App(props) {
+  return (
+    <div className="App">
+      {/* Function can reference other functions in the same file.*/}
+      <SayHello name={props.name}/>
+      <img src={logo} className="App-logo" alt="logo"/>
+      <InputBox placeholder="type text here"/>
+      <TestLink href="./new-page.html" text="test link"/>
+    </div>
+  )
 }
 
 export default App;
