@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './stylesheets/index.css';
 import App from './App';
+import AppClass from './AppClass';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App name="John"/>
-    <App />
+    <App name="John" />
+    <AppClass />
   </React.StrictMode>,
   document.getElementById('root')
 );
