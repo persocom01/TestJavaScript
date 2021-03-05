@@ -37,33 +37,20 @@ JavaScript (JS) files in react are written in a language called JSX, which is a 
 
 3. `{var}` can be used to insert variables into JSX html blocks much like python f-strings.
 
-Two of these features are demonstrated below:
+4. `event.preventDefault()` must be called to prevent default browser behavior instead of `return false`.
+
+Three of these features are demonstrated below:
 
 ```
-function helloUser(user) {
-  if (user) {
-    return (
-      <div className="App">
-        hello {user.name}
-      </div>
-    );
+function ClickMe() {
+  const handleClick = e => {
+    e.preventDefault()
+    console.log('I was clicked!')
   }
   return (
-    <div className="App">
-      hello world
-    </div>
-  );
-}
-```
-
-
-
-```
-function App() {
-  return (
-    <div className="App">
-      hello world
-    </div>
+    <a href="#" onClick={handleClick}>
+      Click me
+    </a>
   );
 }
 ```
