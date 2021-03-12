@@ -64,10 +64,9 @@ class TestInputBox extends React.Component {
     // in state. This is because react checks for changes in state every time
     // an event occurs.
     this.state = {
-      // Equivalent of:
-      // this.state.input = user.input
       input: props.input
     }
+
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -99,44 +98,27 @@ class TestLink extends React.Component {
 
 class AppClass extends React.Component {
   constructor(props) {
-    // Any class component with a constructor must call the super function.
     super(props)
-    // You can define default values if needed here.
-    this.userId = props.id || '007'
 
     this.state = {
-      // Equivalent of this.state.name = user.name || 'world'
-      name: props.name || 'world',
       clockwise: true
     }
-
-
-    // this.SayHello = this.SayHello.bind(this);
   }
 
-  // SayHello(name) {
-  //   name = name || 'world'
-  //
-  // }
+  // Demonstrates defining a method without binding.
+  reverseSpin = () => {
+    this.setState({
+      clockwise: !this.state.clockwise
+    })
+  }
 
   render() {
-
-    // if (this.userName) {
-    //   return (
-    //     <div className="App">
-    //       <sayHello name={this.state.userName}/>
-    //       <img src={logo} className="App-logo" alt="logo"/>
-    //       <testLink href="./new-page.html" text="test link"/>
-    //     </div>
-    //   )
-    // }
-
     return (
       <div className="App">
         {/* Note that userName is a property of state. */}
         <SayHello name={this.state.name}/>
         <img src={logo} className={"App-logo" + (this.state.clockwise ? "" : " reverse")} alt="logo"/>
-        <div><Button value="reverse spin" onClick=""/></div>
+        <div><Button value="reverse spin" onClick={this.reverseSpin}/></div>
         <TestInputBox placeholder="type text here"/>
         <div><TestLink href="./new-page.html" value="test link"/></div>
       </div>

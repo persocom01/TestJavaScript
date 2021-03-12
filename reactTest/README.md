@@ -35,11 +35,13 @@ JavaScript (JS) files in react are written in a language called JSX, which is a 
 
 2. Because `for` is a reserved keyword in JS, html tags in JSX use `htmlFor` instead.
 
-3. `{var}` can be used to insert variables into JSX html blocks much like python f-strings.
+3. html `onclick` is camel case `onClick` instead.
 
-4. `event.preventDefault()` must be called to prevent default browser behavior instead of `return false`.
+4. `{var}` can be used to insert variables into JSX html blocks much like python f-strings.
 
-Three of these features are demonstrated below:
+5. `event.preventDefault()` must be called to prevent default browser behavior instead of `return false`.
+
+Four of these features are demonstrated below:
 
 ```
 function ClickMe() {
@@ -53,4 +55,12 @@ function ClickMe() {
     </a>
   );
 }
+```
+
+### Commands
+
+In windows, to run the dev server in https mode, enter:
+
+```
+set HTTPS=true&&npm start
 ```
