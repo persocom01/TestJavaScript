@@ -37,22 +37,25 @@ JavaScript (JS) files in react are written in a language called JSX, which is a 
 
 3. html `onclick` is camel case `onClick` instead.
 
-4. `{var}` can be used to insert variables into JSX html blocks much like python f-strings.
+4. To make input checkboxes checked by default, instead of using the `checked` property, use `defaultChecked={true}`
 
-5. `event.preventDefault()` must be called to prevent default browser behavior instead of `return false`.
+5. `{var}` can be used to insert variables into JSX html blocks much like python f-strings.
 
-Four of these features are demonstrated below:
+6. `event.preventDefault()` must be called to prevent default browser behavior instead of `return false`.
+
+These features are demonstrated below:
 
 ```
-function ClickMe() {
+function CheckedBox() {
   const handleClick = e => {
     e.preventDefault()
     console.log('I was clicked!')
   }
   return (
-    <a href="#" onClick={handleClick}>
-      Click me
-    </a>
+    <input type="checkbox" name="example-checkbox" onClick={handleClick} defaultChecked={true} />
+    <label htmlFor="tableview-checkbox">
+      Checked by default
+    </label>
   );
 }
 ```
