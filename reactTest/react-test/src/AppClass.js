@@ -16,22 +16,19 @@ import logo from './images/logo.svg';
 import './stylesheets/App.css';
 
 class SayHello extends React.Component {
-  // Demonstrates calling the constructor in a react class component. Generally,
-  // there is no need to call the constructor, unless you wish to make use of
-  // states or bind.
-  constructor(props) {
-    // Any class component with a constructor must call the super function.
-    super(props)
-  }
   // By default, the props object contains any arguments passed to the
-  // component. Access them through this.props.propertyName.
+  // component. Access them through this.props.propertyName
   render() {
     return <div>hello {this.props.name || 'world'}</div>
   }
 }
 
 class Button extends React.Component {
+  // Demonstrates calling the constructor in a react class component. Generally,
+  // there is no need to call the constructor, unless you wish to make use of
+  // states or bind.
   constructor(props) {
+    // Any class component with a constructor must call the super function.
     super(props)
     // Demonstrates the bind method. This makes it such that any reference to
     // this refers to properties in the parent class instead of the method
@@ -52,6 +49,27 @@ class Button extends React.Component {
   }
 }
 
+class CheckBox extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick(e) {
+    if (!this.props.disabled && this.props.onClick) this.props.onClick(e)
+  }
+
+  render() {
+    return (
+      <>
+        <input type="checkbox" name={this.props.name} onClick={this.props.onClick} defaultChecked={this.props.defaultChecked} />
+        <label htmlFor={this.props.name}>{this.props.value}</label>
+      </>
+    )
+  }
+
+}
+
 class TestInputBox extends React.Component {
   constructor(props) {
     super(props)
@@ -64,24 +82,44 @@ class TestInputBox extends React.Component {
     // in state. This is because react checks for changes in state every time
     // an event occurs.
     this.state = {
-      input: props.input
+      user: '',
+      password: ''
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.doLogin = this.doLogin.bind(this)
   }
 
   handleChange(e) {
+    // Demonstrates how setState can be made generic. The typical
+    // inplementation setState can be found under the App function.
     this.setState({
-      input: e.target.value
+      // e.target.name will return the name of the state variable being
+      // modified by value.
+      [e.target.name]: e.target.value
     });
-    console.log(e.target.value)
+  }
+
+  doLogin() {
+    const s = `
+    Login attempt
+    user: ${this.state.user}
+    password: ${this.state.password}
+    `
+    console.log(s)
   }
 
   render() {
     return (
-      <div>
-        <input type={this.props.type} name="user" placeholder={this.placeholder} onChange={this.handleChange} value={this.state.input}/>
-      </div>
+      <>
+        <div>
+          <input name="user" placeholder={this.placeholder} onChange={this.handleChange} value={this.state.user}/>
+        </div>
+        <div>
+          <input name="password" placeholder={this.placeholder} onChange={this.handleChange} value={this.state.password}/>
+        </div>
+        <Button value="Login" onClick={this.doLogin} />
+      </>
     )
   }
 }
@@ -118,7 +156,7 @@ class AppClass extends React.Component {
         {/* Note that userName is a property of state. */}
         <SayHello name={this.state.name}/>
         <img src={logo} className={"App-logo" + (this.state.clockwise ? "" : " reverse")} alt="logo"/>
-        <div><Button value="reverse spin" onClick={this.reverseSpin}/></div>
+        <div><CheckBox value="reverse spin" onClick={this.reverseSpin}/></div>
         <TestInputBox placeholder="type text here"/>
         <div><TestLink href="./new-page.html" value="test link"/></div>
       </div>

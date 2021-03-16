@@ -1,2 +1,3 @@
 # Custom exceptions
 00_test.*
+*.eslintcache

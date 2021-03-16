@@ -44,23 +44,49 @@ function Button(props) {
   )
 }
 
+function CheckBox(props) {
+  const handleClick = e => {
+    if (!props.disabled && props.onClick) props.onClick(e)
+  }
+  return (
+    <>
+      <input type="checkbox" name={props.name} onClick={props.onClick} defaultChecked={props.defaultChecked} />
+      <label htmlFor={props.name}>{props.value}</label>
+    </>
+  )
+}
+
 // Demonstrates use of JS destructuring syntax to reference object properties
 // directly as well as setting their default value.
 // {type} gets the value of the type property from the object passed.
 function TestInputBox({type, placeholder='type text here'}) {
-  const [input, setInput] = useState('')
+  // Demonstrates the state hook version of a generic setState. The typical
+  // inplementation of state hooks can be found under the App function. By
+  // defining multiple state hooks as a single object, the handleChange
+  // function to be made applicable across multiple states.
+  let inputStates = {
+    user: useState(''),
+    password: useState('')
+  }
   // React function components that use JSX need to be in PascalCase or an error
   // will occur. However, event handler functions are written in camelCase.
   function handleChange(e) {
-    setInput(e.target.value)
+    // e.target.name will return the value of the name property of the element
+    // which triggered the event, much like props.name is to react components.
+    inputStates[e.target.name][1](e.target.value)
     console.log(e.target.value)
   }
   return (
-    <div>
-      {/* onChange returns a synthetic event with properties such as:
+    <>
+      <div>
+        {/* onChange returns a synthetic event with properties such as:
         name, value */}
-      <input type={type} name="user" placeholder={placeholder} onChange={handleChange} value={input}/>
-    </div>
+        <input name="user" placeholder={placeholder} onChange={handleChange} value={inputStates.user[0]}/>
+      </div>
+      <div>
+        <input name="password" placeholder={placeholder} onChange={handleChange} value={inputStates.password[0]}/>
+      </div>
+    </>
   )
 }
 
@@ -75,9 +101,9 @@ function TestLink(props) {
 
 function App(props) {
   // Demonstrates the use of state hooks.
-  // Note that useState(initialState) returns an array containing the current
-  // state as well as a function with which to change the state. The function
-  // can be called using functionName(newState).
+  // useState(initialState) returns an array containing the current value of
+  // the state as well as a function with which to change the value. The
+  // function can be called using functionName(newState).
   const [clockwise, setClockwise] = useState(true)
   const reverseSpin = () => setClockwise(!clockwise)
   return (
@@ -86,7 +112,7 @@ function App(props) {
       <SayHello name={props.name}/>
       {/* Demonstrates conditional classes based on state.*/}
       <img src={logo} className={"App-logo" + (clockwise ? "" : " reverse")} alt="logo"/>
-      <div><Button value="reverse spin" onClick={reverseSpin}/></div>
+      <div><CheckBox value="reverse spin" onClick={reverseSpin}/></div>
       <TestInputBox placeholder="type text here"/>
       <div><TestLink href="./new-page.html" value="test link"/></div>
     </div>
