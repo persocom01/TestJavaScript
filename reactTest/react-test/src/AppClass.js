@@ -75,7 +75,8 @@ class TestInputBox extends React.Component {
     // an event occurs.
     this.state = {
       user: '',
-      password: ''
+      password: '',
+      errorMsg: ''
     }
 
     // Demonstrates the bind method. This makes it such that any reference to
@@ -108,7 +109,9 @@ password: ${password}
     if (isUser && isPassword) {
       console.log('login successful')
     } else {
-      console.log('invalid user or password')
+      this.setState({
+        errorMsg: 'you = u and password = pw'
+      })
     }
   }
 
@@ -121,7 +124,8 @@ password: ${password}
         <div>
           <input name="password" placeholder={this.placeholder} onChange={this.handleChange} value={this.state.password}/>
         </div>
-        <Button value="Login" onClick={this.doLogin} />
+        <div><Button value="Login" onClick={this.doLogin} /></div>
+        {this.state.errorMsg && <div>{this.state.errorMsg}</div>}
       </>
     )
   }
