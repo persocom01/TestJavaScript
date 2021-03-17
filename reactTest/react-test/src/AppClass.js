@@ -15,24 +15,16 @@ import React from 'react';
 import logo from './images/logo.svg';
 import './stylesheets/App.css';
 
-class SayHello extends React.Component {
-  // By default, the props object contains any arguments passed to the
-  // component. Access them through this.props.propertyName
-  render() {
-    return <div>hello {this.props.name || 'world'}</div>
-  }
-}
+// Demonstrates calling the constructor in a react class component. Generally,
+// there is no need to call the constructor, unless you wish to make use of
+// states or bind. To access any arguments passed to the component, one can
+// simply reference the props object without calling the constructor:
+// this.props.propertyName
+// As such, the only necessary component is render()
 
 class Button extends React.Component {
-  // Demonstrates calling the constructor in a react class component. Generally,
-  // there is no need to call the constructor, unless you wish to make use of
-  // states or bind.
   constructor(props) {
-    // Any class component with a constructor must call the super function.
     super(props)
-    // Demonstrates the bind method. This makes it such that any reference to
-    // this refers to properties in the parent class instead of the method
-    // itself. Alternatively, all methods can be written as arrow methods.
     this.handleClick = this.handleClick.bind(this)
   }
 
@@ -62,20 +54,20 @@ class CheckBox extends React.Component {
   render() {
     return (
       <>
-        <input type="checkbox" name={this.props.name} onClick={this.props.onClick} defaultChecked={this.props.defaultChecked} />
+        <input type="checkbox" name={this.props.name} onClick={this.handleClick} defaultChecked={this.props.defaultChecked} />
         <label htmlFor={this.props.name}>{this.props.value}</label>
       </>
     )
   }
-
 }
 
 class TestInputBox extends React.Component {
   constructor(props) {
+    // Any class component with a constructor must call the super function.
     super(props)
     // One way to define default values is using the constructor. Note that
-    // properties here are accessed using props.propertyName and not
-    // this.props.propertyName
+    // argument properties are passed to this object using props.propertyName
+    // and not this.props.propertyName
     this.placeholder = props.placeholder || 'type text here'
 
     // It is recommended that all properties that affect rendering be defined
@@ -86,6 +78,9 @@ class TestInputBox extends React.Component {
       password: ''
     }
 
+    // Demonstrates the bind method. This makes it such that any reference to
+    // this refers to properties in the parent class instead of the method
+    // itself. Alternatively, all methods can be written as arrow methods.
     this.handleChange = this.handleChange.bind(this)
     this.doLogin = this.doLogin.bind(this)
   }
@@ -94,19 +89,27 @@ class TestInputBox extends React.Component {
     // Demonstrates how setState can be made generic. The typical
     // inplementation setState can be found under the App function.
     this.setState({
-      // e.target.name will return the name of the state variable being
-      // modified by value.
       [e.target.name]: e.target.value
     });
   }
 
   doLogin() {
-    const s = `
-    Login attempt
-    user: ${this.state.user}
-    password: ${this.state.password}
-    `
-    console.log(s)
+    const {user} = this.state
+    const {password} = this.state
+    const isUser = user === 'u'
+    const isPassword = password === 'pw'
+
+    console.log(`
+Login attempt
+user: ${user}
+password: ${password}
+    `)
+
+    if (isUser && isPassword) {
+      console.log('login successful')
+    } else {
+      console.log('invalid user or password')
+    }
   }
 
   render() {
@@ -132,11 +135,23 @@ class TestLink extends React.Component {
     }
     return 'insufficient link parameters'
   }
+
+  // The above can alternatively be written in the following way so as to make
+  // return only appear once:
+  // render() {
+  //   let output = 'insufficient link parameters'
+  //   if (this.props.href && this.props.value) {
+  //   output = <a href={this.props.href}>{this.props.value}</a>
+  //   }
+  //   return output
+  // }
+
 }
 
 class AppClass extends React.Component {
   constructor(props) {
     super(props)
+    this.link = props.link || 'test link'
 
     this.state = {
       clockwise: true
@@ -153,12 +168,11 @@ class AppClass extends React.Component {
   render() {
     return (
       <div className="App">
-        {/* Note that userName is a property of state. */}
-        <SayHello name={this.state.name}/>
+        <div><TestLink href="./new-page.html" value={this.link}/></div>
+        {/* Note that clockwise is a property of state. */}
         <img src={logo} className={"App-logo" + (this.state.clockwise ? "" : " reverse")} alt="logo"/>
         <div><CheckBox value="reverse spin" onClick={this.reverseSpin}/></div>
         <TestInputBox placeholder="type text here"/>
-        <div><TestLink href="./new-page.html" value="test link"/></div>
       </div>
     )
   }
