@@ -1,9 +1,12 @@
 // Demonstrates if statements and logical operators.
-var input = 107
+var input = -10
 // || = OR. This used to be a common way to set default values. || will reject
 // any argument that evalutaes as false. This includes:
 // false, 0, null, undefined, '' and NaN.
 input = input || 0
+// && = AND. In JS, value1 && value2 will return value2. This is used in react
+// conditional rendering.
+console.log('&& AND: ' + (1 && input))
 // If you explicitly want to reject undefined arguments, use:
 if (input === undefined) input = 0
 
@@ -13,7 +16,7 @@ var allowNegative = false
 // typeof is covered under operators.
 if (typeof checkedInput === 'string') {
   console.log(checkedInput)
-// && = AND and ! = NOT
+// ! = NOT
 } else if (checkedInput < 0 && !allowNegative) {
   console.log('input cannot be negative')
 } else {
