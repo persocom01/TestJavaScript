@@ -4,8 +4,8 @@ var input = -10
 // any argument that evalutaes as false. This includes:
 // false, 0, null, undefined, '' and NaN.
 input = input || 0
-// && = AND. In JS, value1 && value2 will return value2. This is used in react
-// conditional rendering.
+// && = AND. In JS, value1 && value2 will return value2 if the statement
+// evaluates as true. This is used in react conditional rendering.
 console.log('&& AND: ' + (1 && input))
 // If you explicitly want to reject undefined arguments, use:
 if (input === undefined) input = 0
