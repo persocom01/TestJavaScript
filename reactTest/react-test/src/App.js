@@ -4,7 +4,7 @@
 import {useState} from 'react';
 
 // Add new webpages to react. Files are assumed to .js by default.
-// import NewPage from './newPage';
+import Home from './home';
 
 import logo from './images/logo.svg';
 import './stylesheets/App.css';
@@ -59,7 +59,7 @@ function CheckBox(props) {
 // inplementation of state hooks can be found under the App function. Defining
 // multiple state hooks as a single object allows the handleChange function to
 // be made generic.
-function TestInputBox({type, placeholder='type text here'}) {
+function TestInputBox({type, placeholder='type text here', loginSuccess}) {
   let states = {
     user: useState(''),
     password: useState(''),
@@ -72,12 +72,11 @@ function TestInputBox({type, placeholder='type text here'}) {
     // e.target.name will return the value of the name property of the element
     // which triggered the event, much like props.name is to react components.
     states[e.target.name][1](e.target.value)
-    console.log(e.target.value)
   }
 
   function doLogin() {
-    const {user} = states.user[0]
-    const {password} = states.user[0]
+    const user = states.user[0]
+    const password = states.password[0]
     const isUser = user === 'u'
     const isPassword = password === 'pw'
 
@@ -86,7 +85,10 @@ user: ${user}
 password: ${password}`)
 
     if (isUser && isPassword) {
-      console.log('login successful')
+      loginSuccess({user: states.user[0]})
+      states.user[1]('')
+      states.password[1]('')
+      states.errorMsg[1]('')
     } else {
       states.errorMsg[1]('you = u and password = pw')
     }
@@ -105,8 +107,8 @@ password: ${password}`)
       </div>
       {/* Function can reference other functions in the same file.*/}
       <div><Button value="Login" onClick={doLogin} /></div>
-      {/* Demonstrates conditional rendering. To render more than one line, use
-        () to wrap multiple lines */}
+      {/* Demonstrates conditional rendering using &&. To render multiple lines,
+        wrap them in (). */}
       {states.errorMsg[0] && <div>{states.errorMsg[0]}</div>}
     </>
   )
@@ -119,6 +121,14 @@ function TestLink(props) {
   }
   // Demonstrates returning a text string.
   return 'insufficient link parameters'
+
+  // The above can alternatively be written in the following way so as to make
+  // return only appear once:
+  // let output = 'insufficient link parameters'
+  // if (props.href && props.value) {
+  //   output = <a href={props.href}>{props.value}</a>
+  // }
+  // return output
 }
 
 function App(props) {
@@ -129,14 +139,27 @@ function App(props) {
   // the state as well as a function with which to change the value. The
   // function can be called using functionName(newState).
   const [clockwise, setClockwise] = useState(true)
+  const [user, setUser] = useState('')
+  const [activePage, setActivePage] = useState('login')
+
   const reverseSpin = () => setClockwise(!clockwise)
+  const handleLogin = u => {
+    setUser(u.user)
+    setActivePage('home')
+  }
+
   return (
     <div className="App">
-      <div><TestLink href="./new-page.html" value={link}/></div>
-      {/* Demonstrates conditional classes based on state.*/}
-      <img src={logo} className={"App-logo" + (clockwise ? "" : " reverse")} alt="logo"/>
-      <div><CheckBox value="reverse spin" onClick={reverseSpin}/></div>
-      <TestInputBox placeholder="type text here"/>
+      {activePage === 'login' && (
+        <div>
+          <div><TestLink href="./new-page.html" value={link}/></div>
+          {/* Demonstrates conditional classes based on state.*/}
+          <img src={logo} className={"App-logo" + (clockwise ? "" : " reverse")} alt="logo"/>
+          <div><CheckBox value="reverse spin" onClick={reverseSpin}/></div>
+          <TestInputBox placeholder="type text here" loginSuccess={handleLogin}/>
+        </div>
+      )}
+      {activePage ==='home' && <Home/>}
     </div>
   )
 }

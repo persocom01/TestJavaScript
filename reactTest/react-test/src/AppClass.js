@@ -10,7 +10,7 @@
 import React from 'react';
 
 // Add new webpages to react. Files are assumed to .js by default.
-// import NewPage from './newPage';
+import Home from './home';
 
 import logo from './images/logo.svg';
 import './stylesheets/App.css';
@@ -83,7 +83,6 @@ class TestInputBox extends React.Component {
     // this refers to properties in the parent class instead of the method
     // itself. Alternatively, all methods can be written as arrow methods.
     this.handleChange = this.handleChange.bind(this)
-    this.doLogin = this.doLogin.bind(this)
   }
 
   handleChange(e) {
@@ -94,20 +93,26 @@ class TestInputBox extends React.Component {
     });
   }
 
-  doLogin() {
+  // Demonstrates defining a method without binding.
+  doLogin = () => {
     const {user} = this.state
     const {password} = this.state
     const isUser = user === 'u'
     const isPassword = password === 'pw'
 
-    console.log(`
-Login attempt
+    console.log(`Login attempt
 user: ${user}
-password: ${password}
-    `)
+password: ${password}`)
 
     if (isUser && isPassword) {
-      console.log('login successful')
+      this.props.loginSuccess({
+        user: user
+      })
+      this.setState({
+        user: '',
+        password: '',
+        errorMsg: ''
+      })
     } else {
       this.setState({
         errorMsg: 'you = u and password = pw'
@@ -158,25 +163,41 @@ class AppClass extends React.Component {
     this.link = props.link || 'test link'
 
     this.state = {
-      clockwise: true
+      clockwise: true,
+      user: '',
+      activePage: 'login'
     }
+
+    this.reverseSpin = this.reverseSpin.bind(this)
+    this.handleLogin = this.handleLogin.bind(this)
   }
 
-  // Demonstrates defining a method without binding.
-  reverseSpin = () => {
+  reverseSpin() {
     this.setState({
       clockwise: !this.state.clockwise
+    })
+  }
+
+  handleLogin(u) {
+    this.setState({
+      user: u.user,
+      activePage: 'home'
     })
   }
 
   render() {
     return (
       <div className="App">
-        <div><TestLink href="./new-page.html" value={this.link}/></div>
-        {/* Note that clockwise is a property of state. */}
-        <img src={logo} className={"App-logo" + (this.state.clockwise ? "" : " reverse")} alt="logo"/>
-        <div><CheckBox value="reverse spin" onClick={this.reverseSpin}/></div>
-        <TestInputBox placeholder="type text here"/>
+        {this.state.activePage === 'login' && (
+          <div>
+            <div><TestLink href="./new-page.html" value={this.link}/></div>
+            {/* Note that clockwise is a property of state. */}
+            <img src={logo} className={"App-logo" + (this.state.clockwise ? "" : " reverse")} alt="logo"/>
+            <div><CheckBox value="reverse spin" onClick={this.reverseSpin}/></div>
+            <TestInputBox placeholder="type text here" loginSuccess={this.handleLogin}/>
+          </div>
+        )}
+        {this.state.activePage ==='home' && <Home/>}
       </div>
     )
   }
