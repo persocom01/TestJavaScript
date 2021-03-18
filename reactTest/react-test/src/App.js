@@ -69,8 +69,10 @@ function TestInputBox({type, placeholder='type text here', loginSuccess}) {
   // React function components that use JSX need to be in PascalCase or an error
   // will occur. However, event handler functions are written in camelCase.
   function handleChange(e) {
-    // e.target.name will return the value of the name property of the element
-    // which triggered the event, much like props.name is to react components.
+    // e.target refers to the element which raised the event. You might also
+    // encounter e.currentTarget, which refers to the element that handles the
+    // event. The difference being whether the event of the element bubbles up
+    // to its parent container.
     states[e.target.name][1](e.target.value)
   }
 
