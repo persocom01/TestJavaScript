@@ -2,6 +2,7 @@
 // one liner with the above import:
 // import React, {useState} from 'react';
 import {useState} from 'react';
+// import $ from 'jquery';
 
 // Add new webpages to react. Files are assumed to .js by default.
 import Home from './home';
@@ -85,6 +86,26 @@ function TestInputBox({type, placeholder='type text here', loginSuccess}) {
     console.log(`Login attempt
 user: ${user}
 password: ${password}`)
+
+    // Demonstrates sending and receiving information from a http endpoint.
+    // $.ajax({
+    //   url: 'https://kdiris.azurewebsites.net/api/login',
+    //   method: 'POST',
+    //   // Data is sent as a string by default, and has to be converted to json
+    //   // using JSON.stringify if you wish to send it as json.
+    //   data: JSON.stringify({
+    //     user: states.user[0],
+    //     password: states.password[0]
+    //   }),
+    //   // Tells endpoint to expect a json file.
+    //   contentType: 'application/json',
+    //   success: function(data) {
+    //     console.log(data);
+    //   },
+    //   error: function() {
+    //     console.log('Error in communicating with backend');
+    //   }
+    // });
 
     if (isUser && isPassword) {
       loginSuccess({user: states.user[0]})

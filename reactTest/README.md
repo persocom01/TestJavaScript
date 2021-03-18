@@ -4,17 +4,28 @@ A react testing playground.
 
 ## Installation
 
-Install node.js.
+1. Install node.js.
+
+Download and install from: https://nodejs.org/en/download/
+
+2. Install react.
+
+Open cmd in the project folder and enter:
 
 ```
 npx create-react-app react-app-name
+```
 
+npx installs a local copy of the app without having to install dependencies globally. react does not accept app names with caps.
+
+3. Install jquery.
+
+jquery is an optional dependency that is recommended if you wish to use ajax calls in react. In the same folder in cmd, enter:
+
+```
 npm install jquery --save
 ```
 
-npx installs a local copy of the app without having to install dependencies
-globally.
-react does not accept names with caps.
 --save makes jquery a dependency.
 
 ## Usage

@@ -8,6 +8,7 @@
 // Allows use of: class App extends Component {}
 // instead of: class App extends React.Component {}
 import React from 'react';
+// import $ from 'jquery';
 
 // Add new webpages to react. Files are assumed to .js by default.
 import Home from './home';
@@ -103,6 +104,22 @@ class TestInputBox extends React.Component {
     console.log(`Login attempt
 user: ${user}
 password: ${password}`)
+
+    // $.ajax({
+    //   url: 'https://kdiris.azurewebsites.net/api/login',
+    //   method: 'POST',
+    //   data: JSON.stringify({
+    //     user: this.state.user,
+    //     password: this.state.password
+    //   }),
+    //   contentType: 'application/json',
+    //   success: function(data) {
+    //     console.log(data);
+    //   },
+    //   error: function() {
+    //     console.log('Error in communicating with backend');
+    //   }
+    // });
 
     if (isUser && isPassword) {
       this.props.loginSuccess({
