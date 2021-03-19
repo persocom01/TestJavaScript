@@ -7,18 +7,40 @@
 // objects are never equal. Unlike python, all object keys are converted to
 // strings, so { key: value } is the same as { 'key': value }. However, it can
 // be beneficial to use 'key' instead of key if the key contains problematic
-// characters.
-var fruit = { name: 'apple', 1: 23, 'origin.country': 'usa' }
-var fruit2 = { name: 'apple', 1: 23, 'origin.country': 'usa' }
+// characters such as whitespaces.
+var fruit = {
+  name: 'apple',
+  1: 23,
+  'origin.country': 'usa',
+  // Demonstrates adding a method to the object.
+  namePrint () {
+    // this refers to the object itself.
+    console.log('object method: ', this.name)
+  }
+}
+var fruit2 = {
+  name: 'apple',
+  1: 23,
+  'origin.country': 'usa',
+  namePrint () {
+    console.log('object method: ', this.name)
+  }
+}
 console.log('comparison:', fruit === fruit2)
 fruit2 = fruit
 // They are now equal because their references are the same.
 console.log('comparison2:', fruit === fruit2)
 // Unlike python dictionaries, object properties can be referenced using
 // object.property. However, numerical keys cannot be referenced this way, and
-// must instead be referenced using object[number]. object['number'] does the same thing because numerical keys
-// are not differentiated from their string equivalents.
+// must instead be referenced using object[number]. object['number'] does the
+// same thing because numerical keys are not differentiated from their string
+// equivalents.
 console.log('object numberical property:', fruit[1])
+// Unusual keynames like '', '!', strings with whitespaces or reserved
+// characters like . need to be called using [].
+console.log('unusual keynames property:', fruit['origin.country'])
+// Demonstrates calling an object method.
+fruit.namePrint()
 // Deletes an object property.
 delete fruit.name
 // Changing the first object causes the second object to change.
@@ -154,23 +176,6 @@ console.log('set method:', stile.name)
 // Demonstrates access of nested object in object.
 // Also demonstrates use of numerical keys, which can be accessed using obj[num].
 console.log('property num:', stile.maids[1])
-console.log()
-
-var objContinued = {
-  // Unusual keynames.
-  '': 'unusual name1',
-  '!': 'unusual name2',
-  // Adding a method to the object.
-  printMethod () {
-    return 'print content'
-  }
-
-}
-
-// Unusual keys can still be retrieve the same way as numerical keys.
-console.log(objContinued[''])
-console.log(objContinued['!'])
-console.log(objContinued.printMethod())
 console.log()
 
 // Demonstrates copying and merging objects.

@@ -120,6 +120,9 @@ fruits.forEach((fruit, i) => {
 console.log('for each:', str, letterSum)
 console.log()
 
+// One disadvantage of .forEach() is the inability to break the loop. If break
+// is desired, use
+
 // Demonstrates how to loop through nested objects.
 var party = [
   {
