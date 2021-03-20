@@ -1,5 +1,11 @@
+// React components have a built in state object. When this object changed,
+// react re-renders the component. To know when a variable should be defined as
+// a state object property, consider if setState will always be called on it
+// inside the render() function. Since the components re-renders when setState
+// is called, this will cause react to throw an error as such an implementation
+// will result in an infinite loop.
 // Allows use of state hooks in function components. Can also be written as a
-// one liner with the above import:
+// one liner along with importing React:
 // import React, {useState} from 'react';
 import {useState} from 'react';
 // import $ from 'jquery';
