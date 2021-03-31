@@ -8,6 +8,6 @@
 // Demonstrated here with a class export, as putting all exports in a file into
 // a single object makes the syntax when exporting and importing easier. You
 // may also rename the exports using as, for instance:
-// export { default as mod1 } from './module1.js'
+// export { default as Mod1 } from './module1.js'
 export { Mod2Class } from './module2.js'
 export { Mod3Class } from './module3.js'
