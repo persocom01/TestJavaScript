@@ -47,8 +47,9 @@ console.log('ceil:', Math.ceil(1.1))
 // Note that you cannot just pass the list without ....
 console.log('min:', Math.min(...list))
 console.log('max:', Math.max(...list))
-// Works like excel's rand()
-console.log('random:', Math.random())
+// Works like excel's rand(). If multiplied by m can be used with .round() for
+// rng between 0 and m.
+console.log('random:', Math.random() * 100)
 console.log('round:', Math.round(1.5))
 // Returns closest float representation of a number. Beats me what use this is.
 console.log('fround:', Math.fround(1.05))
