@@ -27,6 +27,8 @@ import myMod1 from './module1.js'
 document.querySelector('#import').textContent = mod1.mod1
 var m2c = new MyMod2Class()
 m2c.mod2Fun()
+// Object properties have to be accessed to use this module because it was
+// exported as an object.
 document.querySelector('#default1').textContent = myMod1.default1
 document.querySelector('#default2').textContent = myMod1.default2
 
