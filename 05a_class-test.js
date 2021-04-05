@@ -10,9 +10,10 @@ class Maid {
   // static menu = ['coffee', 'tea']
 
   // All classses have a special method called a constructor. It initializes
-  // the class object.
-  // Classes can commonly accept arguments. For small numbers of aruments, this
-  // works. For larger numbers of arguments, try accepting an object instead.
+  // the class object.Classes commonly accept arguments. For small numbers of
+  // arguments, accepting them directly works. For more complex arguments,
+  // it is recommended that one accept an object with the arugments as object
+  // properties instead.
   constructor (name, attribute) {
     this.name = name
     this.attrib = attribute
@@ -37,7 +38,8 @@ class Maid {
     this._name = newName
   }
 
-  // Demonstrates a normal method.
+  // Demonstrates a normal method. Within a class, this refers to the class
+  // instance, and not the method.
   title (name) {
     var firstCaps = this.attrib.charAt(0).toUpperCase() + this.attrib.slice(1)
     return `${firstCaps} maid ${this._name} at your service, master ${name}.`
