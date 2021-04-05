@@ -157,7 +157,7 @@ class TestLink extends React.Component {
   render() {
     // If if is needed, it is defined inside the render block:
     if (this.props.href && this.props.value) {
-    return <a href={this.props.href}>{this.props.value}</a>
+    return <a href={this.props.href} onClick={this.props.onClick}>{this.props.value}</a>
     }
     return 'insufficient link parameters'
   }
@@ -185,8 +185,16 @@ class AppClass extends React.Component {
       activePage: 'login'
     }
 
+    this.handleClick = this.handleClick.bind(this)
     this.reverseSpin = this.reverseSpin.bind(this)
     this.handleLogin = this.handleLogin.bind(this)
+  }
+
+  handleClick(e) {
+    e.preventDefault()
+    this.setState({
+      activePage: 'home'
+    })
   }
 
   reverseSpin() {
@@ -207,7 +215,7 @@ class AppClass extends React.Component {
       <div className="App">
         {this.state.activePage === 'login' && (
           <div>
-            <div><TestLink href="./new-page.html" value={this.link}/></div>
+            <div><TestLink href="./home.html" onClick={this.handleClick} value={this.link}/></div>
             {/* Note that clockwise is a property of state. */}
             <img src={logo} className={"App-logo" + (this.state.clockwise ? "" : " reverse")} alt="logo"/>
             <div><CheckBox value="reverse spin" onClick={this.reverseSpin}/></div>

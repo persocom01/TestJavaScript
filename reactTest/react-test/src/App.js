@@ -146,7 +146,7 @@ password: ${password}`)
 function TestLink(props) {
   // Demonstrates an if statement in a function component.
   if (props.href && props.value) {
-    return <a href={props.href}>{props.value}</a>
+    return <a href={props.href} onClick={props.onClick}>{props.value}</a>
   }
   // Demonstrates returning a text string.
   return 'insufficient link parameters'
@@ -171,6 +171,11 @@ function App(props) {
   const [user, setUser] = useState('')
   const [activePage, setActivePage] = useState('login')
 
+  const handleClick = e => {
+    // You need this to prevent the page from trying to reach the linked page.
+    e.preventDefault()
+    setActivePage('home')
+  }
   const reverseSpin = () => setClockwise(!clockwise)
   const handleLogin = u => {
     setUser(u.user)
@@ -181,7 +186,7 @@ function App(props) {
     <div className="App">
       {activePage === 'login' && (
         <div>
-          <div><TestLink href="./new-page.html" value={link}/></div>
+          <div><TestLink href="./home.html" onClick={handleClick} value={link}/></div>
           {/* Demonstrates conditional classes based on state.*/}
           <img src={logo} className={"App-logo" + (clockwise ? "" : " reverse")} alt="logo"/>
           <div><CheckBox value="reverse spin" onClick={reverseSpin}/></div>
