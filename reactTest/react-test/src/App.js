@@ -9,6 +9,7 @@
 // import React, {useState} from 'react';
 import {useState} from 'react';
 // import $ from 'jquery';
+import {Users} from './users'
 
 // Add new webpages to react. Files are assumed to .js by default.
 import Home from './home';
@@ -86,8 +87,8 @@ function TestInputBox({type, placeholder='type text here', loginSuccess}) {
   function doLogin() {
     const user = states.user[0]
     const password = states.password[0]
-    const isUser = user === 'u'
-    const isPassword = password === 'pw'
+    const isUser = user === Users.user
+    const isPassword = password === Users.password
 
     console.log(`Login attempt
 user: ${user}

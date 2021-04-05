@@ -5,7 +5,7 @@ var menu = ['coffee', 'tea', 'strawberry shortcake']
 
 // Classes can be made in two ways, the first being class declarations.
 class Maid {
-  // stack properties are recent additions to javascript. They work like static
+  // static properties are recent additions to javascript. They work like static
   // methods but for properties.
   // static menu = ['coffee', 'tea']
 

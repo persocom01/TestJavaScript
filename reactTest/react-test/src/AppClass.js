@@ -9,6 +9,7 @@
 // instead of: class App extends React.Component {}
 import React from 'react';
 // import $ from 'jquery';
+import {Users} from './users'
 
 // Add new webpages to react. Files are assumed to .js by default.
 import Home from './home';
@@ -98,8 +99,8 @@ class TestInputBox extends React.Component {
   doLogin = () => {
     const {user} = this.state
     const {password} = this.state
-    const isUser = user === 'u'
-    const isPassword = password === 'pw'
+    const isUser = user === Users.user
+    const isPassword = password === Users.password
 
     console.log(`Login attempt
 user: ${user}
