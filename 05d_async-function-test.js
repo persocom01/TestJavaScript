@@ -35,10 +35,10 @@ function returnHomeCoinFlip () {
 async function asyncCall () {
   await returnHomeCoinFlip().catch(() => {
     console.log('tails')
-    document.querySelector('#output').textContent = 'you will be redirected home after 5 secs.'
+    document.querySelector('#output').textContent = 'you will be redirected home after 4 secs.'
     setTimeout(() => {
       window.location.href = './index.html'
-    }, 5000)
+    }, 4000)
   })
 }
 
