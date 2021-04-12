@@ -78,3 +78,12 @@ In windows, to run the dev server in https mode, enter:
 ```
 set HTTPS=true&&npm start
 ```
+
+## Sharing
+
+When sharing a node project, you need only share the following:
+1. `public` folder.
+2. `src` folder.
+3. package.json
+
+node_modules can be installed using `npm install` in the project folder, and thus can be safely ignored when pushing the project to github.

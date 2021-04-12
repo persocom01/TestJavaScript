@@ -46,7 +46,12 @@ class Button extends React.Component {
 class CheckBox extends React.Component {
   constructor(props) {
     super(props)
+    this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleChange(e) {
+    if (!this.props.disabled && this.props.onChange) this.props.onChange(e)
   }
 
   handleClick(e) {
@@ -56,8 +61,8 @@ class CheckBox extends React.Component {
   render() {
     return (
       <>
-        <input type="checkbox" name={this.props.name} onClick={this.handleClick} defaultChecked={this.props.defaultChecked} />
-        <label htmlFor={this.props.name}>{this.props.value}</label>
+        <input className={this.props.className} type="checkbox" name={this.props.name} id={this.props.id} onChange={this.handleChange} onClick={this.handleClick} defaultChecked={this.props.defaultChecked} />
+        <label htmlFor={this.props.id}>{this.props.label}</label>
       </>
     )
   }
@@ -74,7 +79,9 @@ class TestInputBox extends React.Component {
 
     // It is recommended that all properties that affect rendering be defined
     // in state. This is because react checks for changes in state every time
-    // an event occurs.
+    // an event occurs. However, it is also recommended that all states be
+    // handled on a single file for ease of maintenance, and child components
+    // merely render the finished
     this.state = {
       user: '',
       password: '',
@@ -179,16 +186,32 @@ class AppClass extends React.Component {
   constructor(props) {
     super(props)
     this.link = props.link || 'test link'
+    this.initialPage = 'login'
 
     this.state = {
       clockwise: true,
       user: '',
-      activePage: 'login'
+      activePage: ''
     }
 
     this.handleClick = this.handleClick.bind(this)
     this.reverseSpin = this.reverseSpin.bind(this)
     this.handleLogin = this.handleLogin.bind(this)
+  }
+
+  // componentDidMount() is a special method that only runs once when the
+  // component is mounted. It does not need to be bound in the constructor. It
+  // can be caused to run more than once by changing the key of the component
+  // it is in, causing the component to unmount and remount.
+  componentDidMount() {
+    this.initialize()
+  }
+
+  initialize(){
+    this.setState({
+      activePage: this.initialPage
+    })
+    console.log('start page: ' + this.initialPage)
   }
 
   handleClick(e) {
@@ -219,7 +242,7 @@ class AppClass extends React.Component {
             <div><TestLink href="./home.html" onClick={this.handleClick} value={this.link}/></div>
             {/* Note that clockwise is a property of state. */}
             <img src={logo} className={"App-logo" + (this.state.clockwise ? "" : " reverse")} alt="logo"/>
-            <div><CheckBox value="reverse spin" onClick={this.reverseSpin}/></div>
+            <div><CheckBox label="reverse spin" onClick={this.reverseSpin}/></div>
             <TestInputBox placeholder="type text here" loginSuccess={this.handleLogin}/>
           </div>
         )}

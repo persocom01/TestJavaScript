@@ -8,10 +8,14 @@
 // strings, so { key: value } is the same as { 'key': value }. However, it can
 // be beneficial to use 'key' instead of key if the key contains problematic
 // characters such as whitespaces.
+var k = 'weight'
+var v = 200
 var fruit = {
   name: 'apple',
   1: 23,
   'origin.country': 'usa',
+  // In order to use a variable as an object key, [] must be used.
+  [k]: v,
   // Demonstrates adding a method to the object.
   namePrint () {
     // this refers to the object itself.
@@ -22,6 +26,7 @@ var fruit2 = {
   name: 'apple',
   1: 23,
   'origin.country': 'usa',
+  [k]: v,
   namePrint () {
     console.log('object method: ', this.name)
   }
@@ -186,9 +191,9 @@ var source = { b: '2', c: '3' }
 var clonedObj = Object.assign({}, source)
 var mergedObj = Object.assign(target, source)
 var spreadMerge = { ...target, ...source }
-console.log(clonedObj)
-console.log(mergedObj)
-console.log(spreadMerge)
+console.log('cloned object:', clonedObj)
+console.log('Object.assign() merge:', mergedObj)
+console.log('... merge:', spreadMerge)
 console.log()
 
 // Demonstrates turning object elements into individual variables.

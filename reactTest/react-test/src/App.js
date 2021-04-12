@@ -7,7 +7,7 @@
 // Allows use of state hooks in function components. Can also be written as a
 // one liner along with importing React:
 // import React, {useState} from 'react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 // import $ from 'jquery';
 import {Users} from './users'
 
@@ -52,13 +52,16 @@ function Button(props) {
 // also be written in short hand without keys like this:
 // <></>
 function CheckBox(props) {
+  const handleChange = e => {
+    if (!props.disabled && props.onChange) props.onChange(e)
+  }
   const handleClick = e => {
     if (!props.disabled && props.onClick) props.onClick(e)
   }
   return (
     <>
-      <input type="checkbox" name={props.name} onClick={handleClick} defaultChecked={props.defaultChecked} />
-      <label htmlFor={props.name}>{props.value}</label>
+      <input className={props.className} type="checkbox" name={props.name} id={props.id} onChange={handleChange} onClick={handleClick} defaultChecked={props.defaultChecked} />
+      <label htmlFor={props.id}>{props.label}</label>
     </>
   )
 }
@@ -68,11 +71,11 @@ function CheckBox(props) {
 // multiple state hooks as a single object allows the handleChange function to
 // be made generic.
 function TestInputBox({type, placeholder='type text here', loginSuccess}) {
-  let states = {
-    user: useState(''),
-    password: useState(''),
-    errorMsg: useState('')
-  }
+  let [states, setState] = useState({
+    user: '',
+    password: '',
+    errorMsg: ''
+  })
 
   // React function components that use JSX need to be in PascalCase or an error
   // will occur. However, event handler functions are written in camelCase.
@@ -81,12 +84,12 @@ function TestInputBox({type, placeholder='type text here', loginSuccess}) {
     // encounter e.currentTarget, which refers to the element that handles the
     // event. The difference being whether the event of the element bubbles up
     // to its parent container.
-    states[e.target.name][1](e.target.value)
+    setState({ ...states, [e.target.name]: e.target.value })
   }
 
   function doLogin() {
-    const user = states.user[0]
-    const password = states.password[0]
+    const user = states.user
+    const password = states.password
     const isUser = user === Users.user
     const isPassword = password === Users.password
 
@@ -101,8 +104,8 @@ password: ${password}`)
     //   // Data is sent as a string by default, and has to be converted to json
     //   // using JSON.stringify if you wish to send it as json.
     //   data: JSON.stringify({
-    //     user: states.user[0],
-    //     password: states.password[0]
+    //     user: states.user,
+    //     password: states.password
     //   }),
     //   // Tells endpoint to expect a json file.
     //   contentType: 'application/json',
@@ -115,12 +118,12 @@ password: ${password}`)
     // });
 
     if (isUser && isPassword) {
-      loginSuccess({user: states.user[0]})
-      states.user[1]('')
-      states.password[1]('')
-      states.errorMsg[1]('')
+      loginSuccess({user: states.user})
+      setState.user('')
+      setState.password('')
+      setState.errorMsg('')
     } else {
-      states.errorMsg[1]('you = u and password = pw')
+      setState.errorMsg('you = u and password = pw')
     }
   }
 
@@ -130,16 +133,16 @@ password: ${password}`)
         {/* Commenting within html tags in JSX must be done this way. */}
         {/* onChange returns a synthetic event with properties of the
           triggering element assigned to the event.target object. */}
-        <input name="user" placeholder={placeholder} onChange={handleChange} value={states.user[0]}/>
+        <input name="user" placeholder={placeholder} onChange={handleChange} value={states.user}/>
       </div>
       <div>
-        <input name="password" placeholder={placeholder} onChange={handleChange} value={states.password[0]}/>
+        <input name="password" placeholder={placeholder} onChange={handleChange} value={states.password}/>
       </div>
       {/* Function can reference other functions in the same file.*/}
       <div><Button value="Login" onClick={doLogin} /></div>
       {/* Demonstrates conditional rendering using &&. To render multiple lines,
         wrap them in (). */}
-      {states.errorMsg[0] && <div>{states.errorMsg[0]}</div>}
+      {states.errorMsg[0] && <div>{states.errorMsg}</div>}
     </>
   )
 }
@@ -164,14 +167,16 @@ function TestLink(props) {
 function App(props) {
   // Demonstrates setting a default value.
   const link = props.link || 'test link';
+  const initialPage = 'login'
   // Demonstrates the use of state hooks.
   // useState(initialState) returns an array containing the current value of
   // the state as well as a function with which to change the value. The
   // function can be called using functionName(newState).
   const [clockwise, setClockwise] = useState(true)
   const [user, setUser] = useState('')
-  const [activePage, setActivePage] = useState('login')
+  const [activePage, setActivePage] = useState('')
 
+  const initialize = () => setActivePage(initialPage)
   const handleClick = e => {
     // You need this to prevent the page from trying to reach the linked page.
     e.preventDefault()
@@ -183,6 +188,11 @@ function App(props) {
     setActivePage('home')
   }
 
+  // Demonstrates the function equivalent of componentDidMount().
+  useEffect(() => {
+      initialize()
+  }, [])
+
   return (
     <div className="App">
       {activePage === 'login' && (
@@ -190,7 +200,7 @@ function App(props) {
           <div><TestLink href="./home.html" onClick={handleClick} value={link}/></div>
           {/* Demonstrates conditional classes based on state.*/}
           <img src={logo} className={"App-logo" + (clockwise ? "" : " reverse")} alt="logo"/>
-          <div><CheckBox value="reverse spin" onClick={reverseSpin}/></div>
+          <div><CheckBox label="reverse spin" onClick={reverseSpin}/></div>
           <TestInputBox placeholder="type text here" loginSuccess={handleLogin}/>
         </div>
       )}

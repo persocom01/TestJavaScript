@@ -16,7 +16,10 @@ arr[1.5] = ['array', 'property']
 console.log('property:', Object.prototype.hasOwnProperty.call(arr, 1.5), '\nvalue:', arr[1.5])
 // Does not list empty keys, but does list properties.
 console.log(Object.keys(arr))
-// Ignores empty keys.
+// ...arr is normally used with objects to combine objects. In arrays, it lists
+// all elements, but empty elements are undefined instead of being listed as
+// empty. ...arr.keys() lists all array indexes but does not list array
+// properties.
 console.log([...arr.keys()])
 console.log()
 
