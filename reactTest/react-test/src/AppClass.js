@@ -91,6 +91,11 @@ class TestInputBox extends React.Component {
     // Demonstrates the bind method. This makes it such that any reference to
     // this refers to properties in the parent class instead of the method
     // itself. Alternatively, all methods can be written as arrow methods.
+    // However, in more complex methods, such as when using functions within
+    // a function, this may not refer to the parent class, even after binding.
+    // In such cases, define a variable within the method such as:
+    // var t = this;
+    // and call properties using t.property instead of this.property.
     this.handleChange = this.handleChange.bind(this)
   }
 

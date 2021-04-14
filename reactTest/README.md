@@ -81,7 +81,7 @@ set HTTPS=true&&npm start
 
 ## Sharing
 
-When sharing a node project, you need only share the following:
+When sharing a node project, you commonly need only share the following:
 1. `public` folder.
 2. `src` folder.
 3. package.json
