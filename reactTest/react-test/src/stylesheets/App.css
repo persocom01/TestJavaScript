@@ -12,7 +12,7 @@
     animation: App-logo-spin infinite 20s linear;
   }
   .App-logo.reverse {
-    animation: App-logo-spin-reverse infinite 20s linear;
+    animation: App-logo-spin infinite 20s linear reverse;
   }
 }
 
@@ -37,14 +37,5 @@
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes App-logo-spin-reverse {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-360deg);
   }
 }

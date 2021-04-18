@@ -104,8 +104,8 @@ console.log('for of array:', letterSum)
 // turn an object into an array using Object.keys(object),
 // Object.values(object) or Object.entries(object).
 str = ''
-for (var v of Object.values(fruitBox)) {
-  str += v + ' '
+for (var e of Object.entries(fruitBox)) {
+  str += e[0] + '-' + e[1] + ' '
 }
 console.log('for of object:', str)
 
@@ -118,10 +118,21 @@ fruits.forEach((fruit, i) => {
   letterSum += fruit.length
 })
 console.log('for each:', str, letterSum)
-console.log()
 
 // One disadvantage of .forEach() is the inability to break the loop. If break
-// is desired, use
+// is desired, use .every() instead, whose loop can be controlled by returning
+// true or false. The loop is broken when false is returned. Not returning
+// anything is the same as return false.
+fruits.every((fruit, i) => {
+  const target = 'banana'
+  if (fruit === target) {
+    console.log('every: found ' + target + ' at index ' + i)
+    return false
+  } else {
+    return true
+  }
+})
+console.log()
 
 // Demonstrates how to loop through nested objects.
 var party = [

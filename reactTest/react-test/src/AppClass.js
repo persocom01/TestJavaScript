@@ -9,7 +9,7 @@
 // instead of: class App extends React.Component {}
 import React from 'react';
 // import $ from 'jquery';
-import {Users} from './users'
+import { Users } from './users'
 
 // Add new webpages to react. Files are assumed to .js by default.
 import Home from './home';
@@ -76,16 +76,17 @@ class TestInputBox extends React.Component {
     // argument properties are passed to this object using props.propertyName
     // and not this.props.propertyName
     this.placeholder = props.placeholder || 'type text here'
+    this.update = props.update
 
     // It is recommended that all properties that affect rendering be defined
     // in state. This is because react checks for changes in state every time
-    // an event occurs. However, it is also recommended that all states be
-    // handled on a single file for ease of maintenance, and child components
-    // merely render the finished
+    // an event occurs. It is also recommended that states be handled in a main
+    // file for ease of maintenance, and child components merely handle
+    // rendering, but for demonstration purposes, this child component handles
+    // states.
     this.state = {
       user: '',
-      password: '',
-      errorMsg: ''
+      password: ''
     }
 
     // Demonstrates the bind method. This makes it such that any reference to
@@ -109,14 +110,18 @@ class TestInputBox extends React.Component {
 
   // Demonstrates defining a method without binding.
   doLogin = () => {
-    const {user} = this.state
-    const {password} = this.state
+    const { user } = this.state
+    const { password } = this.state
     const isUser = user === Users.user
     const isPassword = password === Users.password
 
     console.log(`Login attempt
 user: ${user}
 password: ${password}`)
+
+    this.update({
+      busy: true
+    })
 
     // $.ajax({
     //   url: 'https://kdiris.azurewebsites.net/api/login',
@@ -128,11 +133,25 @@ password: ${password}`)
     //   contentType: 'application/json',
     //   success: function(data) {
     //     console.log(data);
+    //     if (data.status === 200) {
+    //       this.props.loginSuccess() && this.props.loginSuccess({ user: user })
+    //       this.update({
+    //         busy: false
+    //       })
+    //     } else {
+    //       console.log('invalid username or password')
+    //       this.update({
+    //         busy: false
+    //       })
+    //     }
     //   },
     //   error: function() {
     //     console.log('Error in communicating with backend');
+    //     this.update({
+    //       busy: false
+    //     })
     //   }
-    // });
+    // })
 
     if (isUser && isPassword) {
       this.props.loginSuccess({
@@ -140,12 +159,16 @@ password: ${password}`)
       })
       this.setState({
         user: '',
-        password: '',
-        errorMsg: ''
+        password: ''
+      })
+      this.update({
+        errorMsg: '',
+        busy: false
       })
     } else {
-      this.setState({
-        errorMsg: 'you = u and password = pw'
+      this.update({
+        errorMsg: 'you = u and password = pw',
+        busy: false
       })
     }
   }
@@ -160,7 +183,7 @@ password: ${password}`)
           <input name="password" placeholder={this.placeholder} onChange={this.handleChange} value={this.state.password}/>
         </div>
         <div><Button value="Login" onClick={this.doLogin} /></div>
-        {this.state.errorMsg && <div>{this.state.errorMsg}</div>}
+        {this.props.errorMsg && <div>{this.props.errorMsg}</div>}
       </>
     )
   }
@@ -196,7 +219,19 @@ class AppClass extends React.Component {
     this.state = {
       clockwise: true,
       user: '',
-      activePage: ''
+      activePage: '',
+      errorMsg: '',
+      busy: false
+    }
+
+    // This update method imitates the setState method but it can be sent to
+    // child components to allow them to update the parent state.
+    this.update = obj => {
+      for (var e of Object.entries(obj)) {
+        this.setState({
+          [e[0]]: e[1]
+        })
+      }
     }
 
     this.handleClick = this.handleClick.bind(this)
@@ -216,7 +251,7 @@ class AppClass extends React.Component {
     this.setState({
       activePage: this.initialPage
     })
-    console.log('start page: ' + this.initialPage)
+    // console.log('start page: ' + this.initialPage)
   }
 
   handleClick(e) {
@@ -248,7 +283,11 @@ class AppClass extends React.Component {
             {/* Note that clockwise is a property of state. */}
             <img src={logo} className={"App-logo" + (this.state.clockwise ? "" : " reverse")} alt="logo"/>
             <div><CheckBox label="reverse spin" onClick={this.reverseSpin}/></div>
-            <TestInputBox placeholder="type text here" loginSuccess={this.handleLogin}/>
+            {/* Pass all states to the component using:
+              <Component {...this.state}/>
+              some do not recommend this, but instead defining a separate
+              object with all needed states and passing it instead. */}
+            <TestInputBox placeholder="type text here" loginSuccess={this.handleLogin} {...this.state} update={this.update}/>
           </div>
         )}
         {this.state.activePage ==='home' && <Home/>}

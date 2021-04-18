@@ -7,9 +7,9 @@
 // Allows use of state hooks in function components. Can also be written as a
 // one liner along with importing React:
 // import React, {useState} from 'react';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 // import $ from 'jquery';
-import {Users} from './users'
+import { Users } from './users'
 
 // Add new webpages to react. Files are assumed to .js by default.
 import Home from './home';
@@ -69,12 +69,15 @@ function CheckBox(props) {
 // Demonstrates the state hook version of a generic setState. The typical
 // inplementation of state hooks can be found under the App function. Defining
 // multiple state hooks as a single object allows the handleChange function to
-// be made generic.
-function TestInputBox({type, placeholder='type text here', loginSuccess}) {
+// be made generic. It is recommended that states be handled in a main function
+// and passed to child component functions, but this one handles its own states
+// for demonstration purposes.
+function TestInputBox({type, placeholder='type text here', loginSuccess, errorMsgState, busyState}) {
+  const [errorMsg, setErrorMsg] = errorMsgState
+  const [busy, setBusy] = busyState
   let [states, setState] = useState({
     user: '',
-    password: '',
-    errorMsg: ''
+    password: ''
   })
 
   // React function components that use JSX need to be in PascalCase or an error
@@ -97,6 +100,9 @@ function TestInputBox({type, placeholder='type text here', loginSuccess}) {
 user: ${user}
 password: ${password}`)
 
+    // You set busy to prevent things like multiple logins or render a spinner.
+    setBusy(true)
+
     // Demonstrates sending and receiving information from a http endpoint.
     // $.ajax({
     //   url: 'https://kdiris.azurewebsites.net/api/login',
@@ -110,20 +116,38 @@ password: ${password}`)
     //   // Tells endpoint to expect a json file.
     //   contentType: 'application/json',
     //   success: function(data) {
-    //     console.log(data);
+    //     console.log(data)
+    //     if (data.status === 200) {
+    //       loginSuccess() && loginSuccess({ user: states.user })
+    //       setBusy(false)
+    //     } else {
+    //       console.log('invalid username or password')
+    //       setBusy(false)
+    //     }
     //   },
     //   error: function() {
-    //     console.log('Error in communicating with backend');
+    //     console.log('Error in communicating with backend')
+    //     setState({ ...states, busy: false })
     //   }
-    // });
+    // })
 
     if (isUser && isPassword) {
-      loginSuccess({user: states.user})
-      setState.user('')
-      setState.password('')
-      setState.errorMsg('')
+      loginSuccess({ user: states.user })
+      setState({
+        ...states,
+        user: '',
+        password: ''
+      })
+      setErrorMsg('')
+      setBusy(false)
     } else {
-      setState.errorMsg('you = u and password = pw')
+      setState({
+        ...states,
+        user: '',
+        password: ''
+      })
+      setErrorMsg('you = u and password = pw')
+      setBusy(false)
     }
   }
 
@@ -142,7 +166,7 @@ password: ${password}`)
       <div><Button value="Login" onClick={doLogin} /></div>
       {/* Demonstrates conditional rendering using &&. To render multiple lines,
         wrap them in (). */}
-      {states.errorMsg[0] && <div>{states.errorMsg}</div>}
+      {errorMsg && <div>{errorMsg}</div>}
     </>
   )
 }
@@ -175,6 +199,13 @@ function App(props) {
   const [clockwise, setClockwise] = useState(true)
   const [user, setUser] = useState('')
   const [activePage, setActivePage] = useState('')
+  // Since state hooks include their updating function, there is no need to
+  // define a function to update their values that can be passed to a child.
+  // However, the typical implmentation of state hooks also makes it more
+  // difficult to pass alls state values to the child as they cannot be passed
+  // as a single object.
+  const [errorMsg, setErrorMsg] = useState('')
+  const [busy, setBusy] = useState(false)
 
   const initialize = () => setActivePage(initialPage)
   const handleClick = e => {
@@ -201,7 +232,7 @@ function App(props) {
           {/* Demonstrates conditional classes based on state.*/}
           <img src={logo} className={"App-logo" + (clockwise ? "" : " reverse")} alt="logo"/>
           <div><CheckBox label="reverse spin" onClick={reverseSpin}/></div>
-          <TestInputBox placeholder="type text here" loginSuccess={handleLogin}/>
+          <TestInputBox placeholder="type text here" loginSuccess={handleLogin} errorMsgState={[errorMsg, setErrorMsg]} busyState={[busy, setBusy]}/>
         </div>
       )}
       {activePage ==='home' && <Home/>}
