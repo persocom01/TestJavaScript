@@ -207,7 +207,10 @@ function App(props) {
   const [errorMsg, setErrorMsg] = useState('')
   const [busy, setBusy] = useState(false)
 
-  const initialize = () => setActivePage(initialPage)
+  const initialize = () => {
+    setActivePage(initialPage)
+    // console.log('start page: ' + initialPage)
+  }
   const handleClick = e => {
     // You need this to prevent the page from trying to reach the linked page.
     e.preventDefault()
