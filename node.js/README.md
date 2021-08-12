@@ -159,13 +159,70 @@ app.use('/page', pageRouter);
 
 ### Changing port
 
-Open the `www.js` file in the `bin` folder and change the following line:
+By default, the `npm start` command runs `bin/www.js` during startup. This file specifies the server and port node.js will run. To change the default port, open the file and change the following line:
 
 ```
 var port = normalizePort(process.env.PORT || '3000');
 ```
 
-Change 3000 to the desired port.
+Change 3000 to the desired port. To change the startup script or stop using it altogether, open `package.json` and change the following line:
+
+```
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+```
+
+Change the value of `start` to your desired script path. If start is not specified, node runs `server.js`
+
+### https
+
+To add https functionality, two things are needed:
+
+1. An SSL certificate
+
+We will use `openssl` to generate an SSL certificate. Download and install the appropriate installer here: https://slproweb.com/products/Win32OpenSSL.html
+
+After installation, add the path to `openssl.exe` to windows environmental variables. For windows this is normally `C:\Program Files\OpenSSL-Win64\bin`
+
+For production purposes, we would need to generate a private key as well as a Certificate Signing Request (CSR) that needs to be submitted to a trusted certificate authority to be validated to receive a certificate. To do this we would enter the following command:
+
+```
+openssl req -newkey rsa:2048 -new -nodes -keyout key.pem -out csr.pem
+```
+
+For development purposes, a self signed SSL certificate is sufficient, which we can produce using the following command instead:
+
+```
+openssl req -newkey rsa:2048 -new -nodes -x509 -days 9999 -keyout key.pem -out cert.pem
+```
+
+`-newkey rsa:2048` - generates a 2048 bit private key.
+`-x509` - outputs a x509 structure instead of a certificate signing request.
+`-days 9999` - sets the validity of the key to 9999 days.
+
+Copy and paste the output, `cert.pem` and `key.pem` to the app folder if they are not already in it.
+
+2. Start the https server in the code
+
+By default, express stores server code in `bin/www.js`. However, one can still add code to `app.js` without issue. Note, however, that by leaving the defaults in `bin/www.js`, node will still start a http server in port 3000. Thus to only use a https server, either change `bin/www.js` or change the start script value of `npm start`. Below is boilerplate code for starting a https server:
+
+```
+var https = require('https');
+var fs = require('fs');
+
+var port = (process.env.PORT || '3000');
+
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
+var server = https.createServer(options, app);
+server.listen(port);
+```
+
+In order to see the new app, navigate to https://localhost:3000 or whatever port you set the server to runs on on a web browser. Note that by default, browsers may not use https, so typing `localhost:3000` may return a page not found error.
 
 ## Adding node.js modules
 

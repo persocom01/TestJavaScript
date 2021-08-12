@@ -1,3 +1,5 @@
 # Custom exceptions
 00_test.*
 *.eslintcache
+key.pem
+cert.pem
