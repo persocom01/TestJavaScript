@@ -159,7 +159,11 @@ app.use('/page', pageRouter);
 
 ### Changing port
 
-By default, the `npm start` command runs `bin/www.js` during startup. This file specifies the server and port node.js will run. To change the default port, open the file and change the following line:
+Changing the server port may be done in two ways:
+
+1. Changing the default port in `bin/www.js`
+
+By default, the `npm start` command runs `bin/www.js` during startup. To change the default port, open the file and change the following line:
 
 ```
 var port = normalizePort(process.env.PORT || '3000');
@@ -173,7 +177,17 @@ Change 3000 to the desired port. To change the startup script or stop using it a
   },
 ```
 
-Change the value of `start` to your desired script path. If start is not specified, node runs `server.js`
+Change the value of `start` to your desired script path. If start is not specified, node runs `server.js` by default.
+
+2. Changing the PORT environmental variable when starting the server
+
+The port node listens to may be changed at startup by running:
+
+```
+set PORT=desired_port && npm start
+```
+
+This is because by default, `bin/www.js` checks `process.env.PORT` for a value before using default settings. When choosing to set your own default port in code, remember to use the same code if you want to be able to set the port duting server startup as well.
 
 ### https
 
