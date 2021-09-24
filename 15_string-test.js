@@ -20,11 +20,12 @@ console.log()
 
 // Strings can be converted back to numbers either using the + operator or the
 // parseInt(string) and parseFloat(string) functions.
-// Note that + also works on boolean operators, returning 1 for true and 0 for false.
+// Note that + also works on boolean operators, returning 1 for true and 0 for
+// false.
 x = '10' + '10'
-console.log(x)
+console.log('string + string:', x)
 x = +'10' + parseInt('10')
-console.log(x)
+console.log('string converted to int:', x)
 console.log()
 
 // Strings act as immutable arrays and can be sliced.

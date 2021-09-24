@@ -27,9 +27,13 @@ console.log()
 
 // Demonstrates number methods.
 var num = 123456.789
-// (int) Determines number of decimal places.
+// .toExponential(int) where int determines number of decimal places.
 console.log(num.toExponential(4))
-// (int) Determines number of decimal places.
+// .toFixed(int) where int determines number of decimal places.
 console.log(num.toFixed(2))
-// (int) Determines number of significant figures.
+// .toPrecision(int) where int determines number of significant figures.
 console.log(num.toPrecision(3))
+// .toString(radix). Radix is the root of the numbering system. A radix
+// value smaller than 10 will return a value lower than face value and vice
+// versa.
+console.log(num.toString(2))

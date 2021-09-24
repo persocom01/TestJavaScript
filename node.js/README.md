@@ -263,7 +263,7 @@ Any modules used in the app need to be defined under dependencies in package.jso
 
 ### Useful modules
 
-* "multer": "~1.4.2" - for form enctype="multipart/form-data".
+* "multer": "~1.4.3" - for form enctype="multipart/form-data".
 * "axios": "~0.19.2" - the node version of the python requests module.
 * "mariadb": "~2.4.2"
 * "xss-clean": "0.1.1" - sanitizes user input of cross-site scripting attacks.

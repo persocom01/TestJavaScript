@@ -33,6 +33,9 @@ var upload = multer({ storage: storage })
 // Deals with post requests to the upload page. Normally, a submit button will
 // use a different url with it's own router.post() method, but it is possible
 // to route to the same page.
+// upload.single(name) name corresponds to the name field of the input tag that
+// uploads the file in upload.ejs. If you are uploading the file using requests,
+// the name is normally 'file'.
 router.post('/', upload.single('csv_file'), function (req, res, next) {
   const file = req.file
   if (!file) {
