@@ -9,4 +9,6 @@ class Mod1Class {
   }
 }
 
+// You can export functions in the same way, and multiple functions can be
+// exported at the same time.
 module.exports = { Mod1Class }
