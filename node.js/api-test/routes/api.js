@@ -48,7 +48,6 @@ router.get('/async', async function (req, res, next) {
   fetch = (await import('node-fetch')).default
   const response = await fetch(url, {
     method: 'POST',
-    // JSON.stringify(obj) is necessary to send json.
     body: JSON.stringify(obj),
     // Setting the Content-Type header is necessary to send json.
     headers: { 'Content-Type': 'application/json' }

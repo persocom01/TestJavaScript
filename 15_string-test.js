@@ -29,7 +29,7 @@ console.log('string converted to int:', x)
 console.log()
 
 // Strings act as immutable arrays and can be sliced.
-var sentence = 'The quick brown fox jumps over the lazy dog.'
+var sentence = '"The quick brown fox jumps over the lazy dog."'
 console.log('length:', sentence.length)
 console.log('return indexed letter:', sentence[0])
 // Same as above but returns '' instead of undefined if out of range.
@@ -52,7 +52,8 @@ console.log('substr:', sentence.substr(16, 3))
 console.log()
 
 // Other methods.
-var sentence2 = sentence.replace(/dog/, 'wolf')
+// Demonstrates removing quote marks from the start and end of a string.
+var sentence2 = sentence.replace(/^"(.*)"$/, '$1')
 // match() is like search but it returns the actual string instead of the index,
 // and is able to return multiple matches as a list if the g flag is set.
 console.log('match:', sentence2.match(/\w*[ae]+\w*/gmi))
