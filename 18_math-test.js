@@ -1,7 +1,9 @@
 // Demonstrates various functions and methods related to the math object.
+const radians2degrees = rad => rad * 180 / Math.PI
 
 // 360 degrees = 2PI radians.
 console.log('PI:', Math.PI)
+console.log('PI to deg:', radians2degrees(1))
 console.log('abs value:', Math.abs(-1.6))
 console.log()
 

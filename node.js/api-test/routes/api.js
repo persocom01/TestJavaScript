@@ -8,6 +8,12 @@ var mod1 = require('../cjsMod')
 // simply calling them with mod1.functionName() will do.
 var m1c = new mod1.Mod1Class()
 
+// Demonstrates how to use an ESM-only module in node.js. ESM-only modules
+// cannot be imported using require, and using them typically requires the
+// import statement which would cause a SyntaxError when CJS is the default.
+// To use ESM in CJS, we will dynamically import the module later.
+let fetch
+
 // The routes are are in addition to those defined in app.js. For example
 // '/json' defined here plus app.use('/api', apiRouter) in app.js makes the
 // final route 'domain/api/json'.
@@ -28,13 +34,38 @@ router.get('/:query([+-]?([0-9]+\.?[0-9]{0,}))', function (req, res, next) {
   res.send(output)
 })
 
+// Demonstrates sending json using an async api with the ESM fetch module.
+// Apparently apis can send data to themselves.
+var url = 'http://localhost:3000/api/json'
+var obj = {
+  string: 'string data',
+  bool: 'no',
+  int: 1.5,
+  direction: 'n'
+}
+router.get('/async', async function (req, res, next) {
+  console.log('async fetch api')
+  fetch = (await import('node-fetch')).default
+  const response = await fetch(url, {
+    method: 'POST',
+    // JSON.stringify(obj) is necessary to send json.
+    body: JSON.stringify(obj),
+    // Setting the Content-Type header is necessary to send json.
+    headers: { 'Content-Type': 'application/json' }
+  })
+  // response.text() for text response
+  const data = await response.json()
+  res.json(data)
+})
+
 router.post('/json', function (req, res, next) {
-  res.json({ text: 'text' })
+  const data = req.body
+  res.json(data)
 })
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './tmp')
+    cb(null, './temp')
   },
   filename: function (req, file, cb) {
     // cb(null, Date.now() + path.extname(file.originalname))
@@ -43,11 +74,7 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage })
 router.post('/file', upload.single('file'), function (req, res, next) {
-  res.json({ text: 'text' })
-})
-
-router.post('/async', upload.single('file'), async function (req, res, next) {
-  res.json({ text: 'text' })
+  res.json({ text: 'success' })
 })
 
 module.exports = router
