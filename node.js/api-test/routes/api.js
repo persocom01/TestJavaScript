@@ -18,9 +18,7 @@ var fetch
 var config
 try {
   const data = fs.readFileSync('./config/config.json', 'utf8')
-  console.log(config)
   config = JSON.parse(data)
-  console.log(config)
 } catch (err) {
   console.log(`Error reading file from disk: ${err}`)
 }
