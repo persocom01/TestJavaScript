@@ -1,6 +1,7 @@
 // Demonstrates how to set up pageless apis in express.
 var express = require('express')
 var router = express.Router()
+var fs = require('fs')
 var multer = require('multer')
 
 var mod1 = require('../cjsMod')
@@ -12,7 +13,17 @@ var m1c = new mod1.Mod1Class()
 // cannot be imported using require, and using them typically requires the
 // import statement which would cause a SyntaxError when CJS is the default.
 // To use ESM in CJS, we will dynamically import the module later.
-let fetch
+var fetch
+
+var config
+try {
+  const data = fs.readFileSync('./config/config.json', 'utf8')
+  console.log(config)
+  config = JSON.parse(data)
+  console.log(config)
+} catch (err) {
+  console.log(`Error reading file from disk: ${err}`)
+}
 
 // The routes are are in addition to those defined in app.js. For example
 // '/json' defined here plus app.use('/api', apiRouter) in app.js makes the
@@ -36,7 +47,7 @@ router.get('/:query([+-]?([0-9]+\.?[0-9]{0,}))', function (req, res, next) {
 
 // Demonstrates sending json using an async api with the ESM fetch module.
 // Apparently apis can send data to themselves.
-var url = 'http://localhost:3000/api/json'
+var url = `http://localhost:${config.port}/api/json`
 var obj = {
   string: 'string data',
   bool: 'no',
