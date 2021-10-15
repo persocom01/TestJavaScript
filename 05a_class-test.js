@@ -32,7 +32,7 @@ class Maid {
 
   set name (newName) {
     if (typeof newName !== 'string') {
-      console.error('name must be a string')
+      throw Error('name must be a string')
     }
     // Note the _
     this._name = newName
@@ -66,6 +66,9 @@ Maid.prototype.greet = function () {
 
 var maika = new Maid('Maika', 'sadistic')
 // Normal methods require () unlike get methods.
+console.log(maika.name)
+// An error will be thrown when name is set to anything but a string.
+maika.name = 'Maika Sakuranomiya'
 console.log(maika.name)
 console.log(maika.title('Dino'))
 console.log(Maid.lookAtMenu())

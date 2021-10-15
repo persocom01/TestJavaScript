@@ -4,7 +4,7 @@ function CustomError (message) {
   this.message = message
 }
 
-// Atomatically runs when exception is thrown.
+// Automatically runs when exception is thrown.
 CustomError.prototype.toString = function () {
   return this.name + ': "' + this.message + '"'
 }
