@@ -32,10 +32,11 @@ class Maid {
 
   set name (newName) {
     if (typeof newName !== 'string') {
-      throw Error('name must be a string')
+      console.error('name must be a string')
+    } else {
+      // Note the _
+      this._name = newName
     }
-    // Note the _
-    this._name = newName
   }
 
   // Demonstrates a normal method. Within a class, this refers to the class
