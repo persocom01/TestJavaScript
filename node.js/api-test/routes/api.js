@@ -66,8 +66,8 @@ router.get('/async', async function (req, res, next) {
   res.json(data)
 })
 
-// Demonstrates how to do the bove without fetch. The response will be slightly
-// different. It is unknown how to handle it in exactly the same way.
+// Demonstrates how to do the above without fetch. The response will be slightly
+// different. It is unknown how to give exactly the same response.
 router.get('/trigger', function (req, res, next) {
   console.log('get to trigger another api')
   req.url = '/json'
@@ -75,7 +75,10 @@ router.get('/trigger', function (req, res, next) {
   // GET req do not need headers or body.
   req.headers = { 'Content-Type': 'application/json' }
   req.body = JSON.stringify(obj)
-  router.handle(req, res, next)
+  // Alternatively:
+  // router.handle(req, res, next)
+  // There is no notable difference.
+  next()
 })
 
 router.post('/json', function (req, res, next) {
