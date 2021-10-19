@@ -38,7 +38,7 @@ try {
 // with {0,}, until express 5. More on routing found here:
 // https://expressjs.com/en/guide/routing.html
 router.get('/:query([+-]?([0-9]+\.?[0-9]{0,}))', function (req, res, next) {
-  console.log('route with decimal number regex')
+  console.log(`get decimal number regex with query ${req.params.query}`)
   var output = m1c.divideQueryByTwo(req.params.query).toString()
   res.send(output)
 })
@@ -53,7 +53,7 @@ var obj = {
   direction: 'n'
 }
 router.get('/async', async function (req, res, next) {
-  console.log('async fetch api')
+  console.log('get async fetch ap')
   fetch = (await import('node-fetch')).default
   const response = await fetch(url, {
     method: 'POST',
@@ -66,9 +66,21 @@ router.get('/async', async function (req, res, next) {
   res.json(data)
 })
 
+// Demonstrates how to do the bove without fetch. The response will be slightly
+// different. It is unknown how to handle it in exactly the same way.
+router.get('/trigger', function (req, res, next) {
+  console.log('get to trigger another api')
+  req.url = '/json'
+  req.method = 'POST'
+  // GET req do not need headers or body.
+  req.headers = { 'Content-Type': 'application/json' }
+  req.body = JSON.stringify(obj)
+  router.handle(req, res, next)
+})
+
 router.post('/json', function (req, res, next) {
-  const data = req.body
-  res.json(data)
+  console.log(`post json with body ${req.body}`)
+  res.json(req.body)
 })
 
 var storage = multer.diskStorage({
@@ -82,6 +94,7 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage })
 router.post('/file', upload.single('file'), function (req, res, next) {
+  console.log('post upload file')
   res.json({ text: 'success' })
 })
 
