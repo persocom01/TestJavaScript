@@ -29,13 +29,13 @@ try {
 // Regex can be used to defined valid routes. To use pure regex, one may use
 // literals like /\d+/
 // One can also define route parameters using : such as '/:paramName'. Params
-// are retrieved using req.params.paramName. Only letters and numbers
-// (including _) can be params, so - and . can be used as param separators.
-// However, using regex in route parameters allows - and . in params. To use
-// regex in route parameters, put the regex in brackets, such as
-// '/:paramName(regex)'. regex when used in params may have strange rules due to
-// the limitations of the parsing engine. For instance, * needs to be replaced
-// with {0,}, until express 5. More on routing found here:
+// are retrieved using req.params.paramName. To make a parameter optional, add ?
+// to the end. Only letters and numbers (including _) can be params, so - and .
+// can be used as param separators. However, using regex in route parameters
+// allows - and . in params. To use regex in route parameters, put the regex in
+// brackets, such as '/:paramName(regex)'. regex when used in params may have
+// strange rules due to the limitations of the parsing engine. For instance, *
+// needs to be replaced with {0,}, until express 5. More on routing found here:
 // https://expressjs.com/en/guide/routing.html
 router.get('/:query([+-]?([0-9]+\.?[0-9]{0,}))', function (req, res, next) {
   console.log(`get decimal number regex with query ${req.params.query}`)
@@ -63,22 +63,28 @@ router.get('/async', async function (req, res, next) {
   })
   // response.text() for text response
   const data = await response.json()
+  // The output can be modified as normal.
+  data.api = 'async'
   res.json(data)
 })
 
-// Demonstrates how to do the above without fetch. The response will be slightly
-// different. It is unknown how to give exactly the same response.
-router.get('/trigger', function (req, res, next) {
+// Demonstrates how to trigger your own apis without fetch. However, this
+// approach does not allow the response to be modified, which makes it less
+// versatile. One known use of this method is to create if or switch apis.
+router.get('/trigger:query?', function (req, res, next) {
   console.log('get to trigger another api')
-  req.url = '/json'
-  req.method = 'POST'
-  // GET req do not need headers or body.
-  req.headers = { 'Content-Type': 'application/json' }
-  req.body = JSON.stringify(obj)
-  // Alternatively:
-  // router.handle(req, res, next)
-  // There is no notable difference.
-  next()
+  if (req.params.query === undefined) {
+    req.url = '/json'
+    req.method = 'POST'
+    // GET req do not need headers or body.
+    req.headers = { 'Content-Type': 'application/json' }
+    req.body = JSON.stringify(obj)
+    router.handle(req, res, next)
+  } else {
+    req.url = `/${req.params.query}`
+    req.method = 'GET'
+    router.handle(req, res, next)
+  }
 })
 
 router.post('/json', function (req, res, next) {
