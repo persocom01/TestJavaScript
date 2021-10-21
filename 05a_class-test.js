@@ -17,6 +17,22 @@ class Maid {
   constructor (name, attribute) {
     this.name = name
     this.attrib = attribute
+    // Constructors cannot be async, so to run async functions a special init
+    // function is often used. Async variables can be initialized as null first
+    // before they are set asynchronously.
+    this.outfit = null
+    this.setup = this.init()
+  }
+
+  async init () {
+    console.log('init initiated')
+    const outfits = ['normal', 'nekomimi', 'megane']
+    const n = await new Promise((resolve, reject) => {
+      resolve(Math.round(Math.random() * 2))
+      reject(new Error('promise failed'))
+    })
+    console.log(`${this._name}'s outfit today is ${outfits[n]}`)
+    this.outfit = outfits[n]
   }
 
   // Demonstrates a get set pair inside a class.
@@ -66,6 +82,8 @@ Maid.prototype.greet = function () {
 }
 
 var maika = new Maid('Maika', 'sadistic')
+var setup = async () => { await maika.init() }
+console.log(setup)
 // Normal methods require () unlike get methods.
 console.log(maika.name)
 // An error will be thrown when name is set to anything but a string.

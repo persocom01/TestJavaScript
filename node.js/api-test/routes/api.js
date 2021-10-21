@@ -20,7 +20,7 @@ try {
   const data = fs.readFileSync('./config/config.json', 'utf8')
   config = JSON.parse(data)
 } catch (err) {
-  console.log(`Error reading file from disk: ${err}`)
+  console.log(`error reading config file: ${err}`)
 }
 
 // The routes are are in addition to those defined in app.js. For example
@@ -45,7 +45,7 @@ router.get('/:query([+-]?([0-9]+\.?[0-9]{0,}))', function (req, res, next) {
 
 // Demonstrates sending json using an async api with the ESM fetch module.
 // Apparently apis can send data to themselves.
-var url = `http://localhost:${config.port}/api/json`
+var url = `http://localhost:${process.env.PORT || config.port || 3000}/api/json`
 var obj = {
   string: 'string data',
   bool: 'no',

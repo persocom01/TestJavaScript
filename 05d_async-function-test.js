@@ -18,7 +18,7 @@ function returnHomeCoinFlip () {
         }, 2000)
         break
       case 0:
-        // To do something on reject, put it in the promise's catach block.
+        // To do something on reject, put it in the promise's catch block.
         reject(new Error('flipped tails'))
         break
       default:
