@@ -1,5 +1,5 @@
 // Demonstrates if statements and logical operators.
-var input = -10
+var input = 7
 // || = OR. This used to be a common way to set default values. || will reject
 // any argument that evalutaes as false. This includes:
 // false, 0, null, undefined, '' and NaN.
@@ -13,23 +13,28 @@ if (input === undefined) input = 0
 var checkedInput = (input < -100 || input > 100) ? 'input is out of scope' : input
 var allowNegative = false
 
-// typeof is covered under operators.
-if (typeof checkedInput === 'string') {
-  console.log(checkedInput)
-// ! = NOT
-} else if (checkedInput < 0 && !allowNegative) {
-  console.log('input cannot be negative')
-} else {
-// Adding a number to a strong concatenates both as a string.
-  console.log(input + ' passes the tests.')
+function ifFunction (input) {
+  // typeof is covered under operators.
+  if (typeof input === 'string') {
+    return input
+  // ! = NOT
+  } else if (input < 0 && !allowNegative) {
+    return 'input cannot be negative'
+  } else {
+  // Adding a number to a strong concatenates both as a string.
+    return (input + ' passes the tests.')
+  }
 }
+
+console.log(ifFunction(checkedInput))
 
 // Demonstrates the switch statement.
 switch (checkedInput) {
   // Strings can also be used as cases, such as case 'apple':.
   case 7:
     console.log('you picked the lucky number seven!')
-    // break is neccessary or it will continue to the next case.
+    // break is neccessary or it will continue to the next case. If switch is
+    // in a function, return can be used instead.
     break
   case 13:
     console.log('you picked the unlucky number thirteen!')
