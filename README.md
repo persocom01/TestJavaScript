@@ -35,8 +35,14 @@ Javascript can be run on any modern browser. However, some of the code requires 
 
 ## Updating
 
-JavaScript itself probably does not need to be manually updated. To update node.js:
-* windows - download and use the installers from https://nodejs.org/en/download/
+JavaScript itself probably does not need to be manually updated. Sometimes, errors are the result of an old version of nvm rather than node. To up npm, enter:
+
+```
+npm install npm@latest -g
+```
+
+To update node.js:
+* windows - download and use the installers from https://nodejs.org/en/download
 * linux - use nvm to update node:
 
 1. Install nvm
