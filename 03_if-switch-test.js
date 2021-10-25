@@ -1,8 +1,10 @@
 // Demonstrates if statements and logical operators.
 var input = 7
 // || = OR. This used to be a common way to set default values. || will reject
-// any argument that evalutaes as false. This includes:
-// false, 0, null, undefined, '' and NaN.
+// any argument that evaluates as false. This includes:
+// false, 0, null, undefined, '' and NaN. The values are checked from left to
+// right, and the first value evaluated as true is returned. If all values are
+// evaluated false, the rightmost value is returned.
 input = input || 0
 // && = AND. In JS, value1 && value2 will return value2 if the statement
 // evaluates as true. This is used in react conditional rendering.
