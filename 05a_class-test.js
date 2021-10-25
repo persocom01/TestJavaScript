@@ -21,7 +21,7 @@ class Maid {
     // function is often used. Async variables can be initialized as null first
     // before they are set asynchronously.
     this.outfit = null
-    this.setup = this.init()
+    this.startInit = this.init()
   }
 
   async init () {
