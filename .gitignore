@@ -41,6 +41,7 @@ jspm_packages/
 .env
 
 # Custom exceptions
+__pycache__/
 00_test.*
 key.pem
 cert.pem

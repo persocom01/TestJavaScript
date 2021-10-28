@@ -267,3 +267,49 @@ Any modules used in the app need to be defined under dependencies in package.jso
 * "axios": "~0.19.2" - the node version of the python requests module.
 * "mariadb": "~2.4.2"
 * "xss-clean": "0.1.1" - sanitizes user input of cross-site scripting attacks.
+
+## Updating
+
+Sometimes, errors are the result of an old version of nvm rather than node. To update npm, enter:
+
+```
+npm install npm@latest -g
+```
+
+To update node.js:
+* windows - download and use the installers from https://nodejs.org/en/download
+* linux - use nvm to update node:
+
+1. Install nvm
+
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+<!-- alternatively, -->
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+```
+
+2. Ensure nvm is installed
+
+```
+nvm -v
+```
+
+3. Check the node version installed
+
+```
+node -v
+```
+
+4. List and install the version of node you want
+
+```
+<!-- List all versions of node -->
+nvm ls
+nvm install version_number
+```
+
+5. Activate the node version you want
+
+```
+nvm use version_number
+```

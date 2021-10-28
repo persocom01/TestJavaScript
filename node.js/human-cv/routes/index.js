@@ -86,8 +86,15 @@ router.post('/from_file', upload.single('file'), async function (req, res, next)
   // var output = await humanSnap.main('./temp/file.jpg')
   res.json(output)
 })
-router.post('/canvas', upload.single('file'), async function (req, res, next) {
-  var output = await humanCanvas.main('./temp/file.jpg', './temp/outfile.jpg')
+var storageBuffer = multer.memoryStorage()
+var uploadBuffer = multer({ storage: storageBuffer })
+router.post('/canvas', uploadBuffer.single('file'), async function (req, res, next) {
+  // var output = await humanCanvas.main('./temp/file.jpg', './temp/outfile.jpg')
+  var output = await humanCanvas.main(req.file.buffer, './temp/outfile.jpg')
+  res.json(output)
+})
+router.post('/from_file', uploadBuffer.single('file'), async function (req, res, next) {
+  const output = await hcv.detectFromBuffer(req.file.buffer)
   res.json(output)
 })
 

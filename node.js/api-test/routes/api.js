@@ -92,6 +92,7 @@ router.post('/json', function (req, res, next) {
   res.json(req.body)
 })
 
+// Demonstrates how to save file to disk in node.js
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './temp')
@@ -102,8 +103,32 @@ var storage = multer.diskStorage({
   }
 })
 var upload = multer({ storage: storage })
+//
 router.post('/file', upload.single('file'), function (req, res, next) {
   console.log('post upload file')
+  console.log(req.file)
+  // Buffers do not have req.file.path
+  fs.readFile(req.file.path, 'utf8', function (err, data) {
+    if (err) throw err
+    // We put res inside fs.readfile() here because it is an async function.
+    // fs.readFileSync() is the sync version.
+    // We use trim here to remove /r/n from the string.
+    res.json({ filename: req.file.originalname, data: data.toString().trim() })
+  })
+})
+
+// Demonstrates how to save temp files to the buffer instead of disk. This
+// method is slightly faster.
+var storageBuffer = multer.memoryStorage()
+var uploadBuffer = multer({ storage: storageBuffer })
+router.post('/buffer', uploadBuffer.single('file'), function (req, res, next) {
+  console.log('post upload file to buffer')
+  console.log(req.file)
+  console.log(req.file.buffer.toString())
+  // const reader = fs.createReadStream(req.file.buffer)
+  // reader.on('data', function (chunk) {
+  //   console.log(chunk.toString())
+  // })
   res.json({ text: 'success' })
 })
 

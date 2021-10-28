@@ -6,6 +6,9 @@ const canvas = require('canvas')
 const tf = require('@tensorflow/tfjs-node')
 const Human = require('./dist/human.node.js').default
 
+globalThis.Canvas = canvas.Canvas // patch global namespace with canvas library
+globalThis.ImageData = canvas.ImageData // patch global namespace with canvas library
+
 class HumanCV {
   constructor (config, cameraConfig) {
     this.config = config
@@ -20,7 +23,6 @@ class HumanCV {
   async init () {
     log.configure({ inspect: { breakLength: 265 } })
     log.header()
-    this.fetch = (await import('node-fetch')).default
     await this.human.tf.ready()
     log.info('Human:', this.human.version)
     await this.human.load()
@@ -46,21 +48,30 @@ class HumanCV {
     })
   }
 
-  async test () {
-    let result
-    process.on('unhandledRejection', (err) => {
-      // @ts-ignore // no idea if exception message is complete
-      log.error(err || 'no error message')
-    })
-    log.state('Processing embedded warmup image: face')
-    this.config.warmup = 'face'
-    result = await this.human.warmup(this.config)
+  async bufferFromInput (input) {
+    let buffer
+    this.fetch = (await import('node-fetch')).default
+    log.info('Loading image:', input)
+    if (input.startsWith('http:') || input.startsWith('https:')) {
+      const res = await this.fetch(input)
+      if (res && res.ok) buffer = await res.buffer()
+      else log.error('Invalid image URL:', input, res.status, res.statusText, res.headers.get('content-type'))
+    } else {
+      buffer = fs.readFileSync(input)
+    }
+    return buffer
+  }
 
-    log.state('Processing embedded warmup image: full')
-    this.config.warmup = 'full'
-    result = await this.human.warmup(this.config)
-    // no need to print results as they are printed to console during detection from within the library due to human.config.debug set
-    return result
+  getAngleBetweenLines (lineA, lineB) {
+    const dot = (vA, vB) => vA.map((x, i) => vA[i] * vB[i]).reduce((m, n) => m + n)
+    const vA = [(lineA[0][0] - lineA[1][0]), (lineA[0][1] - lineA[1][1])]
+    const vB = [(lineB[0][0] - lineB[1][0]), (lineB[0][1] - lineB[1][1])]
+    const dotProd = dot(vA, vB)
+    const magA = Math.pow(dot(vA, vA), 0.5)
+    const magB = Math.pow(dot(vB, vB), 0.5)
+    const angle = Math.acos(dotProd / magB / magA)
+    const angDeg = angle * 180 / Math.PI
+    return angDeg
   }
 
   logResults (result) {
@@ -108,6 +119,31 @@ class HumanCV {
     }
   }
 
+  openClosedGesture (bodyKeypoints, angle) {
+    const leftShoulder = bodyKeypoints.find((a) => (a.part === 'leftShoulder')).position;
+    const leftElbow = bodyKeypoints.find((a) => (a.part === 'leftElbow')).position;
+    const leftHip = bodyKeypoints.find((a) => (a.part === 'leftHip')).position;
+    const result = this.getAngleBetweenLines([leftShoulder, leftElbow], [leftShoulder, leftHip])
+    return result
+  }
+
+  async test () {
+    let result
+    process.on('unhandledRejection', (err) => {
+      // @ts-ignore // no idea if exception message is complete
+      log.error(err || 'no error message')
+    })
+    log.state('Processing embedded warmup image: face')
+    this.config.warmup = 'face'
+    result = await this.human.warmup(this.config)
+
+    log.state('Processing embedded warmup image: full')
+    this.config.warmup = 'full'
+    result = await this.human.warmup(this.config)
+    // no need to print results as they are printed to console during detection from within the library due to human.config.debug set
+    return result
+  }
+
   async detectFromBuffer (buffer) {
     const tensor = this.buffer2tensor(buffer)
     log.state('Processing:', tensor.shape)
@@ -124,16 +160,22 @@ class HumanCV {
   async startStream (interval = 0) {
     this.isStreaming = true
     this.fetch = (await import('node-fetch')).default
-    let i = interval || this.cameraConfig.interval
-    i *= 1000
-    while (this.isStreaming) {
-      // if (i) {
-      //   setTimeout(() => this.startStream(), i)
-      // }
+    const timer = ms => new Promise(resolve => setTimeout(resolve, ms))
+    const i = (interval || this.cameraConfig.interval) * 1000
+
+    const streamLoop = async () => {
       const response = await this.fetch(`${this.cameraConfig.url}`)
       const data = await response.json()
       const buffer = Buffer.from(data.snapshot, 'base64')
       this.result = await this.detectFromBuffer(buffer)
+    }
+
+    while (this.isStreaming) {
+      if (i) {
+        await timer(i).then(await streamLoop())
+      } else {
+        await streamLoop()
+      }
     }
   }
 
@@ -152,18 +194,19 @@ class HumanCV {
           const dir = fs.readdirSync(f)
           this.result = []
           for (const file of dir) {
-            log.info('Loading image:', path.join(f, file))
-            buffer = fs.readFileSync(path.join(f, file))
+            const filePath = path.join(f, file)
+            log.info('Loading image:', filePath)
+            buffer = await this.bufferFromInput(filePath)
             this.result = this.result.push(await this.detectFromBuffer(buffer))
           }
         } else {
           log.info('Loading image:', f)
-          buffer = fs.readFileSync(f)
+          buffer = await this.bufferFromInput(f)
           this.result = await this.detectFromBuffer(buffer)
         }
       } else {
         log.info('Loading image:', f)
-        buffer = fs.readFileSync(f)
+        buffer = await this.bufferFromInput(f)
         this.result = await this.detectFromBuffer(buffer)
       }
     }
