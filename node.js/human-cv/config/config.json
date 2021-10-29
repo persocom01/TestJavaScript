@@ -1,14 +1,17 @@
 {
     "camera": {
         "enabled": true,
-        "interval": 2,
-        "streaming": true,
+        "interval": 0.1,
+        "streaming": false,
         "url": "http://localhost:5000/snapshot"
     },
     "help": {
         "commands": {
-            "cv_stream": "/cv_stream",
-            "snapshot": "/snapshot"
+            "current_detection": "/detect",
+            "detect_from_file": "/from_file",
+            "snapshot": "/snapshot",
+            "start_stream": "/start_stream",
+            "stop_stream": "/stop_stream"
         },
         "status": "on"
     },

@@ -153,6 +153,7 @@ async function main(input, output) {
       log.data('  Hand: N/A');
     }
     if (result && result.gesture && result.gesture.length > 0) {
+      result.gesture.push({body: 0, gesture: 'test gesture'})
       for (let i = 0; i < result.gesture.length; i++) {
         const [key, val] = Object.entries(result.gesture[i]);
         log.data(`  Gesture: ${key[0]}#${key[1]} gesture:${val[1]}`);
@@ -190,6 +191,7 @@ async function main(input, output) {
     outFile.on('error', (err) => log.error('Output error:', output, err));
     const stream = inputCanvas.createJPEGStream({ quality: 0.5, progressive: true, chromaSubsampling: true });
     stream.pipe(outFile);
+    return result
   }
 }
 

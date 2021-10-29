@@ -119,12 +119,36 @@ class HumanCV {
     }
   }
 
-  openClosedGesture (bodyKeypoints, angle) {
-    const leftShoulder = bodyKeypoints.find((a) => (a.part === 'leftShoulder')).position;
-    const leftElbow = bodyKeypoints.find((a) => (a.part === 'leftElbow')).position;
-    const leftHip = bodyKeypoints.find((a) => (a.part === 'leftHip')).position;
-    const result = this.getAngleBetweenLines([leftShoulder, leftElbow], [leftShoulder, leftHip])
-    return result
+  openClosedGesture (result, angle) {
+    if (result && result.body && result.body.length > 0) {
+      // console.log(result.body[0])
+      for (let i = 0; i < result.body.length; i++) {
+        const body = result.body[i]
+        try {
+          const leftShoulder = body.keypoints.find((a) => (a.part === 'leftShoulder')).position
+          const leftElbow = body.keypoints.find((a) => (a.part === 'leftElbow')).position
+          const leftHip = body.keypoints.find((a) => (a.part === 'leftHip')).position
+          const rightShoulder = body.keypoints.find((a) => (a.part === 'rightShoulder')).position
+          const rightElbow = body.keypoints.find((a) => (a.part === 'rightElbow')).position
+          const rightHip = body.keypoints.find((a) => (a.part === 'rightHip')).position
+          if (leftShoulder && leftElbow && leftHip && rightShoulder && rightElbow && rightHip) {
+            const leftAng = this.getAngleBetweenLines([leftShoulder, leftElbow], [leftShoulder, leftHip])
+            const rightAng = this.getAngleBetweenLines([rightShoulder, rightElbow], [rightShoulder, rightHip])
+            log.data(`left arm angle: ${leftAng} right arm angle:${rightAng}`)
+            if (leftAng >= angle && rightAng >= angle) {
+              result.gesture.push({ body: i, gesture: 'open posture' })
+            } else if (leftAng < angle && rightAng < angle) {
+              result.gesture.push({ body: i, gesture: 'closed posture' })
+            }
+          }
+        } catch (TypeError) {
+          continue
+        }
+      }
+      return result
+    } else {
+      return result
+    }
   }
 
   async test () {
@@ -149,6 +173,7 @@ class HumanCV {
     log.state('Processing:', tensor.shape)
     try {
       this.result = await this.human.detect(tensor, this.config)
+      this.result = this.openClosedGesture(this.result, 25)
     } catch (err) {
       log.error('caught')
     }

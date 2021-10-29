@@ -4,7 +4,6 @@ var fs = require('fs')
 var multer = require('multer')
 var humanSnap = require('../modules/human/human-snapshot')
 var humanCanvas = require('../modules/human/human-canvas')
-var humanBuffer = require('../modules/human/human-buffer')
 var streaming = require('../modules/streaming')
 var humanCV = require('../modules/human/human-cv')
 var fetch
@@ -36,7 +35,7 @@ router.get('/detect', function (req, res, next) {
 router.get('/start_stream', async function (req, res, next) {
   if (!hcv.isStreaming) {
     console.log('[human-cv]starting stream...')
-    hcv.startStream()
+    await hcv.startStream()
     res.send('stream started')
   }
   const output = hcv.result
@@ -44,6 +43,7 @@ router.get('/start_stream', async function (req, res, next) {
 })
 
 router.get('/stop_stream', async function (req, res, next) {
+  console.log('[human-cv]stopping stream...')
   hcv.isStreaming = false
   res.send('stream stopped')
 })
@@ -81,19 +81,20 @@ var storage = multer.diskStorage({
   }
 })
 var upload = multer({ storage: storage })
-router.post('/from_file', upload.single('file'), async function (req, res, next) {
-  var output = await hcv.detectFromFile('./temp/file.jpg')
-  // var output = await humanSnap.main('./temp/file.jpg')
+router.post('/canvas', upload.single('file'), async function (req, res, next) {
+  // var output = await humanCanvas.main('./temp/file.jpg', './temp/outfile.jpg')
+  var output = await humanCanvas.main(req.file.path, './temp/outfile.jpg')
   res.json(output)
 })
 var storageBuffer = multer.memoryStorage()
 var uploadBuffer = multer({ storage: storageBuffer })
-router.post('/canvas', uploadBuffer.single('file'), async function (req, res, next) {
+router.post('/canvas2', uploadBuffer.single('file'), async function (req, res, next) {
   // var output = await humanCanvas.main('./temp/file.jpg', './temp/outfile.jpg')
   var output = await humanCanvas.main(req.file.buffer, './temp/outfile.jpg')
   res.json(output)
 })
 router.post('/from_file', uploadBuffer.single('file'), async function (req, res, next) {
+  console.log('[human-cv]getting detection from file')
   const output = await hcv.detectFromBuffer(req.file.buffer)
   res.json(output)
 })
