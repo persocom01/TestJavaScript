@@ -23,7 +23,7 @@ var start = Date.now()
 timer(ms).then(() => {
   var end = Date.now()
   var timeSpent = end - start
-  console.log('time spent (s): ' + (timeSpent / 1000))
+  console.log('time spent: ' + (timeSpent / 1000) + 's')
 
   if (timeSpent < minTime) {
     const addTime = minTime - timeSpent
