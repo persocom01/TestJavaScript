@@ -20,11 +20,11 @@ console.time('console time')
 // Using the difference between Date.now() allows you to get an execution time
 // that can be returned.
 var start = Date.now()
-timer(1000).then(() => {
+timer(ms).then(() => {
   var end = Date.now()
-
   var timeSpent = end - start
   console.log('time spent (s): ' + (timeSpent / 1000))
+
   if (timeSpent < minTime) {
     const addTime = minTime - timeSpent
     timer(addTime).then(() => console.timeEnd('console time'))
