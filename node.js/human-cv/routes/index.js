@@ -13,7 +13,18 @@ try {
   const data = fs.readFileSync('./config/config.json', 'utf8')
   config = JSON.parse(data)
 } catch (err) {
-  console.log(`[human-cv]error reading config file: ${err}`)
+  console.log(`error reading config file: ${err}`)
+}
+
+var logPrefix = config.log_prefix || '[human-cv]'
+
+var defaultPaths = {
+  get_detection: '/detect',
+  get_help: '/',
+  get_snapshot: '/snapshot',
+  get_start_stream: '/start_stream',
+  get_stop_stream: '/stop_stream',
+  post_detect_from_file: '/from_file'
 }
 
 var hcv = new humanCV.HumanCV(config.human_params, config.camera)
@@ -21,20 +32,24 @@ if (config.camera.enabled && config.camera.streaming) {
   hcv.startStream()
 }
 
-router.get('/', function (req, res, next) {
-  console.log('[human-cv]help triggered')
-  res.json(config.help)
+router.get(config.get_help || defaultPaths.get_help, function (req, res, next) {
+  console.log(`${logPrefix}help triggered`)
+  try {
+    res.json(config.commands)
+  } catch (err) {
+    res.json(defaultPaths)
+  }
 })
 
-router.get('/detect', function (req, res, next) {
-  console.log('[human-cv]getting detection')
+router.get(config.get_detection || defaultPaths.get_detection, function (req, res, next) {
+  console.log(`${logPrefix}getting detection`)
   const output = hcv.result
   res.json(output)
 })
 
-router.get('/start_stream', async function (req, res, next) {
+router.get(config.get_start_stream || defaultPaths.get_start_stream, async function (req, res, next) {
   if (!hcv.isStreaming) {
-    console.log('[human-cv]starting stream...')
+    console.log(`${logPrefix}starting stream...`)
     await hcv.startStream()
     res.send('stream started')
   }
@@ -42,8 +57,8 @@ router.get('/start_stream', async function (req, res, next) {
   res.json(output)
 })
 
-router.get('/stop_stream', async function (req, res, next) {
-  console.log('[human-cv]stopping stream...')
+router.get(config.get_stop_stream || defaultPaths.get_stop_stream, async function (req, res, next) {
+  console.log(`${logPrefix}stopping stream...`)
   hcv.isStreaming = false
   res.send('stream stopped')
 })
@@ -62,8 +77,8 @@ router.get('/stop_stream', async function (req, res, next) {
 //   res.json(output)
 // })
 
-router.get('/snapshot', async function (req, res, next) {
-  console.log('[human-cv]getting snapshot detection')
+router.get(config.get_snapshot || defaultPaths.get_snapshot, async function (req, res, next) {
+  console.log(`${logPrefix}getting snapshot detection`)
   fetch = (await import('node-fetch')).default
   const response = await fetch(`${config.camera.url}`)
   const data = await response.json()
@@ -94,7 +109,7 @@ router.post('/canvas2', uploadBuffer.single('file'), async function (req, res, n
   res.json(output)
 })
 router.post('/from_file', uploadBuffer.single('file'), async function (req, res, next) {
-  console.log('[human-cv]getting detection from file')
+  console.log(`${logPrefix}getting detection from file`)
   const output = await hcv.detectFromBuffer(req.file.buffer)
   res.json(output)
 })

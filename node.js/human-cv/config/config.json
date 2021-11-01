@@ -5,15 +5,13 @@
         "streaming": false,
         "url": "http://localhost:5000/snapshot"
     },
-    "help": {
-        "commands": {
-            "current_detection": "/detect",
-            "detect_from_file": "/from_file",
-            "snapshot": "/snapshot",
-            "start_stream": "/start_stream",
-            "stop_stream": "/stop_stream"
-        },
-        "status": "on"
+    "commands": {
+        "get_detection": "/detect",
+        "get_help": "/",
+        "get_snapshot": "/snapshot",
+        "get_start_stream": "/start_stream",
+        "get_stop_stream": "/stop_stream",
+        "post_detect_from_file": "/from_file"
     },
     "human_params": {
         "async": false,
@@ -106,5 +104,6 @@
         },
         "skipFrame": false
     },
+    "log_prefix": "[human-cv]",
     "port": 3000
 }
