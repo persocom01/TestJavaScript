@@ -1,7 +1,7 @@
 # Demonstrates how to send a get request and recieve a text response.
 import base64
 domain = 'http://localhost:3000'
-path = f'{domain}/'
+path = f'{domain}/api/'
 
 
 def send_request(path, post=False, **kwargs):

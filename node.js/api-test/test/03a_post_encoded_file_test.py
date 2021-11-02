@@ -5,7 +5,7 @@ import io
 
 password = 'encoded file text'
 filename = 'encode.txt'
-domain = 'http://localhost:8000'
+domain = 'http://localhost:3000'
 path = f'{domain}/_file'
 
 

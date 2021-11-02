@@ -7,7 +7,7 @@ json = {
     }
 
 domain = 'http://localhost:3000'
-path = f'{domain}/api/json'
+path = f'{domain}/json'
 
 
 def send_request(path, post=False, **kwargs):

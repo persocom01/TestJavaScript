@@ -2,10 +2,14 @@
 
 var text = 'Iceman, wielding ice chunchunmaru, ate ice-cream at the ice ring while watching The Ring.'
 
-// Regex literals are indicated by the brackets /regex/.
+// Regex literals are indicated by the brackets /regex/flags. Flags are used to
+// modify regex search behavior. There are 6 flags, igsmyu, but the most
+// commonly used are:
+// i - case insensitive
+// g - match all instances instead of one.
 var re = /\bice[- ]?(?<suffix>\w+)/gmi
 // 4 methods work with regex: match, search, replace and split.
-// There is also matchAll, but it doesn't work on node.js.
+// The regex g flag can be used to mimic replaceAll() or matchALL().
 console.log('match:', text.match(re))
 console.log('\n')
 

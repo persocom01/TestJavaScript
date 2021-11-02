@@ -1,8 +1,18 @@
 {
-    "cors": [
-        "*"
-    ],
-    "model": "./vosk-model-small-en-us-0.15",
-    "path": "/",
+    "commands": {
+        "get_async": "/async",
+        "get_divide_query_by_two": "/:query([+-]?([0-9]+.?[0-9]{0,}))",
+        "get_help": "/",
+        "get_trigger_own_api": "/trigger:query?",
+        "post_buffer": "/buffer",
+        "post_file": "/file",
+        "post_json": "/json"
+    },
+    "https": {
+        "certfile": "./config/cert.pem",
+        "enabled": false,
+        "keyfile": "./config/key.pem"
+    },
+    "log_prefix": "[api-test]",
     "port": 3000
 }

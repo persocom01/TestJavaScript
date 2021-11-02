@@ -4,7 +4,7 @@ import os
 
 filepath = './node.js/api-test/test/upload.txt'
 domain = 'http://localhost:3000'
-path = f'{domain}/api/buffer'
+path = f'{domain}/buffer'
 
 
 def send_request(path, post=False, **kwargs):

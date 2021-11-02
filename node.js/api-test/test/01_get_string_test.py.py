@@ -1,5 +1,5 @@
 # Demonstrates how to send a get request and recieve a text response.
-domain = 'http://localhost:3000/api'
+domain = 'http://localhost:3000'
 path = f'{domain}/10.2'
 
 

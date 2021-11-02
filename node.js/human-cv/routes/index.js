@@ -12,7 +12,7 @@ var config
 try {
   const data = fs.readFileSync('./config/config.json', 'utf8')
   config = JSON.parse(data)
-} catch (err) {
+} catch (e) {
   console.log(`error reading config file: ${err}`)
 }
 
@@ -36,7 +36,7 @@ router.get(config.get_help || defaultPaths.get_help, function (req, res, next) {
   console.log(`${logPrefix}help triggered`)
   try {
     res.json(config.commands)
-  } catch (err) {
+  } catch (e) {
     res.json(defaultPaths)
   }
 })

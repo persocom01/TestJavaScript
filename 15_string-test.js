@@ -53,6 +53,8 @@ console.log()
 
 // Other methods.
 // Demonstrates removing quote marks from the start and end of a string.
+// replace() replaces the first match found. replaceAll() does the same for all
+// other matches.
 var sentence2 = sentence.replace(/^"(.*)"$/, '$1')
 // match() is like search but it returns the actual string instead of the index,
 // and is able to return multiple matches as a list if the g flag is set.
