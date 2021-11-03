@@ -1,12 +1,13 @@
 {
     "commands": {
         "get_async": "/async",
-        "get_divide_query_by_two": "/:query([+-]?([0-9]+.?[0-9]{0,}))",
+        "get_divide_query_by_two": "/:num([+-]?([0-9]+.?[0-9]{0,}))",
         "get_help": "/",
         "get_trigger_own_api": "/trigger:query?",
         "post_buffer": "/buffer",
         "post_file": "/file",
-        "post_json": "/json"
+        "post_json": "/json",
+        "post_temp_img": "/temp"
     },
     "https": {
         "certfile": "./config/cert.pem",

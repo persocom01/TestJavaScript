@@ -7,6 +7,9 @@ var text = 'Iceman, wielding ice chunchunmaru, ate ice-cream at the ice ring whi
 // commonly used are:
 // i - case insensitive
 // g - match all instances instead of one.
+// m - makes ^ and $ match the beginning and ending of every line instead of
+// the whole string.
+// Others can be found here: https://www.codeguage.com/courses/regexp/flags
 var re = /\bice[- ]?(?<suffix>\w+)/gmi
 // 4 methods work with regex: match, search, replace and split.
 // The regex g flag can be used to mimic replaceAll() or matchALL().

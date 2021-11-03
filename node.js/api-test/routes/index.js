@@ -3,6 +3,7 @@ var express = require('express')
 var router = express.Router()
 var fs = require('fs')
 var multer = require('multer')
+var imgTest = require('../modules/image-test')
 
 var mod1 = require('../cjsMod')
 // We do this because we are importing a class. When using individual functions,
@@ -29,12 +30,13 @@ var defaultPaths = {
   get_async: '/async',
   // Due to strange rules when strings are processed, you need to escape . here
   // with \. In json, pass the string without the escape.
-  get_divide_query_by_two: '/:query([+-]?([0-9]+\.?[0-9]{0,}))',
+  get_divide_query_by_two: '/:num([+-]?([0-9]+\.?[0-9]{0,}))',
   get_help: '/',
   get_trigger_own_api: '/trigger:query?',
   post_buffer: '/buffer',
   post_file: '/file',
-  post_json: '/json'
+  post_json: '/json',
+  post_temp: '/temp'
 }
 
 // The routes are are in addition to those defined in app.js. For example
@@ -63,7 +65,10 @@ router.get(config.commands.get_help || defaultPaths.get_help, function (req, res
 // https://expressjs.com/en/guide/routing.html
 router.get(config.commands.get_divide_query_by_two || defaultPaths.get_divide_query_by_two, function (req, res, next) {
 // router.get('/:query([+-]?([0-9]+\.?[0-9]{0,}))', function (req, res, next) {
-  console.log(`${logPrefix}get decimal number regex with query ${req.params.query}`)
+  console.log(`${logPrefix}get decimal number regex with params ${req.params}`)
+  // Route params are different from url params, which come in the from:
+  // /routeParam?key1=value1&key2=value2
+  // to access these values, use req.query.keyName instead.
   var output = m1c.divideQueryByTwo(req.params.query).toString()
   res.send(output)
 })
@@ -128,7 +133,6 @@ var storage = multer.diskStorage({
   }
 })
 var upload = multer({ storage: storage })
-//
 router.post(config.commands.post_file || defaultPaths.post_file, upload.single('file'), function (req, res, next) {
   console.log(`${logPrefix}post upload file`)
   console.log(req.file)
@@ -143,13 +147,45 @@ router.post(config.commands.post_file || defaultPaths.post_file, upload.single('
 })
 
 // Demonstrates how to save temp files to the buffer instead of disk. This
-// method is slightly faster.
+// method is slightly faster. However, because blob implementation is still new
+// in node.js, there is no easy method of getting the file path to pass to
+// other functions.
 var storageBuffer = multer.memoryStorage()
 var uploadBuffer = multer({ storage: storageBuffer })
 router.post(config.commands.post_buffer || defaultPaths.post_buffer, uploadBuffer.single('file'), function (req, res, next) {
   console.log(`${logPrefix}post upload file to buffer`)
   console.log(req.file)
+
+  // This is how using the blob object should look like if it were implemented.
+  // const blob = new Blob([req.file.buffer], { type: 'image/jpeg' })
+  // const url = URL.createObjectURL(blob)
   res.json({ filename: req.file.originalname, data: req.file.buffer.toString().trim() })
+})
+
+// Demonstrates how to create and delete temp files using multer. Instead of
+// the multer storage object, a simple dest property is sufficient.
+var uploadTemp = multer({ dest: './temp/' })
+// fs.unlink(path, errorHandler) is used to delete the temp file after use.
+var clearTemp = filePath => fs.unlink(filePath, function (e) {
+  if (e) {
+    console.log(`${logPrefix}unable to delete temp file:`, e)
+  } else {
+    console.log(`${logPrefix}temp file deleted`)
+  }
+})
+router.post(config.commands.post_temp || defaultPaths.post_temp, uploadTemp.single('file'), async function (req, res, next) {
+  console.log(`${logPrefix}post upload temp file`)
+  console.log(req.file)
+  if (req.query.type === 'img' || req.query.type === 'image') {
+    const [width, height] = await imgTest.processImage(req.file.path).then(clearTemp(req.file.path))
+    res.json({ filename: req.file.originalname, image_width: width, image_height: height })
+  } else {
+    fs.readFile(req.file.path, 'utf8', function (err, data) {
+      if (err) throw err
+      clearTemp(req.file.path)
+      res.json({ filename: req.file.originalname, data: data.toString().trim() })
+    })
+  }
 })
 
 module.exports = router
