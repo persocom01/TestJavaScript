@@ -167,7 +167,8 @@ router.post(config.commands.post_buffer || defaultPaths.post_buffer, uploadBuffe
 // accepts a normal file, or an image file if ?type=image is set as url param.
 // It then returns the file in two different ways, from buffer for the image
 // and from file for the normal file, and deletes the temp file afterwards.
-// Instead of the multer storage object, a simple dest property is sufficient.
+// On testing, there was no noticable speed difference over multer diskStorage.
+// For temp files, the dest property is sufficient instead of a storage object.
 var uploadTemp = multer({ dest: './temp/' })
 // fs.unlink(path, errorHandler) is used to delete the temp file after use.
 var clearTemp = filePath => fs.unlink(filePath, function (e) {
