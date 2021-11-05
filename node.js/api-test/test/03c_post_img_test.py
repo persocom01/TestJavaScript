@@ -3,6 +3,7 @@ from requests_toolbelt import MultipartEncoder
 import os
 
 filepath = './node.js/api-test/test/test_img.jpg'
+savepath = './node.js/api-test/temp/test_img.jpg'
 domain = 'localhost:3000'
 path = f'{domain}/temp?type=image'
 
@@ -34,6 +35,8 @@ with open(filepath, 'rb') as f:
 
 if r.status_code == 200:
     # print(r.text.strip('"'))
-    print(r.json())
+    # print(r.json())
+    with open(savepath, 'wb') as f:
+        f.write(r.content)
 else:
     print('request code: ' + str(r.status_code))

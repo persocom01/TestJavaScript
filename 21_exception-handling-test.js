@@ -40,8 +40,11 @@ function tryWrapper (num) {
     // Re-throwing the error can be useful is you want it to be caught again
     // in an outer try catch block.
     throw e
+  // finally executes regardless of error. It is possible to use finally without
+  // catch. This causes code to execute regardless of error, but errors will be
+  // handled in the default way. (app will stop)
   } finally {
-    // return in the finally block overriddes return or throw in the other blocks.
+    // return in the finally block overrides return or throw in the other blocks.
     // return null
   }
 }

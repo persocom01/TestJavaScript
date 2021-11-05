@@ -4,6 +4,7 @@ var router = express.Router()
 var fs = require('fs')
 var multer = require('multer')
 var imgTest = require('../modules/image-test')
+var path = require('path')
 
 var mod1 = require('../cjsMod')
 // We do this because we are importing a class. When using individual functions,
@@ -137,8 +138,8 @@ router.post(config.commands.post_file || defaultPaths.post_file, upload.single('
   console.log(`${logPrefix}post upload file`)
   console.log(req.file)
   // Buffers do not have req.file.path
-  fs.readFile(req.file.path, 'utf8', function (err, data) {
-    if (err) throw err
+  fs.readFile(req.file.path, 'utf8', function (e, data) {
+    if (e) throw e
     // We put res inside fs.readfile() here because it is an async function.
     // fs.readFileSync() is the sync version.
     // We use trim here to remove /r/n from the string.
@@ -162,29 +163,48 @@ router.post(config.commands.post_buffer || defaultPaths.post_buffer, uploadBuffe
   res.json({ filename: req.file.originalname, data: req.file.buffer.toString().trim() })
 })
 
-// Demonstrates how to create and delete temp files using multer. Instead of
-// the multer storage object, a simple dest property is sufficient.
+// Demonstrates how to create and delete temp files using multer. This api
+// accepts a normal file, or an image file if ?type=image is set as url param.
+// It then returns the file in two different ways, from buffer for the image
+// and from file for the normal file, and deletes the temp file afterwards.
+// Instead of the multer storage object, a simple dest property is sufficient.
 var uploadTemp = multer({ dest: './temp/' })
 // fs.unlink(path, errorHandler) is used to delete the temp file after use.
 var clearTemp = filePath => fs.unlink(filePath, function (e) {
-  if (e) {
-    console.log(`${logPrefix}unable to delete temp file:`, e)
-  } else {
-    console.log(`${logPrefix}temp file deleted`)
-  }
+  if (e) throw e
+  console.log(`${logPrefix}temp file deleted`)
 })
+// Instead of passing the absolute path to res.sendFile(), one can use the
+// options root key to append the directory to every relative file path.
+var sendFileOptions = { root: path.resolve() }
 router.post(config.commands.post_temp || defaultPaths.post_temp, uploadTemp.single('file'), async function (req, res, next) {
   console.log(`${logPrefix}post upload temp file`)
   console.log(req.file)
-  if (req.query.type === 'img' || req.query.type === 'image') {
-    const [width, height] = await imgTest.processImage(req.file.path).then(clearTemp(req.file.path))
-    res.json({ filename: req.file.originalname, image_width: width, image_height: height })
-  } else {
-    fs.readFile(req.file.path, 'utf8', function (err, data) {
-      if (err) throw err
+  try {
+    if (req.query.type === 'img' || req.query.type === 'image') {
+      // Demonstrates how to send image buffers.
+      const buffer = await imgTest.processImage(req.file.path)
+      res.write(buffer, 'binary')
+      res.end(null, 'binary')
+      // Delete the temp file.
       clearTemp(req.file.path)
-      res.json({ filename: req.file.originalname, data: data.toString().trim() })
-    })
+    } else {
+      // Demonstrates how to send a file.
+      // res.sendFile() requires absolute path, which you can get using
+      // path.resolve(file) or path.join(__dirname, file).
+      // The difference is that __dir returns the directory of this file
+      // while path.resolve() returns the directory of the app.js file.
+      console.log('path.join():', path.join(__dirname))
+      console.log('path.resolve():', path.resolve())
+      res.sendFile(req.file.path, sendFileOptions, e => {
+        if (e) throw e
+        // res.sendFile is async, so to delete the temp file after the file is
+        // sent, the delete function has to be located in its callback.
+        clearTemp(req.file.path)
+      })
+    }
+  } catch (e) {
+    clearTemp(req.file.path)
   }
 })
 

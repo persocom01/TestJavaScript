@@ -4,7 +4,7 @@ import os
 
 filepath = './node.js/api-test/test/upload.txt'
 domain = 'http://localhost:3000'
-path = f'{domain}/buffer'
+path = f'{domain}/temp'
 
 
 def send_request(path, post=False, **kwargs):
@@ -37,6 +37,7 @@ with open(filepath, 'rb') as f:
     r = send_request(path, post=True, data=encoder, headers={'Content-Type': encoder.content_type}, verify=False)
 
 if r.status_code == 200:
-    print(r.json())
+    # print(r.json())
+    print(r.content)
 else:
     print('request code: ' + str(r.status_code))

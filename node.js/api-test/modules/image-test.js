@@ -1,3 +1,6 @@
+// This file ensures that the image file received can be read as one by loading
+// it with canvas. For testing purposes, the image is subsequently written to
+// buffer to be sent back to see it it returns in one piece.
 const canvas = require('canvas')
 
 async function processImage (input) {
@@ -9,7 +12,8 @@ async function processImage (input) {
   const inputCanvas = new canvas.Canvas(inputImage.width, inputImage.height) // create canvas
   const ctx = inputCanvas.getContext('2d')
   ctx.drawImage(inputImage, 0, 0)
-  return [inputImage.width, inputImage.height]
+  const buffer = inputCanvas.toBuffer('image/jpeg')
+  return buffer
 }
 
 module.exports = { processImage }
