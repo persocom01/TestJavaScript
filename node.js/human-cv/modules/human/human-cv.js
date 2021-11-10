@@ -14,7 +14,7 @@ class HumanCV {
   constructor (config, cameraConfig) {
     this.config = config
     this.cameraConfig = cameraConfig
-    this.isStreaming = false
+    this.isActive = false
     this.human = new Human(config)
     this.fetch = null
     this.startup = this.init()
@@ -139,8 +139,8 @@ class HumanCV {
     return this.result
   }
 
-  async startStream (interval = 0) {
-    this.isStreaming = true
+  async startActiveDetection (interval = 0) {
+    this.isActive = true
     this.fetch = (await import('node-fetch')).default
     const timer = ms => new Promise(resolve => setTimeout(resolve, ms))
     const i = (interval || this.cameraConfig.interval) * 1000
@@ -152,7 +152,7 @@ class HumanCV {
       this.result = await this.detectFromBuffer(buffer)
     }
 
-    while (this.isStreaming) {
+    while (this.isActive) {
       if (i) {
         await timer(i).then(await streamLoop())
       } else {
@@ -193,6 +193,55 @@ class HumanCV {
       }
     }
     return this.result
+  }
+
+  async drawOnCanvas (input) {
+    const inputImage = await canvas.loadImage(input) // load image using canvas library
+    console.log('Loaded image', input, inputImage.width, inputImage.height)
+    const inputCanvas = new canvas.Canvas(inputImage.width, inputImage.height) // create canvas
+    const ctx = inputCanvas.getContext('2d')
+    ctx.drawImage(inputImage, 0, 0) // draw input image onto canvas
+
+    // run detection
+    let buffer = fs.readFileSync(input)
+    this.result = await this.detectFromBuffer(buffer)
+
+    // draw detected results onto canvas
+    await this.human.draw.all(inputCanvas, this.result)
+    buffer = inputCanvas.toBuffer('image/jpeg')
+
+    return buffer
+  }
+
+  async detectDrawnOnCanvas (f) {
+    let buffer
+    log.info('File location:', f)
+    if (f.length === 0) {
+      log.warn('Parameters: <input image | folder> missing')
+      await this.test()
+    } else if (!fs.existsSync(f)) {
+      log.error(`File not found: ${f}`)
+    } else {
+      if (fs.existsSync(f)) {
+        const stat = fs.statSync(f)
+        if (stat.isDirectory()) {
+          const dir = fs.readdirSync(f)
+          this.result = []
+          for (const file of dir) {
+            const filePath = path.join(f, file)
+            log.info('Loading image:', filePath)
+            buffer = await this.drawOnCanvas(filePath)
+          }
+        } else {
+          log.info('Loading image:', f)
+          buffer = await this.drawOnCanvas(f)
+        }
+      } else {
+        log.info('Loading image:', f)
+        buffer = await this.drawOnCanvas(f)
+      }
+    }
+    return buffer
   }
 }
 

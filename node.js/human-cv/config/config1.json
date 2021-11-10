@@ -1,18 +1,17 @@
 {
     "camera": {
-        "active_detection": false,
         "enabled": true,
-        "interval": 2,
+        "interval": 0.1,
+        "streaming": false,
         "url": "http://localhost:5000/snapshot"
     },
     "commands": {
-        "get_current_detection": "/detect",
+        "get_detection": "/detect",
         "get_help": "/",
         "get_snapshot": "/snapshot",
-        "get_start_active_detection": "/start_detect",
-        "get_stop_active_detection": "/stop_detect",
-        "post_detect_from_image_file": "/file",
-        "post_image_with_detection_from_image_file": "/image"
+        "get_start_stream": "/start_stream",
+        "get_stop_stream": "/stop_stream",
+        "post_detect_from_file": "/from_file"
     },
     "human_params": {
         "async": false,
@@ -105,5 +104,6 @@
         },
         "skipFrame": false
     },
+    "log_prefix": "[human-cv]",
     "port": 3000
 }

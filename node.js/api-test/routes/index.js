@@ -76,7 +76,6 @@ router.get(config.commands.get_divide_query_by_two || defaultPaths.get_divide_qu
 
 // Demonstrates sending json using an async api with the ESM fetch module.
 // Apparently apis can send data to themselves.
-var url = `http://localhost:${process.env.PORT || config.port || 3000}${config.commands.post_json || defaultPaths.post_json}`
 var obj = {
   string: 'string data',
   bool: 'no',
@@ -86,6 +85,7 @@ var obj = {
 router.get(config.commands.get_async || defaultPaths.get_async, async function (req, res, next) {
   console.log(`${logPrefix}get async fetch ap`)
   fetch = (await import('node-fetch')).default
+  const url = `http://localhost:${process.env.PORT || config.port || 3000}${config.commands.post_json || defaultPaths.post_json}`
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify(obj),

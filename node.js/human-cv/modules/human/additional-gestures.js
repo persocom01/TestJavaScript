@@ -44,7 +44,9 @@ function openClosedPosture (result, angle) {
 }
 
 function addGestures (result) {
-  console.log(result.body[0])
+  log.info('Adding custom gestures to results')
+  // Add additional gestures by modifying the results using custom gesture
+  // functions like the one below.
   result = openClosedPosture(result, 25)
   return result
 }

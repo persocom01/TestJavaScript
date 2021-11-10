@@ -2,9 +2,7 @@ var express = require('express')
 var router = express.Router()
 var fs = require('fs')
 var multer = require('multer')
-var humanSnap = require('../modules/human/human-snapshot')
 var humanCanvas = require('../modules/human/human-canvas')
-var streaming = require('../modules/streaming')
 var humanCV = require('../modules/human/human-cv')
 var fetch
 
@@ -19,20 +17,21 @@ try {
 var logPrefix = config.log_prefix || '[human-cv]'
 
 var defaultPaths = {
-  get_detection: '/detect',
   get_help: '/',
+  get_current_detection: '/detect',
   get_snapshot: '/snapshot',
-  get_start_stream: '/start_stream',
-  get_stop_stream: '/stop_stream',
-  post_detect_from_file: '/from_file'
+  get_start_active_detection: '/start_detect',
+  get_stop_active_detection: '/stop_detect',
+  post_detect_from_image_file: '/file',
+  post_image_with_detection_from_image_file: '/image'
 }
 
 var hcv = new humanCV.HumanCV(config.human_params, config.camera)
-if (config.camera.enabled && config.camera.streaming) {
-  hcv.startStream()
+if (config.camera.enabled && config.camera.active_detection) {
+  hcv.startActiveDetection()
 }
 
-router.get(config.get_help || defaultPaths.get_help, function (req, res, next) {
+router.get(config.commands.get_help || defaultPaths.get_help, function (req, res, next) {
   console.log(`${logPrefix}help triggered`)
   try {
     res.json(config.commands)
@@ -41,43 +40,40 @@ router.get(config.get_help || defaultPaths.get_help, function (req, res, next) {
   }
 })
 
-router.get(config.get_detection || defaultPaths.get_detection, function (req, res, next) {
+router.get(config.commands.get_current_detection || defaultPaths.get_current_detection, function (req, res, next) {
   console.log(`${logPrefix}getting detection`)
-  const output = hcv.result
-  res.json(output)
-})
-
-router.get(config.get_start_stream || defaultPaths.get_start_stream, async function (req, res, next) {
-  if (!hcv.isStreaming) {
-    console.log(`${logPrefix}starting stream...`)
-    await hcv.startStream()
-    res.send('stream started')
+  if (config.camera.active_detection) {
+    const output = hcv.result
+    res.json(output)
+  } else {
+    req.url = config.commands.get_snapshot || defaultPaths.get_snapshot
+    req.method = 'GET'
+    router.handle(req, res, next)
   }
-  const output = hcv.result
-  res.json(output)
 })
 
-router.get(config.get_stop_stream || defaultPaths.get_stop_stream, async function (req, res, next) {
-  console.log(`${logPrefix}stopping stream...`)
-  hcv.isStreaming = false
-  res.send('stream stopped')
+router.get(config.commands.get_start_active_detection || defaultPaths.get_start_active_detection, async function (req, res, next) {
+  if (!hcv.isActive) {
+    console.log(`${logPrefix}starting active detection...`)
+    hcv.startActiveDetection()
+    res.send('active detection started')
+  } else {
+    res.send('active detection already active')
+  }
 })
 
-// router.get('/stream_test', async function (req, res, next) {
-//   // stream.connect()
-//   const data = stream.getFrame()
-//   fs.writeFile('./temp/streamfile.jpg', data, err => {
-//     if (err) {
-//       console.log(err)
-//     } else {
-//       console.log('File written successfully')
-//     }
-//   })
-//   var output = await humanBuffer.main(data)
-//   res.json(output)
-// })
+router.get(config.commands.get_stop_active_detection || defaultPaths.get_stop_active_detection, async function (req, res, next) {
+  console.log(`${logPrefix}stopping active detection...`)
+  if (hcv.isActive) {
+    hcv.isActive = false
+    res.send(`${logPrefix}active detection stopped`)
+  } else {
+    hcv.isActive = false
+    res.send(`${logPrefix}active detection was not running`)
+  }
+})
 
-router.get(config.get_snapshot || defaultPaths.get_snapshot, async function (req, res, next) {
+router.get(config.commands.get_snapshot || defaultPaths.get_snapshot, async function (req, res, next) {
   console.log(`${logPrefix}getting snapshot detection`)
   fetch = (await import('node-fetch')).default
   const response = await fetch(`${config.camera.url}`)
@@ -85,6 +81,20 @@ router.get(config.get_snapshot || defaultPaths.get_snapshot, async function (req
   const buffer = Buffer.from(data.snapshot, 'base64')
   const output = await hcv.detectFromBuffer(buffer)
   res.json(output)
+})
+
+var uploadTemp = multer({ dest: './temp/' })
+var clearTemp = filePath => fs.unlink(filePath, function (e) {
+  if (e) throw e
+  console.log(`${logPrefix}temp file deleted`)
+})
+router.post(config.commands.get_stop_active_detection || defaultPaths.get_stop_active_detection, uploadTemp.single('file'), async function (req, res, next) {
+  // console.log(req.file.path)
+  // res.send('sent')
+  const buffer = await await hcv.detectDrawnOnCanvas(req.file.path)
+  res.write(buffer, 'binary')
+  res.end(null, 'binary')
+  clearTemp(req.file.path)
 })
 
 var storage = multer.diskStorage({
