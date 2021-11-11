@@ -41,6 +41,7 @@ These are list of improvements that were planned but not implemented for the api
 * Add html demo page
 * Add ability to get detection results along with the image in a single json to the api's `POST` endpoints
 * Add minimum time between snapshots to active detection features
+* Fix the startup detection issue mentioned in `known issues`
 
 ## Tests
 
