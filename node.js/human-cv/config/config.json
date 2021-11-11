@@ -83,7 +83,7 @@
             "detector": {
                 "modelPath": "file://modules/human/models/handtrack.json"
             },
-            "enabled": false,
+            "enabled": true,
             "iouThreshold": 0.2,
             "landmarks": true,
             "maxDetected": 1,
@@ -105,5 +105,6 @@
         },
         "skipFrame": false
     },
+    "log_prefix": "[human-cv]",
     "port": 3000
 }

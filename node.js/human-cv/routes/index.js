@@ -2,7 +2,6 @@ var express = require('express')
 var router = express.Router()
 var fs = require('fs')
 var multer = require('multer')
-var humanCanvas = require('../modules/human/human-canvas')
 var humanCV = require('../modules/human/human-cv')
 var fetch
 
@@ -11,14 +10,14 @@ try {
   const data = fs.readFileSync('./config/config.json', 'utf8')
   config = JSON.parse(data)
 } catch (e) {
-  console.log(`error reading config file: ${err}`)
+  console.log(`error reading config file: ${e}`)
 }
 
 var logPrefix = config.log_prefix || '[human-cv]'
 
 var defaultPaths = {
-  get_help: '/',
   get_current_detection: '/detect',
+  get_help: '/',
   get_snapshot: '/snapshot',
   get_start_active_detection: '/start_detect',
   get_stop_active_detection: '/stop_detect',
@@ -27,7 +26,7 @@ var defaultPaths = {
 }
 
 var hcv = new humanCV.HumanCV(config.human_params, config.camera)
-if (config.camera.enabled && config.camera.active_detection) {
+if (config.camera.active_detection) {
   hcv.startActiveDetection()
 }
 
@@ -56,9 +55,9 @@ router.get(config.commands.get_start_active_detection || defaultPaths.get_start_
   if (!hcv.isActive) {
     console.log(`${logPrefix}starting active detection...`)
     hcv.startActiveDetection()
-    res.send('active detection started')
+    res.json({ text: 'active detection started' })
   } else {
-    res.send('active detection already active')
+    res.json({ text: 'active detection already active' })
   }
 })
 
@@ -66,10 +65,10 @@ router.get(config.commands.get_stop_active_detection || defaultPaths.get_stop_ac
   console.log(`${logPrefix}stopping active detection...`)
   if (hcv.isActive) {
     hcv.isActive = false
-    res.send(`${logPrefix}active detection stopped`)
+    res.json({ text: 'active detection stopped' })
   } else {
     hcv.isActive = false
-    res.send(`${logPrefix}active detection was not running`)
+    res.json({ text: 'active detection was not running' })
   }
 })
 
@@ -83,45 +82,27 @@ router.get(config.commands.get_snapshot || defaultPaths.get_snapshot, async func
   res.json(output)
 })
 
+var storageBuffer = multer.memoryStorage()
+var uploadBuffer = multer({ storage: storageBuffer })
+router.post(config.commands.post_detect_from_image_file || defaultPaths.post_detect_from_image_file, uploadBuffer.single('file'), async function (req, res, next) {
+  console.log(`${logPrefix}getting detection from file`)
+  const output = await hcv.detectFromBuffer(req.file.buffer)
+  res.json(output)
+})
+
 var uploadTemp = multer({ dest: './temp/' })
 var clearTemp = filePath => fs.unlink(filePath, function (e) {
   if (e) throw e
   console.log(`${logPrefix}temp file deleted`)
 })
-router.post(config.commands.get_stop_active_detection || defaultPaths.get_stop_active_detection, uploadTemp.single('file'), async function (req, res, next) {
-  // console.log(req.file.path)
-  // res.send('sent')
-  const buffer = await await hcv.detectDrawnOnCanvas(req.file.path)
-  res.write(buffer, 'binary')
-  res.end(null, 'binary')
-  clearTemp(req.file.path)
-})
-
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './temp')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '.jpg')
-  }
-})
-var upload = multer({ storage: storage })
-router.post('/canvas', upload.single('file'), async function (req, res, next) {
-  // var output = await humanCanvas.main('./temp/file.jpg', './temp/outfile.jpg')
-  var output = await humanCanvas.main(req.file.path, './temp/outfile.jpg')
-  res.json(output)
-})
-var storageBuffer = multer.memoryStorage()
-var uploadBuffer = multer({ storage: storageBuffer })
-router.post('/canvas2', uploadBuffer.single('file'), async function (req, res, next) {
-  // var output = await humanCanvas.main('./temp/file.jpg', './temp/outfile.jpg')
-  var output = await humanCanvas.main(req.file.buffer, './temp/outfile.jpg')
-  res.json(output)
-})
-router.post('/from_file', uploadBuffer.single('file'), async function (req, res, next) {
-  console.log(`${logPrefix}getting detection from file`)
-  const output = await hcv.detectFromBuffer(req.file.buffer)
-  res.json(output)
+router.post(config.commands.post_image_with_detection_from_image_file || defaultPaths.post_image_with_detection_from_image_file, uploadTemp.single('file'), async function (req, res, next) {
+  hcv.detectDrawnOnCanvas(req.file.path, (stream) => {
+    stream.on('data', chunk => {
+      res.write(chunk, 'binary')
+    })
+    stream.on('end', () => res.end(null, 'binary'))
+    clearTemp(req.file.path)
+  })
 })
 
 module.exports = router

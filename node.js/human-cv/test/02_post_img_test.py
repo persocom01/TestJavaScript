@@ -1,11 +1,10 @@
-# Demonstrates how to send files with the request body.
 from requests_toolbelt import MultipartEncoder
 import os
-import json
 
-filepath = './node.js/human-cv/test/test.jpg'
+filepath = './human-cv/test/test_image.jpg'
+savepath = './human-cv/test/test_result.jpg'
 domain = 'localhost:3000'
-path = f'{domain}/from_file'
+path = f'{domain}/image'
 
 
 def send_request(path, post=False, **kwargs):
@@ -35,9 +34,8 @@ with open(filepath, 'rb') as f:
 
 if r.status_code == 200:
     # print(r.text.strip('"'))
-    print(r.json())
-    dic = r.json()
-    with open('./node.js/human-cv/temp/temp.json', 'w') as f:
-        json.dump(dic, f, sort_keys=True, indent=4, ensure_ascii=False)
+    # print(r.json())
+    with open(savepath, 'wb') as f:
+        f.write(r.content)
 else:
     print('request code: ' + str(r.status_code))

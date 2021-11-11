@@ -1,11 +1,14 @@
 import cv2
+import os
 import socket
 import threading
 import struct
+import time
+
 
 class MyCamera:
-    stream_host=''
-    stream_port=6000
+    stream_host = ''
+    stream_port = 6000
     header_format = "L"
 
     vc = None
@@ -16,22 +19,23 @@ class MyCamera:
     def __init__(self):
         self.vc = cv2.VideoCapture(0)
 
-    def startStream_task(self, returnAsJpeg = False):
-        s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    def startStream_task(self, returnAsJpeg=False):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print('Socket created')
-        s.bind((self.stream_host,self.stream_port))
+        s.bind((self.stream_host, self.stream_port))
         print('Socket bind complete')
         s.listen(1)
         print('Socket now listening')
 
-        conn,addr=s.accept()
+        conn, addr = s.accept()
 
-        self.is_streaming=True
+        self.is_streaming = True
         while self.is_streaming:
             try:
-                ret,frame=self.vc.read()
+                ret, frame = self.vc.read()
                 if returnAsJpeg:
-                    retval, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 100])
+                    retval, buffer = cv2.imencode(
+                        '.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 100])
                     data = buffer.tobytes()
                     # conn.sendall(buffer)
                     conn.sendall(struct.pack("L", len(data))+data)
@@ -40,8 +44,7 @@ class MyCamera:
                     # conn.sendall(data)
                     conn.sendall(struct.pack("L", len(data))+data)
             except:
-                self.is_streaming=False
-
+                self.is_streaming = False
 
     """ ============================================================
         Exposed APIs
@@ -56,21 +59,22 @@ class MyCamera:
 
     def getSnapshot(self):
         rval, frame = self.vc.read()
-        
+
         retval, buffer = cv2.imencode('.jpg', frame)
 
         return [True, buffer]
 
-    def start_stream(self, returnAsJpeg = False):
+    def start_stream(self, returnAsJpeg=False):
         if self.is_streaming:
             return [False, "Camera already streaming", -1]
 
         # TODO change stream length to header length. pass jpef directly to javascript
 
-        ret,frame=self.vc.read()
-        self.image_shape =  frame.shape
+        ret, frame = self.vc.read()
+        self.image_shape = frame.shape
 
-        self.stream_thread = threading.Thread(target=self.startStream_task, args=(returnAsJpeg,))
+        self.stream_thread = threading.Thread(
+            target=self.startStream_task, args=(returnAsJpeg,))
         self.stream_thread.start()
 
         return [True, "Started streaming", {
@@ -90,3 +94,29 @@ class MyCamera:
 
         return [True, "Stopped streaming"]
 
+    def record_mp4(self):
+        fps = 20
+
+        out = cv2.VideoWriter(
+            "output.mp4", cv2.VideoWriter_fourcc(*'mp4v'), fps, (640, 480))
+
+        print("start recording")
+        t_end = time.time() + 4             # wait for 4 seconds
+        while time.time() < t_end:
+            ret, frame = self.vc.read()
+            if ret == True:
+                out.write(frame)
+
+                time.sleep(1/fps)
+
+            else:
+                return [False, "OpenCV error"]
+        out.release()
+        print("stop recording")
+
+        temp_file = open("output.mp4", "rb")
+        binary_video = temp_file.read()
+        temp_file.close()
+        # os.remove("output.mp4")
+
+        return [True, binary_video]

@@ -195,7 +195,7 @@ class HumanCV {
     return this.result
   }
 
-  async drawOnCanvas (input) {
+  async drawOnCanvas (input, callback) {
     const inputImage = await canvas.loadImage(input) // load image using canvas library
     console.log('Loaded image', input, inputImage.width, inputImage.height)
     const inputCanvas = new canvas.Canvas(inputImage.width, inputImage.height) // create canvas
@@ -203,18 +203,17 @@ class HumanCV {
     ctx.drawImage(inputImage, 0, 0) // draw input image onto canvas
 
     // run detection
-    let buffer = fs.readFileSync(input)
+    const buffer = fs.readFileSync(input)
     this.result = await this.detectFromBuffer(buffer)
 
     // draw detected results onto canvas
-    await this.human.draw.all(inputCanvas, this.result)
-    buffer = inputCanvas.toBuffer('image/jpeg')
-
-    return buffer
+    this.human.draw.all(inputCanvas, this.result).then(() => {
+      const stream = inputCanvas.createJPEGStream({ quality: 0.75, progressive: true, chromaSubsampling: true })
+      callback(stream)
+    })
   }
 
-  async detectDrawnOnCanvas (f) {
-    let buffer
+  async detectDrawnOnCanvas (f, callback) {
     log.info('File location:', f)
     if (f.length === 0) {
       log.warn('Parameters: <input image | folder> missing')
@@ -225,23 +224,16 @@ class HumanCV {
       if (fs.existsSync(f)) {
         const stat = fs.statSync(f)
         if (stat.isDirectory()) {
-          const dir = fs.readdirSync(f)
-          this.result = []
-          for (const file of dir) {
-            const filePath = path.join(f, file)
-            log.info('Loading image:', filePath)
-            buffer = await this.drawOnCanvas(filePath)
-          }
+          log.error(`Image return does not work on directories: ${f}`)
         } else {
           log.info('Loading image:', f)
-          buffer = await this.drawOnCanvas(f)
+          await this.drawOnCanvas(f, callback)
         }
       } else {
         log.info('Loading image:', f)
-        buffer = await this.drawOnCanvas(f)
+        await this.drawOnCanvas(f, callback)
       }
     }
-    return buffer
   }
 }
 
