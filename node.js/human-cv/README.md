@@ -36,11 +36,12 @@ npm install
 
 ## Future improvements
 
-These are list of improvements that were planned but not implemented for the api:
+These are list of improvements in no order of importance that were planned but not implemented for the api:
 * Add inbuilt camera functionality to the api
 * Add html demo page
 * Add ability to get detection results along with the image in a single json to the api's `POST` endpoints
 * Add minimum time between snapshots to active detection features
+* Add option to customize front of detection drawn on jepg returned by the api.
 * Fix the startup detection issue mentioned in `known issues`
 
 ## Tests
@@ -57,7 +58,7 @@ The functionality of the api was tested by running it alongside the camera app s
 | 6 | /file | <ul><li>a json of detection results was returned after a binary image file was uploaded</li><li>Time taken: ~1.6s</li></ul> |
 | 7 | /image | <ul><li>a binary image file was received with the detections drawn on it.</li><li>Time taken: ~1.6s</li></ul> |
 
-In addition limited testing was performed on the performance of the model to detect age, gender, 6 emotions, as well as track body parts. The images used in emotion testing are located in the `test` folder. The results of the tests are as follows:
+In addition, limited testing was performed on the performance of the model to detect age, gender, 6 emotions, as well as track body parts. The images used in emotion testing are located in the `test` folder. The results of the tests are as follows:
 
 | No. | Test | Results |
 | ------ | ------ | ------ |
@@ -67,17 +68,17 @@ In addition limited testing was performed on the performance of the model to det
 | 4 | disgust |  <ul><li>the model no predictions correct</li><li>3/4 disgusted images were classified as sad instead</li></ul> |
 | 5 | fear | the model got only 2/4 predictions correct |
 | 6 | happy | <ul><li>the model got only 1/4 predictions correct</li><li>3/4 happy images were classified as sad instead</li></ul> |
-| 7 | sad | the model got only 4/4 predictions correct |
+| 7 | sad | the model got 4/4 predictions correct |
 | 8 | surprise | <ul><li>the model got no predictions correct</li><li>3/4 happy images were classified as sad instead</li></ul> |
 | 9 | body tracking | <ul><li>the model tracks the body fairly well, but lighting will affect the detected position of extremities</li><li>Since body tracking is used for gesture detection, for more reliable gesture detection, not using the position of extremities like the hands or feet is suggested</li></ul> |
 
-It should be noted that although the human module boasts many capabilities, one should not be expect all of them to run well concurrently. For instance, while the module is capable of counting the number of persons in an image, the resolution of the image would make any attempt to track the fingers of each person's hands close to impossible. Thus one should keep in mind the use case for this api and configure it accordingly.
+It should be noted that although the human module boasts many capabilities, one should not be expect all of them to run well concurrently. For instance, while the module is capable of capturing multiple persons in an image, the resolution of the image may make attempts to read their facial features accurately close to impossible. Thus one should keep in mind the use case for this api and configure it accordingly.
 
 ## Usage
 
 ### Configuration
 
-The configuration files are located in `config.json` inside the `config` folder. The configuration file contains 6 keys:
+The configuration files are located in `config.json` inside the `config` folder. The configuration file contains 5 keys:
 
 1. `camera` - contains subkeys that relate to how the api interacts with the camera service.
   - `active_detection` - set to `true` to cause the api to use the camera to perform detection repeatedly.
@@ -98,13 +99,21 @@ The configuration files are located in `config.json` inside the `config` folder.
 
 ### Deployment
 
-Yo start the app, in the command line enter:
+To start the app, in the command line enter:
 
 ```
 npm start
 ```
 
 A sample windows `.bat` file has also been provided if it is preferred.
+
+Many features also require the camera service to be running. The camera app is located under `test/camera` for convenience, and can be run by entering:
+
+```
+python app.py
+```
+
+To start active detection on startup, set `active_detection` to `true` under the `camera` key inside the config file located at `config/config.json`. Otherwise, active detection can also be activated by hitting the start detection api endpoint.
 
 ### Inputs and Outputs
 
@@ -114,18 +123,10 @@ The input from the camera was made specific to the camera app and hardcoded into
 
 The inputs of the `POST` endpoints are binary jepg images. The results are returned as json or as binary jepg images with the results drawn on them.
 
+### Custom gestures
+
+This implementation of human-cv has additional gestures implemented under `modules/human/additional-gestures.js`. The module was structured that way as to make it easy to add more custom gestures to the detection results.
+
 ## Known issues
 
-The api does not seem to detect bodies well on startup. The reason for this is unknown, save that this issue occurs the first time a detection is attempted on an image, and affects the detection results, which will register body has being not detected. Many hours were spent trying to rectify this issue, but to no avail. As the human module itself is very new, with updates being made almost every week at the time of this implementation (11 Nov 2021), this very well could be a bug.
-
-## Contributing
-
-Please reach out to Digital Innovation Lab (SG).
-
-## Authors
-
-Clarence Toh - *baseline*
-
-## License
-
-The copyright of this project belongs to DXC and Digital Innovation Lab (SG). All rights reserved.
+The api does not seem to detect bodies well on startup. The reason for this is unknown, save that this issue occurs the first time a detection is attempted on an image, and affects the detection results, which will register body has being not detected. Many hours were spent trying to rectify this issue, but to no avail. As the human module itself is very new, with updates being made almost every week at the time of this implementation (11 Nov 2021), this could be a bug, or it could be intended to speed up the return of results.

@@ -1,7 +1,7 @@
 {
     "camera": {
         "active_detection": false,
-        "enabled": true,
+        "enabled": false,
         "interval": 2,
         "url": "http://localhost:5000/snapshot"
     },
@@ -83,7 +83,7 @@
             "detector": {
                 "modelPath": "file://modules/human/models/handtrack.json"
             },
-            "enabled": true,
+            "enabled": false,
             "iouThreshold": 0.2,
             "landmarks": true,
             "maxDetected": 1,
