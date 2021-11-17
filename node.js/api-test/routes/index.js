@@ -32,12 +32,13 @@ var defaultPaths = {
   // Due to strange rules when strings are processed, you need to escape . here
   // with \. In json, pass the string without the escape.
   get_divide_query_by_two: '/:num([+-]?([0-9]+\.?[0-9]{0,}))',
+  get_file: '/file',
   get_help: '/',
   get_trigger_own_api: '/trigger:query?',
   post_buffer: '/buffer',
   post_file: '/file',
   post_json: '/json',
-  post_temp: '/temp'
+  post_temp_image: '/temp'
 }
 
 // The routes are are in addition to those defined in app.js. For example
@@ -118,6 +119,27 @@ router.get(config.commands.get_trigger_own_api || defaultPaths.get_trigger_own_a
   }
 })
 
+// Demonstrates how to send a file.
+// Instead of passing the absolute path to res.sendFile(), one can use the
+// options root key to append the directory to every relative file path.
+var sendFileOptions = { root: path.resolve() }
+var file2Send = '/temp/uploaded.txt'
+router.get(config.commands.get_file || defaultPaths.get_file, function (req, res, next) {
+  console.log(`${logPrefix}get file`)
+  // res.sendFile() requires absolute path, which you can get using
+  // path.resolve(file) or path.join(__dirname, file).
+  // The difference is that __dir returns the directory of this file
+  // while path.resolve() returns the directory of the app.js file.
+  console.log('path.join():', path.join(__dirname))
+  console.log('path.resolve():', path.resolve())
+  res.sendFile(file2Send, sendFileOptions, e => {
+    if (e) throw e
+    // res.sendFile is async, so to any code meant to execute after the file is
+    // sent (such as deleting the sent file) has to be located in its callback.
+    console.log(`${logPrefix}file sent`)
+  })
+})
+
 router.post(config.commands.post_json || defaultPaths.post_json, function (req, res, next) {
   console.log(`${logPrefix}post json with body ${req.body}`)
   res.json(req.body)
@@ -130,7 +152,7 @@ var storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     // cb(null, Date.now() + path.extname(file.originalname))
-    cb(null, file.originalname)
+    cb(null, 'uploaded.txt')
   }
 })
 var upload = multer({ storage: storage })
@@ -138,9 +160,10 @@ router.post(config.commands.post_file || defaultPaths.post_file, upload.single('
   console.log(`${logPrefix}post upload file`)
   console.log(req.file)
   // Buffers do not have req.file.path
+  // If no encoding is specified, data is returned as a raw buffer.
   fs.readFile(req.file.path, 'utf8', function (e, data) {
     if (e) throw e
-    // We put res inside fs.readfile() here because it is an async function.
+    // We put res here because fs.readfile() is an async function.
     // fs.readFileSync() is the sync version.
     // We use trim here to remove /r/n from the string.
     res.json({ filename: req.file.originalname, data: data.toString().trim() })
@@ -164,10 +187,13 @@ router.post(config.commands.post_buffer || defaultPaths.post_buffer, uploadBuffe
 })
 
 // Demonstrates how to create and delete temp files using multer. This api
-// accepts a normal file, or an image file if ?type=image is set as url param.
-// It then returns the file in two different ways, from buffer for the image
-// and from file for the normal file, and deletes the temp file afterwards.
-// On testing, there was no noticable speed difference over multer diskStorage.
+// accepts an image file, and which is processed in two different ways depending
+// on whether ?type=json is set as url param. The first way sends the file back
+// as a 64bit encoded string, which is useful if you wish to make it part of a
+// json. The second streams the file back to the user. There was no noticable
+// speed difference between the two, but streaming the file back as it is
+// processed is said to consume less memory. The temp file is deleted
+// afterwards. There was no noticable speed difference over multer diskStorage.
 // For temp files, the dest property is sufficient instead of a storage object.
 var uploadTemp = multer({ dest: './temp/' })
 // fs.unlink(path, errorHandler) is used to delete the temp file after use.
@@ -175,32 +201,24 @@ var clearTemp = filePath => fs.unlink(filePath, function (e) {
   if (e) throw e
   console.log(`${logPrefix}temp file deleted`)
 })
-// Instead of passing the absolute path to res.sendFile(), one can use the
-// options root key to append the directory to every relative file path.
-var sendFileOptions = { root: path.resolve() }
-router.post(config.commands.post_temp || defaultPaths.post_temp, uploadTemp.single('file'), async function (req, res, next) {
-  console.log(`${logPrefix}post upload temp file`)
+router.post(config.commands.post_temp_image || defaultPaths.post_temp_image, uploadTemp.single('file'), async function (req, res, next) {
+  console.log(`${logPrefix}post upload image to temp file`)
   console.log(req.file)
   try {
-    if (req.query.type === 'img' || req.query.type === 'image') {
-      // Demonstrates how to send image buffers.
-      const buffer = await imgTest.processImage(req.file.path)
-      res.write(buffer, 'binary')
-      res.end(null, 'binary')
+    if (req.query.type === 'json' || req.query.type === 'json') {
+      // Demonstrates how to send image buffers as 64bit encoded strings.
+      // To send the buffer as a binary file use the following instead:
+      //   res.write(buffer, 'binary')
+      //   res.end(null, 'binary')
+      const buffer = await imgTest.image2buffer(req.file.path)
+      const base64 = buffer.toString('base64')
+      res.json({ filename: req.file.originalname, data: base64 })
       // Delete the temp file.
       clearTemp(req.file.path)
     } else {
-      // Demonstrates how to send a file.
-      // res.sendFile() requires absolute path, which you can get using
-      // path.resolve(file) or path.join(__dirname, file).
-      // The difference is that __dir returns the directory of this file
-      // while path.resolve() returns the directory of the app.js file.
-      console.log('path.join():', path.join(__dirname))
-      console.log('path.resolve():', path.resolve())
-      res.sendFile(req.file.path, sendFileOptions, e => {
-        if (e) throw e
-        // res.sendFile is async, so to delete the temp file after the file is
-        // sent, the delete function has to be located in its callback.
+      imgTest.image2stream(req.file.path, (stream) => {
+        stream.on('data', chunk => res.write(chunk, 'binary'))
+        stream.on('end', () => res.end(null, 'binary'))
         clearTemp(req.file.path)
       })
     }

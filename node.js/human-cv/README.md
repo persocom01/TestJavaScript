@@ -129,4 +129,23 @@ This implementation of human-cv has additional gestures implemented under `modul
 
 ## Known issues
 
-The api does not seem to detect bodies well on startup. The reason for this is unknown, save that this issue occurs the first time a detection is attempted on an image, and affects the detection results, which will register body has being not detected. Many hours were spent trying to rectify this issue, but to no avail. As the human module itself is very new, with updates being made almost every week at the time of this implementation (11 Nov 2021), this could be a bug, or it could be intended to speed up the return of results.
+### Incomplete results
+
+The human module is designed not to re-run every detection model every time it is called, and instead use a cache of prior results. This is reflected the `skipFrames` configuration options. This accelerates the module's response time, as well saving processing power.
+
+However, this also causes an incomplete startup problem, where the results for the first detection may be incomplete, likely as the models running in the background have not yet completed saving their results to cache.
+
+When using the api to run detection over multiple snapshots this is not an issue, but is an issue when the user expects a complete detection from the first snapshot.
+
+### 'ERR_DLOPEN_FAILED' for canvas module
+
+This occurs when the node version is changed without reinstalling canvas. In command line, enter:
+
+```
+npm uninstall canvas
+npm install canvas
+```
+
+To reinstall the package.
+
+### Error: The Node.js native addon module (tfjs_binding.node) can not be found

@@ -48,6 +48,28 @@ http://127.0.0.1:3000/
 
 If cmd was used to start the server, ctrl+c will end the service. If git bash was used, use the task manager and kill all node.js processes.
 
+4. (optional) Install nvm
+
+Node Version Manager (nvm) allows one to switch the current version of node easily. Useful for accommodating older node modules. Installation is different for linux or windows.
+
+* Linux - The repository and installation instructions can be found here: https://github.com/nvm-sh/nvm
+* Windows - Installer found here: https://github.com/coreybutler/nvm-windows/releases
+
+Once installed, nvm should be registered as a command in your system. Ensure it is installed by entering:
+
+```
+nvm ls
+```
+
+To install and use a version of node, enter:
+
+```
+nvm install version_number
+nvm use version_number
+```
+
+When installing, the version number does not have to be precise. `14` installs the version 14.18.1, the latest version of 14. Alternatively one can enter `latest` or `lts` as the version number or the latest and latest long term supported versions respectively.
+
 ### AWS
 
 1. Spin up an Ubuntu 18.04 AWS EC2 instance and configure it to accept SSH, HTTP (port 80), HTTPS (port 443), node.js(port 3000) and flask (port 5000) connections from anywhere.

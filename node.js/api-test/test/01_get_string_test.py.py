@@ -1,6 +1,7 @@
 # Demonstrates how to send a get request and recieve a text response.
 domain = 'http://localhost:3000'
 path = f'{domain}/10.2'
+# path = f'{domain}/file'
 
 
 def send_request(path, post=False, **kwargs):
@@ -29,5 +30,6 @@ if r.status_code == 200:
     # We use .strip() to remove the " from both ends of the response when
     # parsing as text.
     print(r.text.strip('"'))
+    # print(r.content)
 else:
     print('request code: ' + str(r.status_code))

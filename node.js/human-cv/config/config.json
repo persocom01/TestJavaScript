@@ -1,7 +1,7 @@
 {
     "camera": {
         "active_detection": false,
-        "enabled": false,
+        "enabled": true,
         "interval": 2,
         "url": "http://localhost:5000/snapshot"
     },
