@@ -1,24 +1,14 @@
-const log = require('@vladmandic/pilogger')
-const nodeWebCam = require('node-webcam')
-const tempFile = 'webcam-snap'
-const optionsCamera = {
-  callbackReturn: 'buffer',
-  saveShots: false
+const cc = require('camera-capture')
+const fs = require('fs')
+const options = {
+  mime: 'image/jepg'
 }
-const camera = nodeWebCam.create(optionsCamera)
+const camera = new cc.VideoCapture(options)
 
-camera.list((list) => {
-  log.data('detected camera:', list)
-})
-
-async function snapshot (callback) {
-  camera.capture(tempFile, (err, buffer) => { // gets the (default) jpeg data from from webcam
-    if (err) {
-      log.error('error capturing webcam:', err)
-    } else {
-      callback(buffer)
-    }
-  })
+async function snapshot () {
+  await camera.initialize()
+  const frame = await camera.readFrame()
+  return frame.data
 }
 
 module.exports = { snapshot }
