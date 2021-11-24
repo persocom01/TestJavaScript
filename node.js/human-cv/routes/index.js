@@ -25,12 +25,12 @@ var defaultPaths = {
   post_image_with_detection_from_image_file: '/image'
 }
 
-if (config.camera.enabled) {
+if (config.local_camera.enabled) {
   var camera = require('../modules/camera')
-  var cam = new camera.Capture()
+  var webcam = new camera.Webcam(config.local_camera.options, logPrefix)
 }
 var hcv = new humanCV.HumanCV(config.human_params, config.camera)
-if (config.camera.active_detection) hcv.startActiveDetection()
+if (config.active_detection.enabled) hcv.startActiveDetection()
 
 router.get('/camera', async function (req, res, next) {
   console.log(`${logPrefix}camera triggered`)
@@ -38,7 +38,7 @@ router.get('/camera', async function (req, res, next) {
   //   res.write(buffer, 'binary')
   //   res.end(null, 'binary')
   // })
-  const buffer = await cam.snapshot()
+  const buffer = await webcam.snapshot()
   // console.log(buffer)
   // res.send('test')
   res.write(buffer, 'binary')

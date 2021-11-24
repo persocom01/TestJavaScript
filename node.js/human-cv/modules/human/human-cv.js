@@ -11,11 +11,11 @@ globalThis.Canvas = canvas.Canvas // patch global namespace with canvas library
 globalThis.ImageData = canvas.ImageData // patch global namespace with canvas library
 
 class HumanCV {
-  constructor (config, cameraConfig) {
+  constructor (config, activeDetectOptions) {
     this.config = config
-    this.cameraConfig = cameraConfig
+    this.activeDetectOptions = activeDetectOptions
     this.isActive = false
-    this.human = new Human(config)
+    this.human = new Human(this.config)
     this.fetch = null
     this.startup = this.init()
     this.result = null
@@ -143,10 +143,10 @@ class HumanCV {
     this.isActive = true
     this.fetch = (await import('node-fetch')).default
     const timer = ms => new Promise(resolve => setTimeout(resolve, ms))
-    const i = (interval || this.cameraConfig.interval) * 1000
+    const i = (interval || this.activeDetectOptions.interval) * 1000
 
     const streamLoop = async () => {
-      const response = await this.fetch(`${this.cameraConfig.url}`)
+      const response = await this.fetch(`${this.activeDetectOptions.snapshot_url}`)
       const data = await response.json()
       const buffer = Buffer.from(data.snapshot, 'base64')
       this.result = await this.detectFromBuffer(buffer)

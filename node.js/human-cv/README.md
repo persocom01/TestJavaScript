@@ -140,14 +140,6 @@ npm install canvas
 
 To reinstall the package.
 
-### Incomplete results
-
-The human module is designed not to re-run every detection model every time it is called, and instead use a cache of prior results. This is reflected the `skipFrames` configuration options. This accelerates the module's response time, as well saving processing power.
-
-However, this also causes an incomplete startup problem, where the results for the first detection may be incomplete, likely as the models running in the background have not yet completed saving their results to cache.
-
-When using the api to run detection over multiple snapshots this is not an issue, but is an issue when the user expects a complete detection from the first snapshot.
-
 ### Error: The Node.js native addon module (tfjs_binding.node) can not be found
 
 Turn zscaler off and run the following command:
@@ -155,3 +147,11 @@ Turn zscaler off and run the following command:
 ```
 npm rebuild @tensorflow/tfjs-node build-addon-from-source
 ```
+
+### Incomplete results
+
+The human module is designed not to re-run every detection model every time it is called, and instead use a cache of prior results. This is reflected the `skipFrames` configuration options. This accelerates the module's response time, as well saving processing power.
+
+However, this also causes an incomplete startup problem, where the results for the first detection may be incomplete, likely as the models running in the background have not yet completed saving their results to cache.
+
+When using the api to run detection over multiple snapshots this is not an issue, but is an issue when the user expects a complete detection from the first snapshot.

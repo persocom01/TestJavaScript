@@ -1,0 +1,25 @@
+{
+    "camera_config": {
+        "enabled": true,
+        "initialize": true,
+        "options": {
+            "height": 320,
+            "mime": "image/jepg",
+            "port": 8080,
+            "width": 480
+        }
+    },
+    "commands": {
+        "get_help": "/",
+        "get_is_ready": "/ready",
+        "get_pause_camera": "/pause",
+        "get_resume_camera": "/resume",
+        "get_snapshot": "/snapshot",
+        "get_start_camera": "/start",
+        "get_start_recording": "/start_rec",
+        "get_stop_camera": "/stop",
+        "get_stop_recording": "/stop_rec"
+    },
+    "log_prefix": "[camera]",
+    "port": 3000
+}
