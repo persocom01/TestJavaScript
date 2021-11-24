@@ -1,6 +1,6 @@
 # webcam-server-node.js
 
-A standalone server for accessing the webcam. This implementation was chosen as it is cross platform compatible, is reasonably functional, and compatible with the latest LTS version of node.js. This is done using Puppeteer, a Node library for controlling a headless Chrome or Chromium browser to access the webcam.
+Server based access to a webcam. This implementation was chosen as it is cross platform compatible, is reasonably functional, and compatible with the latest LTS version of node.js. This is done using Puppeteer, a Node library for controlling a headless Chrome or Chromium browser to access the webcam.
 
 This app is capable of returning the following types of information from the webcam:
 * a jepg snapshot image (configurable)
