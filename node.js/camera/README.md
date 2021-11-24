@@ -1,6 +1,6 @@
 # webcam-server-node.js
 
-A standalone app for accessing the webcam. This implementation was chosen as it is cross platform compatible, is reasonably functional, and compatible with the latest LTS version of node.js. This app does this using Puppeteer, which is a Node library which controls a headless Chrome or Chromium browser to use the browser webcam. While originally made as part of a different app, this standalone implementation could be useful on its own, as implementing a webcam was not found to be as easy on node.js as other languages like python.
+A standalone server for accessing the webcam. This implementation was chosen as it is cross platform compatible, is reasonably functional, and compatible with the latest LTS version of node.js. This is done using Puppeteer, a Node library for controlling a headless Chrome or Chromium browser to access the webcam.
 
 This app is capable of returning the following types of information from the webcam:
 * a jepg snapshot image (configurable)
@@ -74,14 +74,6 @@ npm start
 ```
 
 A sample windows `.bat` file has also been provided if it is preferred.
-
-### Inputs and Outputs
-
-The api's `GET` endpoints require no input, except that the camera service be running. They return their responses as json files. The definitions of detection results can be found here: https://vladmandic.github.io/human/typedoc/interfaces/Result.html
-
-The input from the camera was made specific to the camera app and hardcoded into this api. This api expects from the camera snapshot api a json response with the image encoded as a base64 string value under the `snapshot` key.
-
-The inputs of the `POST` endpoints are binary jepg images. The results are returned as json or as binary jepg images with the results drawn on them.
 
 ## Known issues
 
