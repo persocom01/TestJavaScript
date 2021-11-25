@@ -2,7 +2,9 @@
 
 Server based access to a webcam. This implementation was chosen as it is cross platform compatible, is reasonably functional, and compatible with the latest LTS version of node.js. This is done using Puppeteer, a Node library for controlling a headless Chrome or Chromium browser to access the webcam.
 
-This app is capable of returning the following types of information from the webcam:
+This is the stand alone version of a node.js webcam. The main module `/modules/camera.js` can be integrated into other node.js projects that need camera access.
+
+This app is capable of returning the following types of information:
 * a jepg snapshot image (configurable)
 * a webm recorded video
 
@@ -32,7 +34,7 @@ npm install
 
 ## Tests
 
-The functionality of all endpoints of the api were tested. The result of the snapshot and stop_rec endpoint were as follows:
+The functionality of all endpoints of the api were tested. The results of the endpoints for getting image and video files were as follows:
 
 | No. | Endpoint | Results |
 | ------ | ------ | ------ |
@@ -60,7 +62,7 @@ The configuration files are located in `config.json` inside the `config` folder.
   - `get_snapshot` - `GET` the api to send a binary jepg image of the current camera frame.
   - `get_start_camera` - `GET` the api to startup the camera. Mainly used if the camera is not configured to initialize itself on app start.
   - `get_start_recording` - `GET` the api to start recording video using the webcam. It can be made to return a video X seconds long by appending a time parameter to the end of the url. For example, it can be made to return a 3 second video using `?time=3`.
-  - `get_stop_camera` - `GET` the api to turn off the camera. One off, the camera has to be restarted using the `get_start_camera` endpoint.
+  - `get_stop_camera` - `GET` the api to turn off the camera. Once off, the camera has to be restarted using the `get_start_camera` endpoint.
   - `get_stop_recording` - `GET` the api to return a webm video file recorded by the webcam since `get_start_recording` was triggered. If `get_start_recording` was not triggered beforehand, a json response reminding the user to trigger it first is returned instead.
 4. `log_prefix` - the prefix when this app prints to the console log.
 5. `port` - the port the app runs on.

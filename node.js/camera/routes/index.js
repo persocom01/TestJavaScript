@@ -27,6 +27,7 @@ var defaultPaths = {
 if (config.camera_config.enabled) {
   var camera = require('../modules/camera')
   var webcam = new camera.Webcam(config.camera_config, async () => {
+    // Insert any code that needs the camera to loaded first here.
     console.log(`${logPrefix}camera initialized`)
   })
 }

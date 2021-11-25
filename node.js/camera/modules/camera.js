@@ -20,11 +20,11 @@ class Webcam {
     return this.camera.isRecording()
   }
 
-  async pauseCamera () {
+  pauseCamera () {
     return this.camera.pause()
   }
 
-  async resumeCamera () {
+  resumeCamera () {
     return this.camera.resume()
   }
 
@@ -41,7 +41,7 @@ class Webcam {
     return this.camera.startCamera()
   }
 
-  async startRecording () {
+  startRecording () {
     return this.camera.startRecording()
   }
 
