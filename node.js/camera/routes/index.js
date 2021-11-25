@@ -27,7 +27,7 @@ var defaultPaths = {
 
 var webcam = new camera.Webcam(config.camera, () => {
   // Insert any code that needs the camera to loaded first here.
-  console.log(`${logPrefix}camera initialized`)
+  if (config.camera.initialize) console.log(`${logPrefix}camera initialized`)
 })
 
 router.get(config.commands.get_help || defaultPaths.get_help, function (req, res, next) {

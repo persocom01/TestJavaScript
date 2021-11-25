@@ -3,6 +3,7 @@ var router = express.Router()
 var fs = require('fs')
 var multer = require('multer')
 var humanCV = require('../modules/human/human-cv')
+var camera = require('../modules/camera')
 var fetch
 
 var config
@@ -25,20 +26,12 @@ var defaultPaths = {
   post_image_with_detection_from_image_file: '/image'
 }
 
-if (config.camera.enabled) {
-  var camera = require('../modules/camera')
-  var webcam = new camera.Webcam(config.camera, () => {
-    console.log(`${logPrefix}camera initialized`)
-    var hcv = new humanCV.HumanCV(config.human_params, config.active_detection)
-    if (config.active_detection.enabled) hcv.startActiveDetection()
-  })
-}
-
-if (config.local_camera.enabled) {
-  var camera = require('../modules/camera')
-  var webcam = new camera.Webcam(config.local_camera.options, logPrefix)
-}
-
+var webcam = new camera.Webcam(config.camera, () => {
+  // Insert any code that needs the camera to loaded first here.
+  if (config.camera.initialize) console.log(`${logPrefix}camera initialized`)
+  var hcv = new humanCV.HumanCV(config.human_params, config.active_detection)
+  if (config.active_detection.enabled) hcv.startActiveDetection()
+})
 
 router.get('/camera', async function (req, res, next) {
   console.log(`${logPrefix}camera triggered`)
