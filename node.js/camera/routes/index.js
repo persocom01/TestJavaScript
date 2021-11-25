@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var fs = require('fs')
+var camera = require('../modules/camera')
 
 var config
 try {
@@ -24,13 +25,10 @@ var defaultPaths = {
   get_stop_recording: '/stop_rec'
 }
 
-if (config.camera_config.enabled) {
-  var camera = require('../modules/camera')
-  var webcam = new camera.Webcam(config.camera_config, async () => {
-    // Insert any code that needs the camera to loaded first here.
-    console.log(`${logPrefix}camera initialized`)
-  })
-}
+var webcam = new camera.Webcam(config.camera, () => {
+  // Insert any code that needs the camera to loaded first here.
+  console.log(`${logPrefix}camera initialized`)
+})
 
 router.get(config.commands.get_help || defaultPaths.get_help, function (req, res, next) {
   console.log(`${logPrefix}help triggered`)

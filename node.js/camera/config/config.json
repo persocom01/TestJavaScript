@@ -1,6 +1,5 @@
 {
-    "camera_config": {
-        "enabled": true,
+    "camera": {
         "initialize": true,
         "options": {
             "height": 320,

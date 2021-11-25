@@ -1,59 +1,62 @@
 const cc = require('camera-capture')
 
 class Webcam {
-  constructor (config, logPrefix = '[camera]', callback = null) {
+  constructor (config, callback = () => {}) {
     this.config = config
-    this.camera = new cc.VideoCapture(this.config)
-    this.startup = this.init(callback)
-    this.logPrefix = logPrefix
+    this.camera = new cc.VideoCapture(this.config.options)
+    if (this.config.initialize) this.startup = this.init(callback)
   }
 
-  async init (callback = null) {
-    await this.camera.initialize().then(() => {
-      return callback
-    })
-    console.log(`${this.logPrefix}initializing camera`)
-  }
-
-  async snapshot () {
-    const frame = await this.camera.readFrame()
-    console.log(`${this.logPrefix}taking snapshot`)
-    return frame.data
-  }
-
-  async startRecording () {
-    await this.camera.startRecording()
-    console.log(`${this.logPrefix}starting video recording`)
-  }
-
-  async stopRecording () {
-    const video = await this.camera.stopRecording()
-    console.log(`${this.logPrefix}stopping video recording`)
-    return video
-  }
-
-  async pauseCamera () {
-    await this.camera.pause()
-    console.log(`${this.logPrefix}pausing camera`)
-  }
-
-  async resumeCamera () {
-    await this.camera.resume()
-    console.log(`${this.logPrefix}resuming camera`)
-  }
-
-  stopCamera () {
-    console.log(`${this.logPrefix}stopping camera`)
-    return this.camera.stop()
-  }
-
-  startCamera () {
-    console.log(`${this.logPrefix}starting camera`)
-    return this.init()
+  async init (callback = () => {}) {
+    await this.camera.initialize()
+    callback()
   }
 
   isReady () {
     return this.camera.isStopped()
+  }
+
+  isRecording () {
+    return this.camera.isRecording()
+  }
+
+  pauseCamera () {
+    return this.camera.pause()
+  }
+
+  resumeCamera () {
+    return this.camera.resume()
+  }
+
+  async snapshot () {
+    const frame = await this.camera.readFrame()
+    return frame.data
+  }
+
+  start () {
+    return this.init()
+  }
+
+  startCamera () {
+    return this.camera.startCamera()
+  }
+
+  startRecording () {
+    return this.camera.startRecording()
+  }
+
+  stop () {
+    return this.camera.stop()
+  }
+
+  stopCamera () {
+    return this.camera.startCamera()
+  }
+
+  async stopRecording () {
+    const data = await this.camera.stopRecording()
+    const buffer = Buffer.from(data)
+    return buffer
   }
 }
 

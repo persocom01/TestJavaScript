@@ -1,9 +1,9 @@
 domain = 'http://localhost:3000'
-# path = f'{domain}/snapshot'
-# savepath = './node.js/camera/test/test_img.jpg'
-path = f'{domain}/stop_rec'
+path = f'{domain}/snapshot'
+savepath = './node.js/camera/test/test_img.jpg'
+# path = f'{domain}/stop_rec'
 # path = f'{domain}/start_rec?time=2'
-savepath = './node.js/camera/test/test_video.webm'
+# savepath = './node.js/camera/test/test_video.webm'
 
 
 def send_request(path, post=False, **kwargs):

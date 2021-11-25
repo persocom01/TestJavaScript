@@ -50,8 +50,7 @@ The file used for testing is located in the `test` folder.
 
 The configuration files are located in `config.json` inside the `config` folder. The configuration file contains 4 keys:
 
-1. `camera_config` - contains subkeys that relate to how the api interacts with the camera module.
-  - `enabled` - set to false to disable the camera entirely. This key was made that the camera module can be entirely disabled for convenience if and when it is integrated into a different application.
+1. `camera` - contains subkeys that relate to how the api interacts with the camera module.
   - `initialize` - when set to true, the camera is turned on when the app is started. The camera can also be turned on after the app starts by using the `get_start_camera` command.
   - `options` - Contains the main configuration options for the camera, mainly the format of image returned, as well as the height and width of the image. The port here defines the port of the headless browser that this app uses to activate the camera. The full list of options can be found here: https://github.com/cancerberoSgx/camera-capture/blob/master/docs/interfaces/_types_.captureoptions.md
 2. `commands` - contains subkeys that determine the path parts of the urls needed to use api. For example: `http://example-domain.com<path>`. Unless otherwise stated, all json responses have only one key, the `text` key, which contains the actual response.

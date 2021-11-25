@@ -1,9 +1,8 @@
 {
-    "camera": {
-        "active_detection": false,
-        "enabled": true,
-        "interval": 2,
-        "url": "http://localhost:5000/snapshot"
+    "active_detection": {
+        "enabled": false,
+        "interval": 0.1,
+        "snapshot_url": "http://localhost:5000/snapshot"
     },
     "commands": {
         "get_current_detection": "/detect",
@@ -104,6 +103,15 @@
             "enabled": false
         },
         "skipFrame": false
+    },
+    "local_camera": {
+        "enabled": true,
+        "options": {
+            "height": 320,
+            "mime": "image/jepg",
+            "port": 8080,
+            "width": 480
+        }
     },
     "log_prefix": "[human-cv]",
     "port": 3000
