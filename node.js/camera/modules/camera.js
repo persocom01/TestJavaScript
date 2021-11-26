@@ -8,7 +8,7 @@ class Webcam {
   }
 
   async init (callback = () => {}) {
-    await this.camera.initialize()
+    await this.start()
     callback()
   }
 
@@ -29,20 +29,31 @@ class Webcam {
   }
 
   async snapshot () {
-    const frame = await this.camera.readFrame()
-    return frame.data
+    if (this.isReady()) {
+      const frame = await this.camera.readFrame()
+      return frame.data
+    } else {
+      await this.start()
+      const frame = await this.camera.readFrame()
+      return frame.data
+    }
   }
 
-  start () {
-    return this.init()
+  async start () {
+    await this.camera.initialize()
   }
 
   startCamera () {
     return this.camera.startCamera()
   }
 
-  startRecording () {
-    return this.camera.startRecording()
+  async startRecording () {
+    if (this.isReady()) {
+      return this.camera.startRecording()
+    } else {
+      await this.start()
+      return this.camera.startRecording()
+    }
   }
 
   stop () {

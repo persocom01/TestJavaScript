@@ -3,7 +3,6 @@ var router = express.Router()
 var fs = require('fs')
 var multer = require('multer')
 var humanCV = require('../modules/human/human-cv')
-var camera = require('../modules/camera')
 var fetch
 
 var config
@@ -26,34 +25,27 @@ var defaultPaths = {
   post_image_with_detection_from_image_file: '/image'
 }
 
-var webcam = new camera.Webcam(config.camera, () => {
-  // Insert any code that needs the camera to loaded first here.
-  if (config.camera.initialize) console.log(`${logPrefix}camera initialized`)
-  var hcv = new humanCV.HumanCV(config.human_params, config.active_detection)
-  if (config.active_detection.enabled) hcv.startActiveDetection()
-})
-
-router.get('/camera', async function (req, res, next) {
-  console.log(`${logPrefix}camera triggered`)
-  // camera.snapshot((buffer) => {
-  //   res.write(buffer, 'binary')
-  //   res.end(null, 'binary')
-  // })
-  const buffer = await webcam.snapshot()
-  // console.log(buffer)
-  // res.send('test')
-  res.write(buffer, 'binary')
-  res.end(null, 'binary')
-})
-
-router.get(config.commands.get_help || defaultPaths.get_help, function (req, res, next) {
-  console.log(`${logPrefix}help triggered`)
-  try {
-    res.json(config.commands)
-  } catch (e) {
-    res.json(defaultPaths)
+var hcv
+// initialize human-cv with local camera
+if (config.active_detection.use_local_camera) {
+  var camera = require('../modules/camera')
+  // callback is used to start human-cv only after camera is running.
+  var webcam = new camera.Webcam(config.camera, () => {
+    if (config.camera.initialize) console.log(`${logPrefix}camera initialized`)
+    // set image source as webcam
+    config.active_detection._imageBufferFunction = () => webcam.snapshot()
+    hcv = new humanCV.HumanCV(config.human_params, config.active_detection)
+  })
+// initialize human-cv without local camera
+} else {
+  // set image source as external url
+  config.active_detection._imageBufferFunction = async () => {
+    fetch = (await import('node-fetch')).default
+    const response = await fetch(`${config.active_detection.snapshot_url}`)
+    return response.buffer()
   }
-})
+  hcv = new humanCV.HumanCV(config.human_params, config.active_detection)
+}
 
 router.get(config.commands.get_current_detection || defaultPaths.get_current_detection, function (req, res, next) {
   console.log(`${logPrefix}getting detection`)
@@ -67,11 +59,41 @@ router.get(config.commands.get_current_detection || defaultPaths.get_current_det
   }
 })
 
+router.get(config.commands.get_help || defaultPaths.get_help, function (req, res, next) {
+  console.log(`${logPrefix}get help`)
+  try {
+    res.json(config.commands)
+  } catch (e) {
+    res.json(defaultPaths)
+  }
+})
+
+router.get(config.commands.get_snapshot || defaultPaths.get_snapshot, async function (req, res, next) {
+  console.log(`${logPrefix}getting snapshot detection`)
+  if (config.active_detection.use_local_camera) {
+    const buffer = await webcam.snapshot()
+    const output = await hcv.detectFromBuffer(buffer)
+    res.json(output)
+  } else {
+    fetch = (await import('node-fetch')).default
+    const response = await fetch(`${config.active_detection.snapshot_url}`)
+    const buffer = await response.buffer()
+    const output = await hcv.detectFromBuffer(buffer)
+    res.json(output)
+  }
+})
+
 router.get(config.commands.get_start_active_detection || defaultPaths.get_start_active_detection, async function (req, res, next) {
-  if (!hcv.isActive) {
-    console.log(`${logPrefix}starting active detection...`)
+  console.log(`${logPrefix}starting active detection...`)
+  if (!hcv.isActive && !isNaN(req.query.interval)) {
+    hcv.startActiveDetection(req.query.interval)
+    res.json({ text: 'active detection started' })
+  } else if (!hcv.isActive) {
     hcv.startActiveDetection()
     res.json({ text: 'active detection started' })
+  } else if (!isNaN(req.query.interval)) {
+    hcv.interval = req.query.interval * 1000
+    res.json({ text: 'active detection interval changed' })
   } else {
     res.json({ text: 'active detection already active' })
   }
@@ -86,16 +108,6 @@ router.get(config.commands.get_stop_active_detection || defaultPaths.get_stop_ac
     hcv.isActive = false
     res.json({ text: 'active detection was not running' })
   }
-})
-
-router.get(config.commands.get_snapshot || defaultPaths.get_snapshot, async function (req, res, next) {
-  console.log(`${logPrefix}getting snapshot detection`)
-  fetch = (await import('node-fetch')).default
-  const response = await fetch(`${config.camera.url}`)
-  const data = await response.json()
-  const buffer = Buffer.from(data.snapshot, 'base64')
-  const output = await hcv.detectFromBuffer(buffer)
-  res.json(output)
 })
 
 var storageBuffer = multer.memoryStorage()

@@ -1,10 +1,11 @@
 from requests_toolbelt import MultipartEncoder
 import os
 
-filepath = './human-cv/test/test_image.jpg'
-savepath = './human-cv/test/test_result.jpg'
+filepath = './node.js/human-cv/test/test_image.jpg'
+savepath = './node.js/human-cv/test/test_result.jpg'
 domain = 'localhost:3000'
 path = f'{domain}/image'
+# path = f'{domain}/file'
 
 
 def send_request(path, post=False, **kwargs):

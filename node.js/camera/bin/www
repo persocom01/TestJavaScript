@@ -7,12 +7,22 @@
 var app = require('../app');
 var debug = require('debug')('camera:server');
 var http = require('http');
+var fs = require('fs')
+
+// Load config file
+var config
+try {
+  const data = fs.readFileSync('./config/config.json', 'utf8')
+  config = JSON.parse(data)
+} catch (err) {
+  console.log(`Error reading file from disk: ${err}`)
+}
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || config.port || 3000);
 app.set('port', port);
 
 /**

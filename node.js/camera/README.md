@@ -58,9 +58,9 @@ The configuration files are located in `config.json` inside the `config` folder.
   - `get_is_ready` - `GET` whether the camera is ready to be used as a json response.
   - `get_pause_camera` - `GET` the api to pause the camera, reducing cpu usage.
   - `get_resume_camera` - `GET` the api to resume the camera.
-  - `get_snapshot` - `GET` the api to send a binary jepg image of the current camera frame.
+  - `get_snapshot` - `GET` the api to send a binary jepg image of the current camera frame. Starts the camera if it is turned off.
   - `get_start_camera` - `GET` the api to startup the camera. Mainly used if the camera is not configured to initialize itself on app start.
-  - `get_start_recording` - `GET` the api to start recording video using the webcam. It can be made to return a video X seconds long by appending a time parameter to the end of the url. For example, it can be made to return a 3 second video using `?time=3`.
+  - `get_start_recording` - `GET` the api to start recording video using the webcam. It can be made to return a video X seconds long by appending a time parameter to the end of the url. For example, it can be made to return a 3 second video using `?time=3`. Starts the camera if it is turned off.
   - `get_stop_camera` - `GET` the api to turn off the camera. Once off, the camera has to be restarted using the `get_start_camera` endpoint.
   - `get_stop_recording` - `GET` the api to return a webm video file recorded by the webcam since `get_start_recording` was triggered. If `get_start_recording` was not triggered beforehand, a json response reminding the user to trigger it first is returned instead.
 4. `log_prefix` - the prefix when this app prints to the console log.

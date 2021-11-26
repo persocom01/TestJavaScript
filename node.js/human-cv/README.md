@@ -10,6 +10,10 @@ The human computer vision api implements AI-powered computer vision from the hum
 * Gesture recognition
 * Body segmentation
 
+For convenience, this api includes an integrated [node.js webcam](https://github.dxc.com/Digital-Innovation-Lab-Asset/webcam-server) app so as to be capable of accessing the webcam on the local computer on its own.
+
+Alternatively, a url endpoint can be provided for a webcam image source, or in the worst case, this api provides endpoints where results can be obtained by `POST` requests using binary jepg images.
+
 ## Pre-requisites
 
 This app uses node.js and the latest node package manager (npm). It uses package-lock.json version 2, which can cause incompatibility issues with older versions of npm. Get both on windows here:
@@ -37,7 +41,6 @@ npm install
 ## Future improvements
 
 These are list of improvements in no order of importance that were planned but not implemented for the api:
-* Add inbuilt camera functionality to the api
 * Add html demo page
 * Add ability to get detection results along with the image in a single json to the api's `POST` endpoints
 * Add minimum time between snapshots to active detection features
@@ -46,7 +49,7 @@ These are list of improvements in no order of importance that were planned but n
 
 ## Tests
 
-The functionality of the api was tested by running it alongside the camera app service provided inside the `test` folder. The api has endpoints that will still function without the camera app, but a jepg image needs to be sent to those endpoints to return a detection. The following endpoints were tested:
+The functionality of the api was tested by running it with its integrated webcam functionality as well as with a separate webcam server, which can be found [here.](https://github.dxc.com/Digital-Innovation-Lab-Asset/webcam-server) The following endpoints were tested:
 
 | No. | Endpoint | Results |
 | ------ | ------ | ------ |
@@ -54,9 +57,10 @@ The functionality of the api was tested by running it alongside the camera app s
 | 2 | / | returns a json of all available endpoints |
 | 3 | /snapshot | takes a snapshot using the camera and returns a json of detection results |
 | 4 | /start_detect | starts active detection |
-| 5 | /stop_detect | stops active detection |
-| 6 | /file | <ul><li>a json of detection results was returned after a binary image file was uploaded</li><li>Time taken: ~1.6s</li></ul> |
-| 7 | /image | <ul><li>a binary image file was received with the detections drawn on it.</li><li>Time taken: ~1.6s</li></ul> |
+| 5 | /start_detect?interval=2 | changes active detection interval to 2s |
+| 6 | /stop_detect | stops active detection |
+| 7 | /file | <ul><li>a json of detection results was returned after a binary image file was uploaded</li><li>Time taken: ~1.6s</li></ul> |
+| 8 | /image | <ul><li>a binary image file was received with the detections drawn on it.</li><li>Time taken: ~1.6s</li></ul> |
 
 In addition, limited testing was performed on the performance of the model to detect age, gender, 6 emotions, as well as track body parts. The images used in emotion testing are located in the `test` folder. The results of the tests are as follows:
 
@@ -65,14 +69,12 @@ In addition, limited testing was performed on the performance of the model to de
 | 1 | age | the model returns the user's age within an around + or - 5 year range. Lighting, shadow, and the presence or lack of facial hair may cause the detection to be more inaccurate than that |
 | 2 | gender | the model detects traditional genders accurately |
 | 3 | anger | the model got only 1/4 predictions correct |
-| 4 | disgust |  <ul><li>the model no predictions correct</li><li>3/4 disgusted images were classified as sad instead</li></ul> |
-| 5 | fear | the model got only 2/4 predictions correct |
+| 4 | disgust |  <ul><li>the model got no predictions correct</li><li>3/4 disgusted images were classified as sad instead</li></ul> |
+| 5 | fear | the model got 2/4 predictions correct |
 | 6 | happy | <ul><li>the model got only 1/4 predictions correct</li><li>3/4 happy images were classified as sad instead</li></ul> |
 | 7 | sad | the model got 4/4 predictions correct |
 | 8 | surprise | <ul><li>the model got no predictions correct</li><li>3/4 happy images were classified as sad instead</li></ul> |
 | 9 | body tracking | <ul><li>the model tracks the body fairly well, but lighting will affect the detected position of extremities</li><li>Since body tracking is used for gesture detection, for more reliable gesture detection, not using the position of extremities like the hands or feet is suggested</li></ul> |
-
-It should be noted that although the human module boasts many capabilities, one should not be expect all of them to run well concurrently. For instance, while the module is capable of capturing multiple persons in an image, the resolution of the image may make attempts to read their facial features accurately close to impossible. Thus one should keep in mind the use case for this api and configure it accordingly.
 
 ## Usage
 
@@ -80,8 +82,13 @@ It should be noted that although the human module boasts many capabilities, one 
 
 The configuration files are located in `config.json` inside the `config` folder. The configuration file contains 5 keys:
 
-1. `camera` - contains subkeys that relate to how the api interacts with the camera service.
-  - `active_detection` - set to `true` to cause the api to use the camera to perform detection repeatedly.
+1. `active_detection` - contains subkeys that give the user control over the api's active detection feature. Active detection causes the api to actively perform detections on webcam images without user input. The detections can be retrieved from the api later.
+  - `enabled` - set to `true` to cause the api to repeatedly perform detections on camera snapshots.
+  - `interval` - this is the interval in seconds, between active detections. It does not include the detection time itself. So 1 seconds interval + 1 second detection will make the time between detections 2 seconds.
+  - `snapshot_url` - this is the url from which the api retrieves binary camera snapshot data. `use_local_camera` must be set to `false` for this to work.
+  - `use_local_camera` - causes the api to use its integrated camera module for active detections.
+2. `camera` - contains subkeys that configure the api's integrated camera module. Irrelevant if `use_local_camera` is set to `false`.
+  - `initialize` - if set to `true`, the camera will be turned on and be ready for use when the api is started.
   - `enabled` - currently serves no purpose as this is reserved for future local camera functionality.
   - `interval` - this is the interval in seconds, between active detections. It does not include the detection time itself. So 1 seconds interval + 1 second detection will make the time between detections 2 seconds.
   - `url` - this is the url target that the api sends snapshot requests to.

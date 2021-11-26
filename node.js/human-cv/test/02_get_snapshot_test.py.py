@@ -1,8 +1,8 @@
-# Demonstrates how to send a get request and recieve a text response.
 domain = 'http://localhost:3000'
-path = f'{domain}/camera'
+# path = f'{domain}/snapshot'
+path = f'{domain}/start_detect?interval=2'
 # path = f'{domain}/file'
-savepath = './node.js/human-cv/temp/test_img.bmp'
+# savepath = './node.js/human-cv/temp/test_img.bmp'
 
 
 def send_request(path, post=False, **kwargs):
@@ -22,16 +22,11 @@ def send_request(path, post=False, **kwargs):
     return request
 
 
-# We use verify=False because the api is using a self signed ssl cert that will
-# fail verification.
 r = send_request(path, verify=False)
-# A success retuirns code 200. More infomration here:
-# https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 if r.status_code == 200:
-    # We use .strip() to remove the " from both ends of the response when
-    # parsing as text.
     # print(r.text.strip('"'))
-    with open(savepath, 'wb') as f:
-        f.write(r.content)
+    print(r.json())
+    # with open(savepath, 'wb') as f:
+    #     f.write(r.content)
 else:
     print('request code: ' + str(r.status_code))

@@ -11,13 +11,14 @@ globalThis.Canvas = canvas.Canvas // patch global namespace with canvas library
 globalThis.ImageData = canvas.ImageData // patch global namespace with canvas library
 
 class HumanCV {
-  constructor (config, activeDetectOptions) {
+  constructor (config, activeDetection) {
     this.config = config
-    this.activeDetectOptions = activeDetectOptions
-    this.isActive = false
+    this.activeDetection = activeDetection
+    this.interval = this.activeDetection.interval
     this.human = new Human(this.config)
-    this.fetch = null
     this.startup = this.init()
+    this.fetch = null
+    this.isActive = false
     this.result = null
   }
 
@@ -30,6 +31,7 @@ class HumanCV {
     const loaded = Object.keys(this.human.models).filter((a) => this.human.models[a])
     log.info('Loaded:', loaded)
     log.info('Memory state:', this.human.tf.engine().memory())
+    if (this.activeDetection.enabled) this.startActiveDetection()
   }
 
   buffer2tensor (buffer) {
@@ -141,22 +143,19 @@ class HumanCV {
 
   async startActiveDetection (interval = 0) {
     this.isActive = true
-    this.fetch = (await import('node-fetch')).default
     const timer = ms => new Promise(resolve => setTimeout(resolve, ms))
-    const i = (interval || this.activeDetectOptions.interval) * 1000
+    this.interval = (interval || this.activeDetection.interval) * 1000
 
-    const streamLoop = async () => {
-      const response = await this.fetch(`${this.activeDetectOptions.snapshot_url}`)
-      const data = await response.json()
-      const buffer = Buffer.from(data.snapshot, 'base64')
+    const detectLoop = async () => {
+      const buffer = await this.activeDetection._imageBufferFunction()
       this.result = await this.detectFromBuffer(buffer)
     }
 
     while (this.isActive) {
-      if (i) {
-        await timer(i).then(await streamLoop())
+      if (this.interval) {
+        await timer(this.interval).then(await detectLoop())
       } else {
-        await streamLoop()
+        await detectLoop()
       }
     }
   }

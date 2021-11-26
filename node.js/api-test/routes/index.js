@@ -94,6 +94,7 @@ router.get(config.commands.get_async || defaultPaths.get_async, async function (
     headers: { 'Content-Type': 'application/json' }
   })
   // response.text() for text response
+  // response.buffer() for binary response
   const data = await response.json()
   // The output can be modified as normal.
   data.api = 'async'
@@ -207,6 +208,7 @@ router.post(config.commands.post_temp_image || defaultPaths.post_temp_image, upl
   try {
     if (req.query.type === 'json' || req.query.type === 'json') {
       // Demonstrates how to send image buffers as 64bit encoded strings.
+      // To change it back, use Buffer.from(string, 'base64')
       // To send the buffer as a binary file use the following instead:
       //   res.write(buffer, 'binary')
       //   res.end(null, 'binary')
