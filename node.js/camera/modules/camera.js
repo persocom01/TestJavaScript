@@ -29,14 +29,9 @@ class Webcam {
   }
 
   async snapshot () {
-    if (this.isReady()) {
-      const frame = await this.camera.readFrame()
-      return frame.data
-    } else {
-      await this.start()
-      const frame = await this.camera.readFrame()
-      return frame.data
-    }
+    if (!this.isReady()) await this.start()
+    const frame = await this.camera.readFrame()
+    return frame.data
   }
 
   async start () {
@@ -48,12 +43,8 @@ class Webcam {
   }
 
   async startRecording () {
-    if (this.isReady()) {
-      return this.camera.startRecording()
-    } else {
-      await this.start()
-      return this.camera.startRecording()
-    }
+    if (!this.isReady()) await this.start()
+    return this.camera.startRecording()
   }
 
   stop () {

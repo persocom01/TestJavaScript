@@ -12,7 +12,7 @@ The human computer vision api implements AI-powered computer vision from the hum
 
 For convenience, this api includes an integrated [node.js webcam](https://github.dxc.com/Digital-Innovation-Lab-Asset/webcam-server) app so as to be capable of accessing the webcam on the local computer on its own.
 
-Alternatively, a url endpoint can be provided for a webcam image source, or in the worst case, this api provides endpoints where results can be obtained by `POST` requests using binary jepg images.
+Alternatively, a url endpoint can be provided for a webcam image source, or in the worst case, this api provides endpoints where results can be obtained by `POST` requests using binary jepg images. See the config section of this readme for instructions on how to configure how this api retrieves webcam data.
 
 ## Pre-requisites
 
@@ -88,10 +88,8 @@ The configuration files are located in `config.json` inside the `config` folder.
   - `snapshot_url` - this is the url from which the api retrieves binary camera snapshot data. `use_local_camera` must be set to `false` for this to work.
   - `use_local_camera` - causes the api to use its integrated camera module for active detections.
 2. `camera` - contains subkeys that configure the api's integrated camera module. Irrelevant if `use_local_camera` is set to `false`.
-  - `initialize` - if set to `true`, the camera will be turned on and be ready for use when the api is started.
-  - `enabled` - currently serves no purpose as this is reserved for future local camera functionality.
-  - `interval` - this is the interval in seconds, between active detections. It does not include the detection time itself. So 1 seconds interval + 1 second detection will make the time between detections 2 seconds.
-  - `url` - this is the url target that the api sends snapshot requests to.
+  - `initialize` - if set to `true`, the camera will be turned on and be ready for use when the api is started. Even if set to `false`, the camera will be turned on if any endpoint uses the local camera.
+  - `options` - Contains the main configuration options for the camera, mainly the format of image returned, as well as the height and width of the image. The port here defines the port of the headless browser that this app uses to activate the camera. The full list of options can be found here: https://github.com/cancerberoSgx/camera-capture/blob/master/docs/interfaces/_types_.captureoptions.md
 2. `commands` - contains subkeys that determine the path parts of the urls needed to use api. For example: `http://example-domain.com<path>`.
   - `get_current_detection` - `GET` the last detection results if `active_detection` is set to `true`. Otherwise it will activate the `get_snapshot`.
   - `get_help` - `GET` the list of api commands.
