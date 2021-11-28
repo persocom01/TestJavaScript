@@ -70,14 +70,12 @@ router.get(config.commands.get_help || defaultPaths.get_help, function (req, res
 
 router.get(config.commands.get_snapshot || defaultPaths.get_snapshot, async function (req, res, next) {
   console.log(`${logPrefix}getting snapshot detection`)
-  if (config.active_detection.use_local_camera) {
-    const buffer = await webcam.snapshot()
-    const output = await hcv.detectFromBuffer(buffer)
-    res.json(output)
+  if (req.query.as === 'raw') {
+    const buffer = await config.active_detection._imageBufferFunction()
+    res.write(buffer, 'binary')
+    res.end(null, 'binary')
   } else {
-    fetch = (await import('node-fetch')).default
-    const response = await fetch(`${config.active_detection.snapshot_url}`)
-    const buffer = await response.buffer()
+    const buffer = await config.active_detection._imageBufferFunction()
     const output = await hcv.detectFromBuffer(buffer)
     res.json(output)
   }
@@ -105,7 +103,6 @@ router.get(config.commands.get_stop_active_detection || defaultPaths.get_stop_ac
     hcv.isActive = false
     res.json({ text: 'active detection stopped' })
   } else {
-    hcv.isActive = false
     res.json({ text: 'active detection was not running' })
   }
 })

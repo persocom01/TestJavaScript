@@ -215,7 +215,7 @@ class HumanCV {
   async detectDrawnOnCanvas (f, callback) {
     log.info('File location:', f)
     if (f.length === 0) {
-      log.warn('Parameters: <input image | folder> missing')
+      log.warn('Parameters: <input image> missing')
       await this.test()
     } else if (!fs.existsSync(f)) {
       log.error(`File not found: ${f}`)

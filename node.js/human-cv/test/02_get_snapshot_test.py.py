@@ -1,8 +1,8 @@
 domain = 'http://localhost:3000'
-# path = f'{domain}/snapshot'
-path = f'{domain}/start_detect?interval=2'
+path = f'{domain}/snapshot?as=raw'
+# path = f'{domain}/start_detect?interval=2'
 # path = f'{domain}/file'
-# savepath = './node.js/human-cv/temp/test_img.bmp'
+savepath = './node.js/human-cv/temp/test_image.jpg'
 
 
 def send_request(path, post=False, **kwargs):
@@ -25,8 +25,8 @@ def send_request(path, post=False, **kwargs):
 r = send_request(path, verify=False)
 if r.status_code == 200:
     # print(r.text.strip('"'))
-    print(r.json())
-    # with open(savepath, 'wb') as f:
-    #     f.write(r.content)
+    # print(r.json())
+    with open(savepath, 'wb') as f:
+        f.write(r.content)
 else:
     print('request code: ' + str(r.status_code))
