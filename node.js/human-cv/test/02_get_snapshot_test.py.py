@@ -1,8 +1,7 @@
+import base64
+
 domain = 'http://localhost:3000'
-path = f'{domain}/snapshot?as=raw'
-# path = f'{domain}/start_detect?interval=2'
-# path = f'{domain}/file'
-savepath = './node.js/human-cv/temp/test_image.jpg'
+savepath = './node.js/human-cv/test/test_result.jpg'
 
 
 def send_request(path, post=False, **kwargs):
@@ -22,11 +21,29 @@ def send_request(path, post=False, **kwargs):
     return request
 
 
+# Get detection result
+path = f'{domain}/detect'
 r = send_request(path, verify=False)
 if r.status_code == 200:
-    # print(r.text.strip('"'))
-    # print(r.json())
-    with open(savepath, 'wb') as f:
-        f.write(r.content)
+    print(r.json())
 else:
     print('request code: ' + str(r.status_code))
+
+# Get detection result as image
+# path = f'{domain}/detect?as=img'
+# r = send_request(path, verify=False)
+# if r.status_code == 200:
+#     with open(savepath, 'wb') as f:
+#         f.write(r.content)
+# else:
+#     print('request code: ' + str(r.status_code))
+
+# Get detection result and image in the same json
+# path = f'{domain}/detect?as=both'
+# r = send_request(path, verify=False)
+# if r.status_code == 200:
+#     print(r.json()['result'])
+#     with open(savepath, 'wb') as f:
+#         f.write(base64.b64decode(r.json()['image']))
+# else:
+#     print('request code: ' + str(r.status_code))

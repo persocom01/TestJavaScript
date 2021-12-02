@@ -19,6 +19,7 @@ class HumanCV {
     this.startup = this.init()
     this.fetch = null
     this.isActive = false
+    this.buffer = null
     this.result = null
   }
 
@@ -52,17 +53,30 @@ class HumanCV {
   }
 
   async bufferFromInput (input) {
-    let buffer
     this.fetch = (await import('node-fetch')).default
-    log.info('Loading image:', input)
     if (input.startsWith('http:') || input.startsWith('https:')) {
       const res = await this.fetch(input)
-      if (res && res.ok) buffer = await res.buffer()
+      if (res && res.ok) this.buffer = await res.buffer()
       else log.error('Invalid image URL:', input, res.status, res.statusText, res.headers.get('content-type'))
     } else {
-      buffer = fs.readFileSync(input)
+      this.buffer = fs.readFileSync(input)
     }
-    return buffer
+    return this.buffer
+  }
+
+  async detectFromBuffer (buffer = this.buffer) {
+    this.buffer = buffer
+    const tensor = this.buffer2tensor(this.buffer)
+    log.state('Processing:', tensor.shape)
+    try {
+      this.result = await this.human.detect(tensor, this.config)
+      this.result = ag.addGestures(this.result) // additional gestures added here.
+    } catch (err) {
+      log.error('caught')
+    }
+    this.human.tf.dispose(tensor)
+    this.logResults(this.result)
+    return this.result
   }
 
   logResults (result) {
@@ -127,28 +141,14 @@ class HumanCV {
     return result
   }
 
-  async detectFromBuffer (buffer) {
-    const tensor = this.buffer2tensor(buffer)
-    log.state('Processing:', tensor.shape)
-    try {
-      this.result = await this.human.detect(tensor, this.config)
-      this.result = ag.addGestures(this.result) // additional gestures added here.
-    } catch (err) {
-      log.error('caught')
-    }
-    this.human.tf.dispose(tensor)
-    this.logResults(this.result)
-    return this.result
-  }
-
   async startActiveDetection (interval = 0) {
     this.isActive = true
     const timer = ms => new Promise(resolve => setTimeout(resolve, ms))
     this.interval = (interval || this.activeDetection.interval) * 1000
 
     const detectLoop = async () => {
-      const buffer = await this.activeDetection._imageBufferFunction()
-      this.result = await this.detectFromBuffer(buffer)
+      this.buffer = await this.activeDetection._imageBufferFunction()
+      this.result = await this.detectFromBuffer()
     }
 
     while (this.isActive) {
@@ -161,7 +161,6 @@ class HumanCV {
   }
 
   async detectFromFile (f) {
-    let buffer
     log.info('File location:', f)
     if (f.length === 0) {
       log.warn('Parameters: <input image | folder> missing')
@@ -177,42 +176,55 @@ class HumanCV {
           for (const file of dir) {
             const filePath = path.join(f, file)
             log.info('Loading image:', filePath)
-            buffer = await this.bufferFromInput(filePath)
-            this.result = this.result.push(await this.detectFromBuffer(buffer))
+            this.buffer = await this.bufferFromInput(filePath)
+            this.result = this.result.push(await this.detectFromBuffer())
           }
         } else {
           log.info('Loading image:', f)
-          buffer = await this.bufferFromInput(f)
-          this.result = await this.detectFromBuffer(buffer)
+          this.buffer = await this.bufferFromInput(f)
+          this.result = await this.detectFromBuffer()
         }
       } else {
         log.info('Loading image:', f)
-        buffer = await this.bufferFromInput(f)
-        this.result = await this.detectFromBuffer(buffer)
+        this.buffer = await this.bufferFromInput(f)
+        this.result = await this.detectFromBuffer()
       }
     }
     return this.result
   }
 
-  async drawOnCanvas (input, callback) {
+  async drawOnCanvas (input, runDetection = true) {
     const inputImage = await canvas.loadImage(input) // load image using canvas library
-    console.log('Loaded image', input, inputImage.width, inputImage.height)
+    log.info('Loaded image', input, inputImage.width, inputImage.height)
     const inputCanvas = new canvas.Canvas(inputImage.width, inputImage.height) // create canvas
     const ctx = inputCanvas.getContext('2d')
     ctx.drawImage(inputImage, 0, 0) // draw input image onto canvas
 
     // run detection
-    const buffer = fs.readFileSync(input)
-    this.result = await this.detectFromBuffer(buffer)
+    if (runDetection) {
+      this.buffer = fs.readFileSync(input)
+      this.result = await this.detectFromBuffer()
+    }
 
     // draw detected results onto canvas
-    this.human.draw.all(inputCanvas, this.result).then(() => {
-      const stream = inputCanvas.createJPEGStream({ quality: 0.75, progressive: true, chromaSubsampling: true })
-      callback(stream)
-    })
+    this.human.draw.all(inputCanvas, this.result)
+    return inputCanvas
   }
 
-  async detectDrawnOnCanvas (f, callback) {
+  canvasOutput (canvas, output = 'buffer') {
+    if (output === 'stream') {
+      const stream = canvas.createJPEGStream()
+      return stream
+    } else if (output === 'both') {
+      const buffer = canvas.toBuffer('image/jpeg')
+      const base64 = buffer.toString('base64')
+      return { result: this.result, image: base64 }
+    } else {
+      return canvas.toBuffer('image/jpeg')
+    }
+  }
+
+  async detectDrawnOnCanvas (f, output = 'buffer') {
     log.info('File location:', f)
     if (f.length === 0) {
       log.warn('Parameters: <input image> missing')
@@ -226,11 +238,13 @@ class HumanCV {
           log.error(`Image return does not work on directories: ${f}`)
         } else {
           log.info('Loading image:', f)
-          await this.drawOnCanvas(f, callback)
+          const canvas = await this.drawOnCanvas(f)
+          return this.canvasOutput(canvas, output)
         }
       } else {
         log.info('Loading image:', f)
-        await this.drawOnCanvas(f, callback)
+        const canvas = await this.drawOnCanvas(f)
+        return this.canvasOutput(canvas, output)
       }
     }
   }

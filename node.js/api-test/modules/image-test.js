@@ -17,8 +17,7 @@ async function loadImage (input) {
 
 async function image2buffer (input) {
   const imageCanvas = await loadImage(input)
-  const buffer = imageCanvas.toBuffer('image/jpeg')
-  return buffer
+  return imageCanvas.toBuffer('image/jpeg')
 }
 
 async function image2stream (input, callback) {

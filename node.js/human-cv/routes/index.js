@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 var fs = require('fs')
 var multer = require('multer')
+var nid = require('nanoid')
 var humanCV = require('../modules/human/human-cv')
 var fetch
 
@@ -21,8 +22,7 @@ var defaultPaths = {
   get_snapshot: '/snapshot',
   get_start_active_detection: '/start_detect',
   get_stop_active_detection: '/stop_detect',
-  post_detect_from_image_file: '/file',
-  post_image_with_detection_from_image_file: '/image'
+  post_detect_from_image_file: '/file'
 }
 
 var hcv
@@ -47,13 +47,43 @@ if (config.active_detection.use_local_camera) {
   hcv = new humanCV.HumanCV(config.human_params, config.active_detection)
 }
 
-router.get(config.commands.get_current_detection || defaultPaths.get_current_detection, function (req, res, next) {
+var clearTemp = filePath => fs.unlink(filePath, function (e) {
+  if (e) throw e
+  console.log(`${logPrefix}temp file deleted`)
+})
+router.get(config.commands.get_current_detection || defaultPaths.get_current_detection, async function (req, res, next) {
   console.log(`${logPrefix}getting detection`)
   if (config.camera.active_detection) {
-    const output = hcv.result
-    res.json(output)
+    if (req.query.as === 'img' || req.query.as === 'image' || req.query.as === 'jpg' || req.query.as === 'jepg') {
+      const buffer = hcv.buffer
+      const tempPath = './temp/' + nid.nanoid()
+      fs.writeFileSync(tempPath, buffer, 'binary')
+      try {
+        const canvas = await hcv.drawOnCanvas(tempPath, false)
+        const stream = hcv.canvasOutput(canvas, 'stream')
+        stream.on('data', chunk => res.write(chunk, 'binary'))
+        stream.on('end', () => res.end(null, 'binary'))
+      } finally {
+        clearTemp(tempPath)
+      }
+    } else if (req.query.as === 'both') {
+      const buffer = hcv.buffer
+      const tempPath = './temp/' + nid.nanoid()
+      fs.writeFileSync(tempPath, buffer, 'binary')
+      try {
+        const canvas = await hcv.drawOnCanvas(tempPath, false)
+        const output = hcv.canvasOutput(canvas, 'both')
+        res.json(output)
+      } finally {
+        clearTemp(tempPath)
+      }
+    } else {
+      const output = hcv.result
+      res.json(output)
+    }
   } else {
-    req.url = config.commands.get_snapshot || defaultPaths.get_snapshot
+    const url = config.commands.get_snapshot || defaultPaths.get_snapshot
+    req.url = url + `?as=${req.query.as}`
     req.method = 'GET'
     router.handle(req, res, next)
   }
@@ -74,6 +104,27 @@ router.get(config.commands.get_snapshot || defaultPaths.get_snapshot, async func
     const buffer = await config.active_detection._imageBufferFunction()
     res.write(buffer, 'binary')
     res.end(null, 'binary')
+  } else if (req.query.as === 'img' || req.query.as === 'image' || req.query.as === 'jpg' || req.query.as === 'jepg') {
+    const buffer = await config.active_detection._imageBufferFunction()
+    const tempPath = './temp/' + nid.nanoid()
+    fs.writeFileSync(tempPath, buffer, 'binary')
+    try {
+      const stream = await hcv.detectDrawnOnCanvas(tempPath, 'stream')
+      stream.on('data', chunk => res.write(chunk, 'binary'))
+      stream.on('end', () => res.end(null, 'binary'))
+    } finally {
+      clearTemp(tempPath)
+    }
+  } else if (req.query.as === 'both') {
+    const buffer = await config.active_detection._imageBufferFunction()
+    const tempPath = './temp/' + nid.nanoid()
+    fs.writeFileSync(tempPath, buffer, 'binary')
+    try {
+      const output = await hcv.detectDrawnOnCanvas(tempPath, 'both')
+      res.json(output)
+    } finally {
+      clearTemp(tempPath)
+    }
   } else {
     const buffer = await config.active_detection._imageBufferFunction()
     const output = await hcv.detectFromBuffer(buffer)
@@ -107,25 +158,31 @@ router.get(config.commands.get_stop_active_detection || defaultPaths.get_stop_ac
   }
 })
 
-var storageBuffer = multer.memoryStorage()
-var uploadBuffer = multer({ storage: storageBuffer })
-router.post(config.commands.post_detect_from_image_file || defaultPaths.post_detect_from_image_file, uploadBuffer.single('file'), async function (req, res, next) {
-  console.log(`${logPrefix}getting detection from file`)
-  const output = await hcv.detectFromBuffer(req.file.buffer)
-  res.json(output)
-})
-
 var uploadTemp = multer({ dest: './temp/' })
-var clearTemp = filePath => fs.unlink(filePath, function (e) {
-  if (e) throw e
-  console.log(`${logPrefix}temp file deleted`)
-})
-router.post(config.commands.post_image_with_detection_from_image_file || defaultPaths.post_image_with_detection_from_image_file, uploadTemp.single('file'), async function (req, res, next) {
-  hcv.detectDrawnOnCanvas(req.file.path, (stream) => {
-    stream.on('data', chunk => res.write(chunk, 'binary'))
-    stream.on('end', () => res.end(null, 'binary'))
-    clearTemp(req.file.path)
-  })
+router.post(config.commands.post_detect_from_image_file || defaultPaths.post_detect_from_image_file, uploadTemp.single('file'), async function (req, res, next) {
+  if (req.query.as === 'img' || req.query.as === 'image' || req.query.as === 'jpg' || req.query.as === 'jepg') {
+    try {
+      const stream = await hcv.detectDrawnOnCanvas(req.file.path, 'stream')
+      stream.on('data', chunk => res.write(chunk, 'binary'))
+      stream.on('end', () => res.end(null, 'binary'))
+    } finally {
+      clearTemp(req.file.path)
+    }
+  } else if (req.query.as === 'both') {
+    try {
+      const output = await hcv.detectDrawnOnCanvas(req.file.path, 'both')
+      res.json(output)
+    } finally {
+      clearTemp(req.file.path)
+    }
+  } else {
+    try {
+      const output = await hcv.detectFromFile(req.file.path)
+      res.json(output)
+    } finally {
+      clearTemp(req.file.path)
+    }
+  }
 })
 
 module.exports = router

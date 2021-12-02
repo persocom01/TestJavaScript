@@ -1,16 +1,16 @@
 # webcam-server-node.js
 
-Server based access to a webcam. This implementation was chosen as it is cross platform compatible, is reasonably functional, and compatible with the latest LTS version of node.js. This is done using Puppeteer, a Node library for controlling a headless Chrome or Chromium browser to access the webcam.
+Server based access to a webcam. This implementation was chosen as it is cross platform compatible, is reasonably functional, and compatible with the latest LTS version of node.js. This is done using Puppeteer, a node.js library for controlling a headless Chrome or Chromium browser to access the webcam.
 
 This is the stand alone version of a node.js webcam. The main module `/modules/camera.js` can be integrated into other node.js projects that need camera access.
 
-This app is capable of returning the following types of information:
+This api is capable of returning the following types of information:
 * a jepg snapshot image (configurable)
 * a webm recorded video
 
 ## Pre-requisites
 
-This app uses node.js and the latest node package manager (npm). It uses package-lock.json version 2, which can cause incompatibility issues with older versions of npm. Get both on windows here:
+This api uses node.js and the latest node package manager (npm). It uses package-lock.json version 2, which can cause incompatibility issues with older versions of npm. Get both on windows here:
 
 * [node 16.13.0](https://nodejs.org/en/)
 
@@ -59,16 +59,16 @@ The configuration files are located in `config.json` inside the `config` folder.
   - `get_pause_camera` - `GET` the api to pause the camera, reducing cpu usage.
   - `get_resume_camera` - `GET` the api to resume the camera.
   - `get_snapshot` - `GET` the api to send a binary jepg image of the current camera frame. Starts the camera if it is turned off.
-  - `get_start_camera` - `GET` the api to startup the camera. Mainly used if the camera is not configured to initialize itself on app start.
+  - `get_start_camera` - `GET` the api to startup the camera. Mainly used if the camera is not configured to initialize itself on api start.
   - `get_start_recording` - `GET` the api to start recording video using the webcam. It can be made to return a video X seconds long by appending a time parameter to the end of the url. For example, it can be made to return a 3 second video using `?time=3`. Starts the camera if it is turned off.
   - `get_stop_camera` - `GET` the api to turn off the camera. Once off, the camera has to be restarted using the `get_start_camera` endpoint.
   - `get_stop_recording` - `GET` the api to return a webm video file recorded by the webcam since `get_start_recording` was triggered. If `get_start_recording` was not triggered beforehand, a json response reminding the user to trigger it first is returned instead.
-4. `log_prefix` - the prefix when this app prints to the console log.
-5. `port` - the port the app runs on.
+4. `log_prefix` - the prefix when this api prints to the console log.
+5. `port` - the port the api runs on.
 
 ### Deployment
 
-To start the app, in the command line enter:
+To start the api, in the command line enter:
 
 ```
 npm start
@@ -78,4 +78,4 @@ A sample windows `.bat` file has also been provided if it is preferred.
 
 ## Known issues
 
-After the first video is recorded, subsequent attempts to record more videos will return an unreadable file. The cause of this is unknown, but this app works around the issue by restarting the camera after a video is recorded. This will appear as the camera light turning off and on again after video recordings.
+After the first video is recorded, subsequent attempts to record more videos will return an unreadable file. The cause of this is unknown, but this api works around the issue by restarting the camera after a video is recorded. This will appear as the camera light turning off and on again after video recordings.

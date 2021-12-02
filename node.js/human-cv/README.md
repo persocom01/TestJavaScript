@@ -10,13 +10,9 @@ The human computer vision api implements AI-powered computer vision from the hum
 * Gesture recognition
 * Body segmentation
 
-For convenience, this api includes an integrated [node.js webcam](https://github.dxc.com/Digital-Innovation-Lab-Asset/webcam-server) app so as to be capable of accessing the webcam on the local computer on its own.
-
-Alternatively, a url endpoint can be provided for a webcam image source, or in the worst case, this api provides endpoints where results can be obtained by `POST` requests using binary jepg images. See the config section of this readme for instructions on how to configure how this api retrieves webcam data.
-
 ## Pre-requisites
 
-This app uses node.js and the latest node package manager (npm). It uses package-lock.json version 2, which can cause incompatibility issues with older versions of npm. Get both on windows here:
+This api uses node.js and the latest node package manager (npm). It uses package-lock.json version 2, which can cause incompatibility issues with older versions of npm. Get both on windows here:
 
 * [node 16.13.0](https://nodejs.org/en/)
 
@@ -42,7 +38,6 @@ npm install
 
 These are list of improvements in no order of importance that were planned but not implemented for the api:
 * Add html demo page
-* Add ability to get detection results along with the image in a single json to the api's `POST` endpoints
 * Add minimum time between snapshots to active detection features
 * Add option to customize front of detection drawn on jepg returned by the api.
 * Fix the startup detection issue mentioned in `known issues`
@@ -54,10 +49,15 @@ The functionality of the api was tested by running it with its integrated webcam
 | No. | Endpoint | Results |
 | ------ | ------ | ------ |
 | 1 | /detect | <ul><li>returns a json of detection results if active detection is on</li><li>performs a snapshot detection if active detection is off</li></ul> |
-| 2 | / | returns a json of all available endpoints |
-| 3 | /snapshot | takes a snapshot using the camera and returns a json of detection results |
+| 2 | /detect?as=img | <ul><li>returns a binary image file of the last detection if active detection is on</li><li>performs a snapshot detection and returns it as a binary image if active detection is off</li></ul> |
+| 3 | /detect?as=both | <ul><li>returns a json with two keys, result and image, containing the detection result and a base64 encoded string of the image with detections drawn on it if active detection is on</li><li>performs a snapshot detection and returns it as a json with two keys, result and image, containing the detection result and a base64 encoded string of the image with detections drawn on it if active detection is off</li></ul> |
+| 4 | / | returns a json of all available endpoints |
+| 5 | /snapshot | takes a snapshot using the camera and returns a json of detection results |
+| 6 | /snapshot?as=raw | takes a snapshot using the camera and the raw image as a binary jepg file without performing any detections |
+| 7 | /snapshot?as=img | takes a snapshot using the camera and returns it as a binary image |
+| 8 | /snapshot?as=both | takes a snapshot using the camera and returns it as a binary image |
 | 4 | /start_detect | starts active detection |
-| 5 | /start_detect?interval=2 | changes active detection interval to 2s |
+| 5 | /start_detect?interval=2 | <ul><li>starts active detection with detection interval of 2s if not already active</li><li>changes active detection interval to 2s if already active</li></ul> |
 | 6 | /stop_detect | stops active detection |
 | 7 | /file | <ul><li>a json of detection results was returned after a binary image file was uploaded</li><li>Time taken: ~1.6s</li></ul> |
 | 8 | /image | <ul><li>a binary image file was received with the detections drawn on it.</li><li>Time taken: ~1.6s</li></ul> |
@@ -89,7 +89,7 @@ The configuration files are located in `config.json` inside the `config` folder.
   - `use_local_camera` - causes the api to use its integrated camera module for active detections.
 2. `camera` - contains subkeys that configure the api's integrated camera module. Irrelevant if `use_local_camera` is set to `false`.
   - `initialize` - if set to `true`, the camera will be turned on and be ready for use when the api is started. Even if set to `false`, the camera will be turned on if any endpoint uses the local camera.
-  - `options` - Contains the main configuration options for the camera, mainly the format of image returned, as well as the height and width of the image. The port here defines the port of the headless browser that this app uses to activate the camera. The full list of options can be found here: https://github.com/cancerberoSgx/camera-capture/blob/master/docs/interfaces/_types_.captureoptions.md
+  - `options` - Contains the main configuration options for the camera, mainly the format of image returned, as well as the height and width of the image. The port here defines the port of the headless browser that this api uses to activate the camera. The full list of options can be found here: https://github.com/cancerberoSgx/camera-capture/blob/master/docs/interfaces/_types_.captureoptions.md
 2. `commands` - contains subkeys that determine the path parts of the urls needed to use api. For example: `http://example-domain.com<path>`.
   - `get_current_detection` - `GET` the last detection results if `active_detection` is set to `true`. Otherwise it will activate the `get_snapshot`.
   - `get_help` - `GET` the list of api commands.
@@ -99,12 +99,12 @@ The configuration files are located in `config.json` inside the `config` folder.
   - `post_detect_from_image_file` - `POST` a binary jepg image to this endpoint to get its detection results as a json response. Works without the camera.
   - `post_image_with_detection_from_image_file` - `POST` a binary jepg image to this endpoint to get its detection results drawn on the image and returned as the response. Works without the camera.
 3. `human_params` - These are the parameters of the main module used in this api, human. The configurations are too many to list, and can be read from official documentation here: https://vladmandic.github.io/human/typedoc/interfaces/Config.html
-4. `log_prefix` - the prefix when this app prints to the console log.
-5. `port` - the port the app runs on.
+4. `log_prefix` - the prefix when this api prints to the console log.
+5. `port` - the port the api runs on.
 
 ### Deployment
 
-To start the app, in the command line enter:
+To start the api, in the command line enter:
 
 ```
 npm start
@@ -122,11 +122,23 @@ To start active detection on startup, set `active_detection` to `true` under the
 
 ### Inputs and Outputs
 
-The api's `GET` endpoints require no input, except that the camera service be running. They return their responses as json files. The definitions of detection results can be found here: https://vladmandic.github.io/human/typedoc/interfaces/Result.html
+### Inputs
 
-The input from the camera was made specific to the camera app and hardcoded into this api. This api expects from the camera snapshot api a json response with the image encoded as a base64 string value under the `snapshot` key.
+This api requires an image source in order to run computer vision detections on. This cam come from 3 possible sources:
+1. Local computer webcam - for convenience, a [node.js webcam](https://github.dxc.com/Digital-Innovation-Lab-Asset/webcam-server) was integrated into this api to make it capable of accessing a webcam on the local computer. To use it, ensure that inside the config file, `use_local_camera` is set to `true`.
+2. A url endpoint - the webcam service can be run and separately and a url endpoint for binary jepg snapshots can be given to the api instead. To use this option, ensure that inside the config file, `use_local_camera` is set to `false` and `snapshot_url` is set to the correct address.
+3. File uploads - as a last resort, this api is capable of running without a camera, but images will have to be uploaded to it from an external source. While there is no requirement to use this option, if this is the primary way this api is used, ensure that inside the config file, `use_local_camera` is set to `false`.
 
-The inputs of the `POST` endpoints are binary jepg images. The results are returned as json or as binary jepg images with the results drawn on them.
+If the api is configured to use the local camera or url endpoint, it requires no inputs to perform detections on images from those sources.
+
+### Outputs
+
+This api is made to be able to provide detection results in the following 3 formats:
+1. Json (default)
+2. A binary jepg file of the original image with detections drawn on it. To get the result in this format, append `?as=img` when retrieving results from this api's url endpoints
+3. Json containing both the detection results under the `result` key, as well as a binary jepg file of the original image with detections drawn on it encoded as a base64 string under the `image` key.
+
+The definitions of detection results can be found here: https://vladmandic.github.io/human/typedoc/interfaces/Result.html
 
 ### Custom gestures
 

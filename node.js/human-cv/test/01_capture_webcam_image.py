@@ -1,6 +1,6 @@
 import cv2
 
-filename = './node.js/human-cv/test/test_image.jpg'
+filename = './node.js/human-cv/test/test_img.jpg'
 
 # Try either VideoCapture(0) or (1) based on camera availability.
 # Using cv2.VideoCapture(0, cv2.CAP_DSHOW) may remove a warning for unknown
