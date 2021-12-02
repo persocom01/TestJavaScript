@@ -48,19 +48,19 @@ The functionality of the api was tested by running it with its integrated webcam
 
 | No. | Endpoint | Results |
 | ------ | ------ | ------ |
-| 1 | /detect | <ul><li>returns a json of detection results if active detection is on</li><li>performs a snapshot detection if active detection is off</li></ul> |
-| 2 | /detect?as=img | <ul><li>returns a binary image file of the last detection if active detection is on</li><li>performs a snapshot detection and returns it as a binary image if active detection is off</li></ul> |
-| 3 | /detect?as=both | <ul><li>returns a json with two keys, result and image, containing the detection result and a base64 encoded string of the image with detections drawn on it if active detection is on</li><li>performs a snapshot detection and returns it as a json with two keys, result and image, containing the detection result and a base64 encoded string of the image with detections drawn on it if active detection is off</li></ul> |
+| 1 | /detect | <ul><li>if active detection is on, returns a json of the last detection results</li><li>if active detection is off, a snapshot detection is performed</li></ul> |
+| 2 | /detect?as=img | <ul><li>if active detection is on, returns a binary jepg image file of the last detection</li><li>if active detection is off, a snapshot detection is performed</li></ul> |
+| 3 | /detect?as=both | <ul><li>if active detection is on, returns a json with two keys, `result` and `image`, containing the last detection result and a base64 encoded string of the last image with detections drawn on it</li><li>if active detection is off, a snapshot detection is performed</li></ul> |
 | 4 | / | returns a json of all available endpoints |
-| 5 | /snapshot | takes a snapshot using the camera and returns a json of detection results |
-| 6 | /snapshot?as=raw | takes a snapshot using the camera and the raw image as a binary jepg file without performing any detections |
-| 7 | /snapshot?as=img | takes a snapshot using the camera and returns it as a binary image |
-| 8 | /snapshot?as=both | takes a snapshot using the camera and returns it as a binary image |
-| 4 | /start_detect | starts active detection |
-| 5 | /start_detect?interval=2 | <ul><li>starts active detection with detection interval of 2s if not already active</li><li>changes active detection interval to 2s if already active</li></ul> |
-| 6 | /stop_detect | stops active detection |
-| 7 | /file | <ul><li>a json of detection results was returned after a binary image file was uploaded</li><li>Time taken: ~1.6s</li></ul> |
-| 8 | /image | <ul><li>a binary image file was received with the detections drawn on it.</li><li>Time taken: ~1.6s</li></ul> |
+| 5 | /snapshot | <ul><li>takes a snapshot using the camera and returns a json of detection results</li><li>Time taken: ~1.4s</li></ul> |
+| 6 | /snapshot?as=raw | <ul><li>takes a snapshot using the camera and returns the raw image as a binary jepg file without performing any detections</li><li>Time taken: ~0.9s</li></ul> |
+| 7 | /snapshot?as=img | <ul><li>takes a snapshot using the camera and returns it as a binary jepg file with detections drawn on it</li><li>Time taken: ~1.5s</li></ul> |
+| 8 | /snapshot?as=both | <ul><li>takes a snapshot using the camera and returns the result as a json with two keys, `result` and `image`, containing the detection result and a base64 encoded string of the image with detections drawn on it</li><li>Time taken: ~1.7s</li></ul> |
+| 9 | /start_detect | starts active detection |
+| 10 | /start_detect?interval=2 | <ul><li>starts active detection with detection interval of 2s if not already active</li><li>changes active detection interval to 2s if already active</li></ul> |
+| 11 | /stop_detect | stops active detection |
+| 12 | /file | <ul><li>a json of detection results was returned after a binary image file was uploaded</li><li>Time taken: ~1.6s</li></ul> |
+| 13 | /file?as | <ul><li>a json of detection results was returned after a binary image file was uploaded</li><li>Time taken: ~1.7s</li></ul> |
 
 In addition, limited testing was performed on the performance of the model to detect age, gender, 6 emotions, as well as track body parts. The images used in emotion testing are located in the `test` folder. The results of the tests are as follows:
 

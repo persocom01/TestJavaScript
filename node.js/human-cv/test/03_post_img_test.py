@@ -38,28 +38,26 @@ def send_request(path, post=False, **kwargs):
 #     print('request code: ' + str(r.status_code))
 
 # Get result as image
-# path = f'{domain}/file?as=img'
-# with open(filepath, 'rb') as f:
-#     filename = os.path.basename(f.name)
-#     encoder = MultipartEncoder({'file': (filename, f)})
-#     r = send_request(path, post=True, data=encoder, headers={'Content-Type': encoder.content_type}, verify=False)
-# if r.status_code == 200:
-#     # print(r.text.strip('"'))
-#     # print(r.json())
-#     with open(savepath, 'wb') as f:
-#         f.write(r.content)
-# else:
-#     print('request code: ' + str(r.status_code))
-
-# Get detection result and image in the same json
-path = f'{domain}/file?as=both'
+path = f'{domain}/file?as=img'
 with open(filepath, 'rb') as f:
     filename = os.path.basename(f.name)
     encoder = MultipartEncoder({'file': (filename, f)})
     r = send_request(path, post=True, data=encoder, headers={'Content-Type': encoder.content_type}, verify=False)
 if r.status_code == 200:
-    print(r.json()['result'])
     with open(savepath, 'wb') as f:
-        f.write(base64.b64decode(r.json()['image']))
+        f.write(r.content)
 else:
     print('request code: ' + str(r.status_code))
+
+# Get detection result and image in the same json
+# path = f'{domain}/file?as=both'
+# with open(filepath, 'rb') as f:
+#     filename = os.path.basename(f.name)
+#     encoder = MultipartEncoder({'file': (filename, f)})
+#     r = send_request(path, post=True, data=encoder, headers={'Content-Type': encoder.content_type}, verify=False)
+# if r.status_code == 200:
+#     print(r.json()['result'])
+#     with open(savepath, 'wb') as f:
+#         f.write(base64.b64decode(r.json()['image']))
+# else:
+#     print('request code: ' + str(r.status_code))
